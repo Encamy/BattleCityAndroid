@@ -35,16 +35,6 @@ class Player extends Sprite implements InputProcessor {
 
     private void update(float deltaTime)
     {
-        // clamp velocity
-        /*if (velocity.y > speed)
-        {
-            velocity.y = speed;
-        }
-        else if (velocity.y < speed)
-        {
-            velocity.y = -speed;
-        }
-*/
         // update position
         setX(getX() + velocity.x * deltaTime);
         setY(getY() + velocity.y * deltaTime);
@@ -76,15 +66,19 @@ class Player extends Sprite implements InputProcessor {
         {
             case Input.Keys.W:
                 velocity.y = speed;
+                velocity.x = 0;
                 break;
             case Input.Keys.A:
                 velocity.x = -speed;
+                velocity.y = 0;
                 break;
             case Input.Keys.D:
                 velocity.x = speed;
+                velocity.y = 0;
                 break;
             case Input.Keys.S:
                 velocity.y = -speed;
+                velocity.x = 0;
                 break;
         }
 
@@ -118,36 +112,6 @@ class Player extends Sprite implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button)
     {
-        /*if (screenX > Gdx.graphics.getWidth() * 0.3f)
-        {
-            return false;
-        }
-
-        if (screenY < Gdx.graphics.getHeight() * 0.3f)
-        {
-            velocity.y = speed;
-            return  true;
-        }
-
-        if (screenY > Gdx.graphics.getHeight() * 0.6f)
-        {
-            velocity.y = -speed;
-            return  true;
-        }
-
-        if (screenX < Gdx.graphics.getWidth() * 0.15f)
-        {
-            velocity.x = -speed;
-            return  true;
-        }
-
-        if (screenX > Gdx.graphics.getWidth() * 0.15f)
-        {
-            velocity.x = speed;
-            return  true;
-        }
-
-        return true;*/
         return false;
     }
 
