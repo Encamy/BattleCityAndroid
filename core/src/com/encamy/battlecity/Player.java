@@ -8,6 +8,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.Map;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 class Player extends Sprite implements InputProcessor {
@@ -16,14 +22,17 @@ class Player extends Sprite implements InputProcessor {
     private float speed = 60 * 2;
     private float m_animationTime = 0;
     private Animation m_left, m_top, m_right, m_bottom;
+    private MapObjects m_walls;
 
-    public Player(Animation left, Animation top, Animation right, Animation bottom)
+    public Player(Animation left, Animation top, Animation right, Animation bottom, MapObjects walls)
     {
         super(((TextureAtlas.AtlasRegion) top.getKeyFrame(0)));
         m_left = left;
         m_top = top;
         m_right = right;
         m_bottom = bottom;
+
+        m_walls = walls;
     }
 
     @Override
@@ -35,10 +44,6 @@ class Player extends Sprite implements InputProcessor {
 
     private void update(float deltaTime)
     {
-        // update position
-        setX(getX() + velocity.x * deltaTime);
-        setY(getY() + velocity.y * deltaTime);
-
         // update animation
         m_animationTime += deltaTime;
         if (velocity.x < 0)
@@ -57,6 +62,41 @@ class Player extends Sprite implements InputProcessor {
         {
             super.setRegion(((TextureAtlas.AtlasRegion) m_top.getKeyFrame(m_animationTime)));
         }
+
+        if (!canMove(getX() + velocity.x * deltaTime, getY() + velocity.y * deltaTime))
+        {
+            return;
+        }
+
+        // update position
+        setX(getX() + velocity.x * deltaTime);
+        setY(getY() + velocity.y * deltaTime);
+    }
+
+    private boolean canMove(float x, float y)
+    {
+        Rectangle player = new Rectangle();
+
+        // TODO solve this magic constants
+        player.x = x / 0.8f + 4;
+        player.y = y / 0.8f + 2;
+        player.width = 60;
+        player.height = 60;
+
+        for (MapObject object : m_walls)
+        {
+            if (object instanceof RectangleMapObject)
+            {
+                Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
+
+                if (Intersector.overlaps(rectangle, player))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     @Override

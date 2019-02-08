@@ -16,6 +16,7 @@ import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapImageLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -71,7 +72,9 @@ public class BattleCity extends ApplicationAdapter
 			}
 		}
 
-		m_player = new Player(left, top, right, bottom);
+		MapObjects walls  = m_tileMap.getLayers().get("Collisions").getObjects();
+
+		m_player = new Player(left, top, right, bottom, walls);
 		m_player.setPosition(spawnpoint.x, spawnpoint.y);
 
 		Gdx.input.setInputProcessor(m_player);
