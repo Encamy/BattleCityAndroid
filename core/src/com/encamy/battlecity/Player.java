@@ -27,12 +27,14 @@ class Player extends Sprite implements InputProcessor {
     }
 
     @Override
-    public void draw(Batch batch) {
+    public void draw(Batch batch)
+    {
         update(Gdx.graphics.getDeltaTime());
         super.draw(batch);
     }
 
-    private void update(float deltaTime) {
+    private void update(float deltaTime)
+    {
         // clamp velocity
         /*if (velocity.y > speed)
         {
@@ -68,7 +70,8 @@ class Player extends Sprite implements InputProcessor {
     }
 
     @Override
-    public boolean keyDown(int keycode) {
+    public boolean keyDown(int keycode)
+    {
         switch (keycode)
         {
             case Input.Keys.W:
@@ -89,7 +92,8 @@ class Player extends Sprite implements InputProcessor {
     }
 
     @Override
-    public boolean keyUp(int keycode) {
+    public boolean keyUp(int keycode)
+    {
         switch (keycode)
         {
             case Input.Keys.W:
@@ -106,32 +110,104 @@ class Player extends Sprite implements InputProcessor {
     }
 
     @Override
-    public boolean keyTyped(char character) {
+    public boolean keyTyped(char character)
+    {
         return false;
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+    public boolean touchDown(int screenX, int screenY, int pointer, int button)
+    {
+        /*if (screenX > Gdx.graphics.getWidth() * 0.3f)
+        {
+            return false;
+        }
+
+        if (screenY < Gdx.graphics.getHeight() * 0.3f)
+        {
+            velocity.y = speed;
+            return  true;
+        }
+
+        if (screenY > Gdx.graphics.getHeight() * 0.6f)
+        {
+            velocity.y = -speed;
+            return  true;
+        }
+
+        if (screenX < Gdx.graphics.getWidth() * 0.15f)
+        {
+            velocity.x = -speed;
+            return  true;
+        }
+
+        if (screenX > Gdx.graphics.getWidth() * 0.15f)
+        {
+            velocity.x = speed;
+            return  true;
+        }
+
+        return true;*/
         return false;
     }
 
     @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+    public boolean touchUp(int screenX, int screenY, int pointer, int button)
+    {
+        velocity.x = 0;
+        velocity.y = 0;
+
+        return true;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer)
+    {
+        if (screenX > Gdx.graphics.getWidth() * 0.3f)
+        {
+            return false;
+        }
+
+        if (screenY < Gdx.graphics.getHeight() * 0.3f)
+        {
+            velocity.y = speed;
+            velocity.x = 0;
+            return  true;
+        }
+
+        if (screenY > Gdx.graphics.getHeight() * 0.6f)
+        {
+            velocity.y = -speed;
+            velocity.x = 0;
+            return  true;
+        }
+
+        if (screenX < Gdx.graphics.getWidth() * 0.15f)
+        {
+            velocity.x = -speed;
+            velocity.y = 0;
+            return  true;
+        }
+
+        if (screenX > Gdx.graphics.getWidth() * 0.15f)
+        {
+            velocity.x = speed;
+            velocity.y = 0;
+            return  true;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY)
+    {
         return false;
     }
 
     @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
+    public boolean scrolled(int amount)
+    {
         return false;
     }
 }
