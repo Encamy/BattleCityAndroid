@@ -77,9 +77,8 @@ class Player extends Sprite implements InputProcessor {
     {
         Rectangle player = new Rectangle();
 
-        // TODO solve this magic constants
-        player.x = x / 0.8f + 4;
-        player.y = y / 0.8f + 2;
+        player.x = x;
+        player.y = y;
         player.width = 60;
         player.height = 60;
 

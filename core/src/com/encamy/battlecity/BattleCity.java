@@ -11,17 +11,26 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapImageLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.Iterator;
+
+import javax.swing.text.View;
 
 import sun.rmi.runtime.Log;
 
@@ -29,12 +38,16 @@ public class BattleCity extends ApplicationAdapter
 {
 	//SpriteBatch batch;
 	private OrthographicCamera m_camera;
+	private Viewport m_viewport;
 	private TiledMap m_tileMap;
     private OrthogonalTiledMapRenderer m_renderer;
 
     private Player m_player;
 
 	private static final float FRAME_DURATION = 0.20f;
+    private static final int WIDTH = 1280;
+    private static final int HEIGHT = 720;
+    private final float SCALE = 10;//WORLD_TO_STAGE_SCALE
 
 	@Override
 	public void create ()
@@ -42,12 +55,11 @@ public class BattleCity extends ApplicationAdapter
 		//batch = new SpriteBatch();
 
 		m_camera = new OrthographicCamera();
-		m_camera.setToOrtho(false, 1067, 540);
-		m_camera.viewportWidth = 1067;
-        m_camera.viewportHeight = 540;
+		m_camera.setToOrtho(false, WIDTH, HEIGHT);
 
 		m_tileMap = new TmxMapLoader().load("general_map.tmx");
-		m_renderer = new OrthogonalTiledMapRenderer(m_tileMap, 0.8f);
+		m_renderer = new OrthogonalTiledMapRenderer(m_tileMap);
+        m_renderer.setView(m_camera);
 
 		TextureAtlas atlas = load_atlas(m_tileMap);
 
@@ -67,13 +79,13 @@ public class BattleCity extends ApplicationAdapter
 				object.getProperties().containsKey("type") &&
 				object.getProperties().get("type", String.class).equals("spawn_player1"))
 			{
-				spawnpoint.x = ((RectangleMapObject)object).getRectangle().getX() * 0.8f;
-				spawnpoint.y = ((RectangleMapObject)object).getRectangle().getY() * 0.8f;
+				spawnpoint.x = ((RectangleMapObject)object).getRectangle().getX();
+				spawnpoint.y = ((RectangleMapObject)object).getRectangle().getY();
 			}
 		}
 
 		MapObjects walls  = m_tileMap.getLayers().get("Collisions").getObjects();
-
+		
 		m_player = new Player(left, top, right, bottom, walls);
 		m_player.setPosition(spawnpoint.x, spawnpoint.y);
 
@@ -86,25 +98,18 @@ public class BattleCity extends ApplicationAdapter
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		m_renderer.setView(m_camera);
+		m_camera.update();
 
-		//m_camera.update();
 		m_renderer.getBatch().begin();
 		m_player.draw(m_renderer.getBatch());
 		m_renderer.getBatch().end();
 
         m_renderer.render();
-
-        //batch.setProjectionMatrix(m_camera.combined);
-		//batch.begin();
-        // ... some texture render staff
-		//batch.end();
 	}
 	
 	@Override
 	public void dispose ()
     {
-		//batch.dispose();
 		m_tileMap.dispose();
 		m_renderer.dispose();
 	}

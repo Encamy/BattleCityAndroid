@@ -1820,7 +1820,7 @@
   </data>
  </layer>
  <objectgroup id="13" name="Objects">
-  <object id="7" x="416" y="640">
+  <object id="7" x="448" y="640">
    <properties>
     <property name="type" value="spawn_player1"/>
    </properties>
@@ -1838,13 +1838,13 @@
    </properties>
    <point/>
   </object>
-  <object id="45" x="480" y="64">
+  <object id="45" x="544" y="64">
    <properties>
     <property name="type" value="spawn_enemy"/>
    </properties>
    <point/>
   </object>
-  <object id="46" x="1024" y="64">
+  <object id="46" x="1056" y="64">
    <properties>
     <property name="type" value="spawn_enemy"/>
    </properties>
@@ -1876,7 +1876,7 @@
   <object id="33" x="1024" y="192" width="32" height="96"/>
   <object id="34" x="960" y="288" width="96" height="32"/>
   <object id="35" x="928" y="224" width="32" height="96"/>
-  <object id="36" x="992" y="576" width="26.6667" height="62"/>
+  <object id="36" x="992" y="576" width="32" height="64"/>
   <object id="37" x="128" y="576" width="32" height="64"/>
   <object id="38" x="96" y="288" width="96" height="32"/>
   <object id="39" x="192" y="224" width="32" height="96"/>
