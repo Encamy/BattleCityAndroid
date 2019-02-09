@@ -34,6 +34,11 @@ import javax.swing.text.View;
 
 import sun.rmi.runtime.Log;
 
+import static com.encamy.battlecity.Settings.ANIMATION_FRAME_DURATION;
+import static com.encamy.battlecity.Settings.APPLICATION_VERSION;
+import static com.encamy.battlecity.Settings.SCREEN_HEIGHT;
+import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
+
 public class BattleCity extends ApplicationAdapter
 {
 	//SpriteBatch batch;
@@ -44,33 +49,33 @@ public class BattleCity extends ApplicationAdapter
 
     private Player m_player;
 
-	private static final float FRAME_DURATION = 0.20f;
-    private static final int WIDTH = 1280;
-    private static final int HEIGHT = 720;
-    private final float SCALE = 10;//WORLD_TO_STAGE_SCALE
-
 	@Override
 	public void create ()
     {
-		//batch = new SpriteBatch();
+		Gdx.app.log("Info", this.getClass().getName() + " started. v" + APPLICATION_VERSION);
+		Gdx.app.log("Info", "platform = " + Gdx.app.getType().name());
 
 		m_camera = new OrthographicCamera();
-		m_camera.setToOrtho(false, WIDTH, HEIGHT);
+		m_camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 		m_tileMap = new TmxMapLoader().load("general_map.tmx");
 		m_renderer = new OrthogonalTiledMapRenderer(m_tileMap);
         m_renderer.setView(m_camera);
 
+        Gdx.app.log("Trace", "Loading animations");
+
 		TextureAtlas atlas = load_atlas(m_tileMap);
 
-		Animation left = new Animation(FRAME_DURATION, atlas.findRegions("yellow1_left"));
-		Animation top = new Animation(FRAME_DURATION, atlas.findRegions("yellow1_top"));
-		Animation right = new Animation(FRAME_DURATION, atlas.findRegions("yellow1_right"));
-		Animation bottom = new Animation(FRAME_DURATION, atlas.findRegions("yellow1_bottom"));
+		Animation left = new Animation(ANIMATION_FRAME_DURATION, atlas.findRegions("yellow1_left"));
+		Animation top = new Animation(ANIMATION_FRAME_DURATION, atlas.findRegions("yellow1_top"));
+		Animation right = new Animation(ANIMATION_FRAME_DURATION, atlas.findRegions("yellow1_right"));
+		Animation bottom = new Animation(ANIMATION_FRAME_DURATION, atlas.findRegions("yellow1_bottom"));
 		left.setPlayMode(Animation.PlayMode.LOOP);
 		top.setPlayMode(Animation.PlayMode.LOOP);
 		right.setPlayMode(Animation.PlayMode.LOOP);
 		bottom.setPlayMode(Animation.PlayMode.LOOP);
+
+        Gdx.app.log("Trace", "Loading player sprites");
 
 		Vector2 spawnpoint = new Vector2();
 		for (MapObject object : m_tileMap.getLayers().get("Objects").getObjects())
@@ -83,6 +88,8 @@ public class BattleCity extends ApplicationAdapter
 				spawnpoint.y = ((RectangleMapObject)object).getRectangle().getY();
 			}
 		}
+
+        Gdx.app.log("Trace", "Loading collisions layer");
 
 		MapObjects walls  = m_tileMap.getLayers().get("Collisions").getObjects();
 		

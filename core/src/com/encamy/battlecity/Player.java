@@ -16,6 +16,9 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import static com.encamy.battlecity.Settings.SCREEN_HEIGHT;
+import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
+
 class Player extends Sprite implements InputProcessor {
 
     private Vector2 velocity = new Vector2();
@@ -77,10 +80,16 @@ class Player extends Sprite implements InputProcessor {
     {
         Rectangle player = new Rectangle();
 
-        player.x = x;
-        player.y = y;
-        player.width = 60;
-        player.height = 60;
+        // Some player-friendly assumptions
+        player.x = x + 4;
+        player.y = y + 4;
+        player.width = 52;
+        player.height = 52;
+
+        if (player.x < 0 || player.y < 0 || player.x > SCREEN_WIDTH || player.y > SCREEN_HEIGHT)
+        {
+            return false;
+        }
 
         for (MapObject object : m_walls)
         {
