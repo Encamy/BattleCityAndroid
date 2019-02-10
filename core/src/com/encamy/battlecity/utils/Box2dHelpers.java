@@ -17,7 +17,7 @@ public class Box2dHelpers
     {
         BodyDef bodyDef = new BodyDef();
         bodyDef.fixedRotation = true;
-        //bodyDef.linearDamping = 10f;
+        bodyDef.linearDamping = 10f;
 
         if (isStatic)
         {
@@ -42,7 +42,7 @@ public class Box2dHelpers
     {
         BodyDef bodyDef = new BodyDef();
         bodyDef.fixedRotation = true;
-        //bodyDef.linearDamping = 10f;
+        bodyDef.linearDamping = 10f;
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(x - SCREEN_WIDTH * 0.5f + 32, y - SCREEN_HEIGHT * 0.5f + 32);
 
