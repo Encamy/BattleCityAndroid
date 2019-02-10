@@ -85,7 +85,7 @@ public class Player extends Sprite implements InputProcessor {
         player.width = 52;
         player.height = 52;
 
-        if (player.x < 0 || player.y < 0 || player.x > Settings.SCREEN_WIDTH || player.y > Settings.SCREEN_HEIGHT)
+        if (player.x < 0 || player.y < 0 || player.x + player.width > Settings.SCREEN_WIDTH || player.y + player.height > Settings.SCREEN_HEIGHT)
         {
             return false;
         }
