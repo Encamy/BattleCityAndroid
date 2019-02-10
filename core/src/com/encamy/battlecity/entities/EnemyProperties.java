@@ -1,8 +1,9 @@
-package com.encamy.battlecity;
+package com.encamy.battlecity.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.encamy.battlecity.Settings;
 
 import java.util.ArrayList;
 import java.util.Arrays;

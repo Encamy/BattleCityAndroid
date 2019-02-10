@@ -1,4 +1,4 @@
-package com.encamy.battlecity;
+package com.encamy.battlecity.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -15,9 +15,10 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.encamy.battlecity.Settings;
 
 
-class Player extends Sprite implements InputProcessor {
+public class Player extends Sprite implements InputProcessor {
 
     private Vector2 velocity = new Vector2();
     private float speed = Settings.BASE_MOVEMENT_SPEED;

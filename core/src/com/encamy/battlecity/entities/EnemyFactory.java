@@ -1,4 +1,4 @@
-package com.encamy.battlecity;
+package com.encamy.battlecity.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -9,8 +9,6 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-
-import org.w3c.dom.css.Rect;
 
 import java.util.ArrayList;
 import java.util.List;
