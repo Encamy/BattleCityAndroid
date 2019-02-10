@@ -1,4 +1,4 @@
-package com.encamy.battlecity;
+package com.encamy.battlecity.utils;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.encamy.battlecity.Settings;
 
 import static com.encamy.battlecity.Settings.SCREEN_HEIGHT;
 import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
@@ -16,7 +17,7 @@ public class Box2dHelpers
     {
         BodyDef bodyDef = new BodyDef();
         bodyDef.fixedRotation = true;
-        bodyDef.linearDamping = 10f;
+        //bodyDef.linearDamping = 10f;
 
         if (isStatic)
         {
@@ -41,7 +42,7 @@ public class Box2dHelpers
     {
         BodyDef bodyDef = new BodyDef();
         bodyDef.fixedRotation = true;
-        bodyDef.linearDamping = 10f;
+        //bodyDef.linearDamping = 10f;
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(x - SCREEN_WIDTH * 0.5f + 32, y - SCREEN_HEIGHT * 0.5f + 32);
 

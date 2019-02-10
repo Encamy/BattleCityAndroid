@@ -5,5 +5,5 @@ public class Settings {
     public static int SCREEN_WIDTH = 1280;
     public static int SCREEN_HEIGHT = 720;
     public static final float ANIMATION_FRAME_DURATION = 0.20f;
-    public static final float BASE_MOVEMENT_SPEED = 60 * 2;
+    public static final float BASE_MOVEMENT_SPEED = 600 * 2;
 }

@@ -23,6 +23,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.encamy.battlecity.entities.EnemyFactory;
 import com.encamy.battlecity.entities.Player;
+import com.encamy.battlecity.utils.Box2dHelpers;
 
 import java.util.Iterator;
 
@@ -97,7 +98,7 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
                 54, 54);
 
         m_player = new Player(left, top, right, bottom, playerBody);
-        m_enemyFactory = new EnemyFactory(m_tileMap.getLayers().get("EnemySpawns").getObjects(), atlas, m_world);
+        m_enemyFactory = new EnemyFactory(m_tileMap.getLayers().get("EnemySpawns").getObjects(), atlas, m_world, m_player.getSteeringEntity());
 
 		Gdx.input.setInputProcessor(this);
 	}

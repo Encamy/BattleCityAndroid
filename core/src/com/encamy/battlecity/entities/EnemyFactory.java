@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.ArrayList;
@@ -33,8 +34,9 @@ public class EnemyFactory
     private Vector<Enemy> m_enemies = new Vector<Enemy>();
 
     private World m_world;
+    private Box2dSteeringEntity m_playerSteeringEntity;
 
-    public EnemyFactory(MapObjects spawnPoints, TextureAtlas atlas, World world)
+    public EnemyFactory(MapObjects spawnPoints, TextureAtlas atlas, World world, Box2dSteeringEntity playerSteeringEntity)
     {
         Gdx.app.log("Trace", "Creating enemy factory");
         m_spawnPoints = spawnPoints;
@@ -43,6 +45,7 @@ public class EnemyFactory
         m_properties = new EnemyProperties(m_atlas);
 
         m_world = world;
+        m_playerSteeringEntity = playerSteeringEntity;
     }
 
     public void update(float deltaTime)
@@ -71,7 +74,7 @@ public class EnemyFactory
             level = m_random.nextInt(4);
         }
 
-        return new Enemy(spawnpoint, m_properties.Get(level), m_world);
+        return new Enemy(spawnpoint, m_properties.Get(level), m_world, m_playerSteeringEntity);
     }
 
     private void spawn()

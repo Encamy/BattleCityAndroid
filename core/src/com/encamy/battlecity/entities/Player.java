@@ -13,10 +13,12 @@ import com.encamy.battlecity.Settings;
 public class Player extends Sprite {
 
     private Vector2 velocity = new Vector2();
-    private float m_speed = Settings.BASE_MOVEMENT_SPEED;
+    //private float m_speed = Settings.BASE_MOVEMENT_SPEED;
+    private float m_speed = 500f;
     private float m_animationTime = 0;
     private Animation m_left, m_top, m_right, m_bottom;
     private Body m_body;
+    private Box2dSteeringEntity m_steeringEntity;
 
     public Player(Animation left, Animation top, Animation right, Animation bottom, Body body)
     {
@@ -27,6 +29,7 @@ public class Player extends Sprite {
         m_bottom = bottom;
 
         m_body = body;
+        m_steeringEntity = new Box2dSteeringEntity(m_body, 10.0f);
     }
 
     @Override
@@ -49,6 +52,11 @@ public class Player extends Sprite {
     public Body getBody()
     {
         return m_body;
+    }
+
+    public Box2dSteeringEntity getSteeringEntity()
+    {
+        return m_steeringEntity;
     }
 
     private void update(float deltaTime)
@@ -75,7 +83,7 @@ public class Player extends Sprite {
         m_body.setLinearVelocity(velocity.x, velocity.y);
 
 
-        Gdx.app.log("Trace", "Current player position: " + getX() + ":" + getY());
+        //Gdx.app.log("Trace", "Current player position: " + getX() + ":" + getY());
         setX(m_body.getPosition().x + Settings.SCREEN_WIDTH * 0.5f - 32);
         setY(m_body.getPosition().y + Settings.SCREEN_HEIGHT * 0.5f - 32);
     }

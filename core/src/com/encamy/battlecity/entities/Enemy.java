@@ -1,6 +1,7 @@
 package com.encamy.battlecity.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ai.steer.behaviors.Arrive;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -9,7 +10,7 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.encamy.battlecity.Box2dHelpers;
+import com.encamy.battlecity.utils.Box2dHelpers;
 import com.encamy.battlecity.Settings;
 
 
@@ -22,8 +23,9 @@ public class Enemy extends Sprite {
     private Animation m_left, m_top, m_right, m_bottom;
     private MapObjects m_walls;
     private Body m_body;
+    private Box2dSteeringEntity m_steeringEntity;
 
-    public Enemy(Vector2 spawnpoint, EnemyProperties property, World world)
+    public Enemy(Vector2 spawnpoint, EnemyProperties property, World world, Box2dSteeringEntity playerSteeringEntity)
     {
         super((TextureAtlas.AtlasRegion)property.bottomAnimation.getKeyFrame(0));
 
@@ -31,6 +33,11 @@ public class Enemy extends Sprite {
         SetPosition(spawnpoint);
 
         m_body = Box2dHelpers.createPlayerBox(world, spawnpoint.x, spawnpoint.y, 58, 58);
+
+        m_steeringEntity = new Box2dSteeringEntity(m_body, 10.0f);
+        m_steeringEntity.setMaxLinearSpeed(speed);
+        Arrive<Vector2> arriveSB = new Arrive<Vector2>(m_steeringEntity, playerSteeringEntity).setArrivalTolerance(2f).setDecelerationRadius(10);
+        m_steeringEntity.setBehavior(arriveSB);
     }
 
     @Override
@@ -41,6 +48,9 @@ public class Enemy extends Sprite {
 
     private void update(float deltaTime)
     {
+        // update behavior
+        m_steeringEntity.update(deltaTime);
+
         // update animation
         m_animationTime += deltaTime;
         if (velocity.x < 0)
