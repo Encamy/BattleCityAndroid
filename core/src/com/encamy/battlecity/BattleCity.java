@@ -48,6 +48,7 @@ public class BattleCity extends ApplicationAdapter
     private OrthogonalTiledMapRenderer m_renderer;
 
     private Player m_player;
+    private EnemyFactory m_enemyFactory;
 
 	@Override
 	public void create ()
@@ -96,6 +97,8 @@ public class BattleCity extends ApplicationAdapter
 		m_player = new Player(left, top, right, bottom, walls);
 		m_player.setPosition(spawnpoint.x, spawnpoint.y);
 
+        m_enemyFactory = new EnemyFactory(m_tileMap.getLayers().get("EnemySpawns").getObjects(), atlas);
+
 		Gdx.input.setInputProcessor(m_player);
 	}
 
@@ -106,9 +109,11 @@ public class BattleCity extends ApplicationAdapter
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		m_camera.update();
+		m_enemyFactory.update(Gdx.graphics.getDeltaTime());
 
 		m_renderer.getBatch().begin();
 		m_player.draw(m_renderer.getBatch());
+		m_enemyFactory.draw(m_renderer.getBatch());
 		m_renderer.getBatch().end();
 
         m_renderer.render();

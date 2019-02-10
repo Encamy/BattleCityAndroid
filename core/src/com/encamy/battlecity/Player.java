@@ -16,13 +16,11 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import static com.encamy.battlecity.Settings.SCREEN_HEIGHT;
-import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
 
 class Player extends Sprite implements InputProcessor {
 
     private Vector2 velocity = new Vector2();
-    private float speed = 60 * 2;
+    private float speed = Settings.BASE_MOVEMENT_SPEED;
     private float m_animationTime = 0;
     private Animation m_left, m_top, m_right, m_bottom;
     private MapObjects m_walls;
@@ -86,7 +84,7 @@ class Player extends Sprite implements InputProcessor {
         player.width = 52;
         player.height = 52;
 
-        if (player.x < 0 || player.y < 0 || player.x > SCREEN_WIDTH || player.y > SCREEN_HEIGHT)
+        if (player.x < 0 || player.y < 0 || player.x > Settings.SCREEN_WIDTH || player.y > Settings.SCREEN_HEIGHT)
         {
             return false;
         }
