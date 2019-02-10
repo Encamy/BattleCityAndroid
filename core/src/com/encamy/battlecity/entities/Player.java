@@ -1,22 +1,12 @@
 package com.encamy.battlecity.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.maps.Map;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.encamy.battlecity.Settings;
 
 
@@ -37,8 +27,6 @@ public class Player extends Sprite {
         m_bottom = bottom;
 
         m_body = body;
-       // setX(body.getPosition().x);
-      //  setY(body.getPosition().y);
     }
 
     @Override
@@ -56,6 +44,11 @@ public class Player extends Sprite {
     public float getSpeed()
     {
         return m_speed;
+    }
+
+    public Body getBody()
+    {
+        return m_body;
     }
 
     private void update(float deltaTime)

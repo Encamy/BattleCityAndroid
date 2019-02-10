@@ -23,10 +23,7 @@ import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.encamy.battlecity.entities.EnemyFactory;
 import com.encamy.battlecity.entities.Player;
 
@@ -41,12 +38,10 @@ import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
 public class BattleCity extends ApplicationAdapter implements InputProcessor {
 	//SpriteBatch batch;
 	private OrthographicCamera m_camera;
-	private Viewport m_viewport;
 	private TiledMap m_tileMap;
     private OrthogonalTiledMapRenderer m_renderer;
 
     private Player m_player;
-    private Body m_playerBody;
     private EnemyFactory m_enemyFactory;
 
     private Box2DDebugRenderer m_b2drenderer;
@@ -116,13 +111,13 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
             }
         }
 
-       m_playerBody = createPlayerBox(
+       Body playerBody = createPlayerBox(
                 m_world,
                 spawnpoint.x,
                 spawnpoint.y,
                 54, 54);
 
-        m_player = new Player(left, top, right, bottom, m_playerBody);
+        m_player = new Player(left, top, right, bottom, playerBody);
         m_enemyFactory = new EnemyFactory(m_tileMap.getLayers().get("EnemySpawns").getObjects(), atlas);
 
 		Gdx.input.setInputProcessor(this);
