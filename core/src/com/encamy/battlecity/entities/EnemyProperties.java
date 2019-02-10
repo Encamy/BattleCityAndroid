@@ -81,10 +81,10 @@ public class EnemyProperties
                 property.score = 100;
                 textureIndex = 1;
 
-                left_animationTextures.addAll(Arrays.asList(atlas.findRegion("white" + textureIndex + "_left")));
-                top_animationTextures.addAll(Arrays.asList(atlas.findRegion("white" + textureIndex + "_top")));
-                right_animationTextures.addAll(Arrays.asList(atlas.findRegion("white" + textureIndex + "_right")));
-                bottom_animationTextures.addAll(Arrays.asList(atlas.findRegion("white" + textureIndex + "_bottom")));
+                left_animationTextures.addAll(Arrays.asList(atlas.findRegions("white" + textureIndex + "_left").toArray()));
+                top_animationTextures.addAll(Arrays.asList(atlas.findRegions("white" + textureIndex + "_top").toArray()));
+                right_animationTextures.addAll(Arrays.asList(atlas.findRegions("white" + textureIndex + "_right").toArray()));
+                bottom_animationTextures.addAll(Arrays.asList(atlas.findRegions("white" + textureIndex + "_bottom").toArray()));
 
                 break;
 
@@ -94,10 +94,10 @@ public class EnemyProperties
                 property.score = 200;
                 textureIndex = 5;
 
-                left_animationTextures.addAll(Arrays.asList(atlas.findRegion("white" + textureIndex + "_left")));
-                top_animationTextures.addAll(Arrays.asList(atlas.findRegion("white" + textureIndex + "_top")));
-                right_animationTextures.addAll(Arrays.asList(atlas.findRegion("white" + textureIndex + "_right")));
-                bottom_animationTextures.addAll(Arrays.asList(atlas.findRegion("white" + textureIndex + "_bottom")));
+                left_animationTextures.addAll(Arrays.asList(atlas.findRegions("white" + textureIndex + "_left").toArray()));
+                top_animationTextures.addAll(Arrays.asList(atlas.findRegions("white" + textureIndex + "_top").toArray()));
+                right_animationTextures.addAll(Arrays.asList(atlas.findRegions("white" + textureIndex + "_right").toArray()));
+                bottom_animationTextures.addAll(Arrays.asList(atlas.findRegions("white" + textureIndex + "_bottom").toArray()));
                 break;
 
             case 2:
@@ -106,17 +106,17 @@ public class EnemyProperties
                 property.score = 300;
                 textureIndex = 6;
 
-                left_animationTextures.addAll(Arrays.asList(atlas.findRegion("white" + textureIndex + "_left")));
-                left_animationTextures.addAll(Arrays.asList(atlas.findRegion("red" + textureIndex + "_left")));
+                left_animationTextures.addAll(Arrays.asList(atlas.findRegions("white" + textureIndex + "_left").toArray()));
+                left_animationTextures.addAll(Arrays.asList(atlas.findRegions("red" + textureIndex + "_left").toArray()));
 
-                top_animationTextures.addAll(Arrays.asList(atlas.findRegion("white" + textureIndex + "_top")));
-                top_animationTextures.addAll(Arrays.asList(atlas.findRegion("red" + textureIndex + "_top")));
+                top_animationTextures.addAll(Arrays.asList(atlas.findRegions("white" + textureIndex + "_top").toArray()));
+                top_animationTextures.addAll(Arrays.asList(atlas.findRegions("red" + textureIndex + "_top").toArray()));
 
-                right_animationTextures.addAll(Arrays.asList(atlas.findRegion("white" + textureIndex + "_right")));
-                right_animationTextures.addAll(Arrays.asList(atlas.findRegion("red" + textureIndex + "_right")));
+                right_animationTextures.addAll(Arrays.asList(atlas.findRegions("white" + textureIndex + "_right").toArray()));
+                right_animationTextures.addAll(Arrays.asList(atlas.findRegions("red" + textureIndex + "_right").toArray()));
 
-                bottom_animationTextures.addAll(Arrays.asList(atlas.findRegion("white" + textureIndex + "_bottom")));
-                bottom_animationTextures.addAll(Arrays.asList(atlas.findRegion("red" + textureIndex + "_bottom")));
+                bottom_animationTextures.addAll(Arrays.asList(atlas.findRegions("white" + textureIndex + "_bottom").toArray()));
+                bottom_animationTextures.addAll(Arrays.asList(atlas.findRegions("red" + textureIndex + "_bottom").toArray()));
                 break;
 
             case 3:
@@ -125,17 +125,17 @@ public class EnemyProperties
                 property.score = 400;
                 textureIndex = 8;
 
-                left_animationTextures.addAll(Arrays.asList(atlas.findRegion("white" + textureIndex + "_left")));
-                left_animationTextures.addAll(Arrays.asList(atlas.findRegion("red" + textureIndex + "_left")));
+                left_animationTextures.addAll(Arrays.asList(atlas.findRegions("white" + textureIndex + "_left").toArray()));
+                left_animationTextures.addAll(Arrays.asList(atlas.findRegions("red" + textureIndex + "_left").toArray()));
 
-                top_animationTextures.addAll(Arrays.asList(atlas.findRegion("white" + textureIndex + "_top")));
-                top_animationTextures.addAll(Arrays.asList(atlas.findRegion("red" + textureIndex + "_top")));
+                top_animationTextures.addAll(Arrays.asList(atlas.findRegions("white" + textureIndex + "_top").toArray()));
+                top_animationTextures.addAll(Arrays.asList(atlas.findRegions("red" + textureIndex + "_top").toArray()));
 
-                right_animationTextures.addAll(Arrays.asList(atlas.findRegion("white" + textureIndex + "_right")));
-                right_animationTextures.addAll(Arrays.asList(atlas.findRegion("red" + textureIndex + "_right")));
+                right_animationTextures.addAll(Arrays.asList(atlas.findRegions("white" + textureIndex + "_right").toArray()));
+                right_animationTextures.addAll(Arrays.asList(atlas.findRegions("red" + textureIndex + "_right").toArray()));
 
-                bottom_animationTextures.addAll(Arrays.asList(atlas.findRegion("white" + textureIndex + "_bottom")));
-                bottom_animationTextures.addAll(Arrays.asList(atlas.findRegion("red" + textureIndex + "_bottom")));
+                bottom_animationTextures.addAll(Arrays.asList(atlas.findRegions("white" + textureIndex + "_bottom").toArray()));
+                bottom_animationTextures.addAll(Arrays.asList(atlas.findRegions("red" + textureIndex + "_bottom").toArray()));
                 break;
 
             default:

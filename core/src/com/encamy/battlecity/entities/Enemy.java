@@ -34,7 +34,24 @@ public class Enemy extends Sprite {
 
     private void update(float deltaTime)
     {
-
+        // update animation
+        m_animationTime += deltaTime;
+        if (velocity.x < 0)
+        {
+            super.setRegion(((TextureAtlas.AtlasRegion) m_left.getKeyFrame(m_animationTime)));
+        }
+        else if (velocity.x > 0)
+        {
+            super.setRegion(((TextureAtlas.AtlasRegion) m_right.getKeyFrame(m_animationTime)));
+        }
+        else if (velocity.y < 0)
+        {
+            super.setRegion(((TextureAtlas.AtlasRegion) m_bottom.getKeyFrame(m_animationTime)));
+        }
+        else if (velocity.y > 0)
+        {
+            super.setRegion(((TextureAtlas.AtlasRegion) m_top.getKeyFrame(m_animationTime)));
+        }
     }
 
     private void SetPosition(Vector2 spawnpoint)
