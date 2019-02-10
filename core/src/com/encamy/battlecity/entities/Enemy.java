@@ -7,6 +7,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
+import com.encamy.battlecity.Box2dHelpers;
+import com.encamy.battlecity.Settings;
 
 
 public class Enemy extends Sprite {
@@ -17,13 +21,16 @@ public class Enemy extends Sprite {
     private int score;
     private Animation m_left, m_top, m_right, m_bottom;
     private MapObjects m_walls;
+    private Body m_body;
 
-    public Enemy(Vector2 spawnpoint, EnemyProperties property)
+    public Enemy(Vector2 spawnpoint, EnemyProperties property, World world)
     {
         super((TextureAtlas.AtlasRegion)property.bottomAnimation.getKeyFrame(0));
 
         SetProperty(property);
         SetPosition(spawnpoint);
+
+        m_body = Box2dHelpers.createPlayerBox(world, spawnpoint.x, spawnpoint.y, 58, 58);
     }
 
     @Override
@@ -52,6 +59,9 @@ public class Enemy extends Sprite {
         {
             super.setRegion(((TextureAtlas.AtlasRegion) m_top.getKeyFrame(m_animationTime)));
         }
+
+        setX(m_body.getPosition().x + Settings.SCREEN_WIDTH * 0.5f - 32);
+        setY(m_body.getPosition().y + Settings.SCREEN_HEIGHT * 0.5f - 32);
     }
 
     private void SetPosition(Vector2 spawnpoint)

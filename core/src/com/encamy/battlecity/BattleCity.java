@@ -97,7 +97,7 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
                 54, 54);
 
         m_player = new Player(left, top, right, bottom, playerBody);
-        m_enemyFactory = new EnemyFactory(m_tileMap.getLayers().get("EnemySpawns").getObjects(), atlas);
+        m_enemyFactory = new EnemyFactory(m_tileMap.getLayers().get("EnemySpawns").getObjects(), atlas, m_world);
 
 		Gdx.input.setInputProcessor(this);
 	}
