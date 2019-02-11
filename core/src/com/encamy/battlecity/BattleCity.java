@@ -26,6 +26,7 @@ import com.encamy.battlecity.entities.Player;
 import com.encamy.battlecity.utils.Box2dHelpers;
 
 import java.util.Iterator;
+import java.util.Set;
 
 import static com.encamy.battlecity.Settings.ANIMATION_FRAME_DURATION;
 import static com.encamy.battlecity.Settings.APPLICATION_VERSION;
@@ -160,6 +161,36 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
                         true);
             }
         }
+
+        // Create world boundaries
+
+        // bottom
+        Box2dHelpers.createBox(
+                m_world,
+                0,-10,
+                Settings.SCREEN_WIDTH, 10,
+                true);
+
+        // left
+        Box2dHelpers.createBox(
+                m_world,
+                -10,0,
+                10, Settings.SCREEN_HEIGHT,
+                true);
+
+        // top
+        Box2dHelpers.createBox(
+                m_world,
+                10, Settings.SCREEN_HEIGHT + 1,
+                Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT + 2,
+                true);
+
+        // right
+        Box2dHelpers.createBox(
+                m_world,
+                Settings.SCREEN_WIDTH + 2, 0,
+                Settings.SCREEN_WIDTH + 10, Settings.SCREEN_HEIGHT,
+                true);
     }
 
 	private TextureAtlas load_atlas(TiledMap tiledMap)
