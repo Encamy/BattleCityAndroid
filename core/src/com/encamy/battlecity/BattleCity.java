@@ -36,14 +36,13 @@ import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
 public class BattleCity extends ApplicationAdapter implements InputProcessor {
 	//SpriteBatch batch;
 	private OrthographicCamera m_camera;
-	private TiledMap m_tileMap;
     private OrthogonalTiledMapRenderer m_renderer;
 
-    private Player m_player;
     private EnemyFactory m_enemyFactory;
 
     private Box2DDebugRenderer m_b2drenderer;
     private World m_world;
+    private LayerManager m_layerManager;
 
 	@Override
 	public void create ()
@@ -54,52 +53,24 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
 		m_camera = new OrthographicCamera();
 		m_camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-		m_tileMap = new TmxMapLoader().load("general_map.tmx");
-		m_renderer = new OrthogonalTiledMapRenderer(m_tileMap);
-        m_renderer.setView(m_camera);
-
         Box2D.init();
         m_b2drenderer = new Box2DDebugRenderer();
         m_world = new World(new Vector2(0,0), true);
 
-        Gdx.app.log("Trace", "Loading animations");
+        m_layerManager = new LayerManager(m_world);
+        m_layerManager.loadLevel("general_map.tmx");
 
-		TextureAtlas atlas = load_atlas(m_tileMap);
+        m_renderer = new OrthogonalTiledMapRenderer(m_layerManager.getTileMap());
+        m_renderer.setView(m_camera);
 
-		Animation left = new Animation(ANIMATION_FRAME_DURATION, atlas.findRegions("yellow1_left"));
-		Animation top = new Animation(ANIMATION_FRAME_DURATION, atlas.findRegions("yellow1_top"));
-		Animation right = new Animation(ANIMATION_FRAME_DURATION, atlas.findRegions("yellow1_right"));
-		Animation bottom = new Animation(ANIMATION_FRAME_DURATION, atlas.findRegions("yellow1_bottom"));
-		left.setPlayMode(Animation.PlayMode.LOOP);
-		top.setPlayMode(Animation.PlayMode.LOOP);
-		right.setPlayMode(Animation.PlayMode.LOOP);
-		bottom.setPlayMode(Animation.PlayMode.LOOP);
+        m_layerManager.loadPlayer(1);
 
-        Gdx.app.log("Trace", "Loading player sprites");
-
-		Vector2 spawnpoint = new Vector2();
-		for (MapObject object : m_tileMap.getLayers().get("Objects").getObjects())
-		{
-			if (object instanceof RectangleMapObject &&
-				object.getProperties().containsKey("type") &&
-				object.getProperties().get("type", String.class).equals("spawn_player1"))
-			{
-				spawnpoint.x = ((RectangleMapObject)object).getRectangle().getX();
-				spawnpoint.y = ((RectangleMapObject)object).getRectangle().getY();
-			}
-		}
-
-		MapObjects walls  = m_tileMap.getLayers().get("Collisions").getObjects();
-        loadCollission(walls);
-
-        Body playerBody = Box2dHelpers.createPlayerBox(
+        m_enemyFactory = new EnemyFactory(
+                m_layerManager.getTileMap().getLayers().get("EnemySpawns").getObjects(),
+                m_layerManager.getAtlas(),
                 m_world,
-                spawnpoint.x,
-                spawnpoint.y,
-                54, 54);
-
-        m_player = new Player(left, top, right, bottom, playerBody);
-        m_enemyFactory = new EnemyFactory(m_tileMap.getLayers().get("EnemySpawns").getObjects(), atlas, m_world, m_player.getSteeringEntity());
+                m_layerManager.getPlayer(1).getSteeringEntity()
+        );
 
 		Gdx.input.setInputProcessor(this);
 	}
@@ -114,7 +85,7 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
 		m_enemyFactory.update(Gdx.graphics.getDeltaTime());
 
 		m_renderer.getBatch().begin();
-		m_player.draw(m_renderer.getBatch());
+        m_layerManager.getPlayer(1).draw(m_renderer.getBatch());
 		m_enemyFactory.draw(m_renderer.getBatch());
 		m_renderer.getBatch().end();
 
@@ -127,7 +98,7 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
 	@Override
 	public void dispose ()
     {
-		m_tileMap.dispose();
+        m_layerManager.dispose();
 		m_renderer.dispose();
 	}
 
@@ -143,93 +114,22 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
 		super.resume();
 	}
 
-	private void loadCollission(MapObjects walls)
-    {
-        Gdx.app.log("Trace", "Loading collisions layer");
-        for (MapObject object : walls)
-        {
-            if (object instanceof RectangleMapObject)
-            {
-                Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
-
-                Box2dHelpers.createBox(
-                        m_world,
-                        rectangle.x,
-                        rectangle.y,
-                        rectangle.width,
-                        rectangle.height,
-                        true);
-            }
-        }
-
-        // Create world boundaries
-
-        // bottom
-        Box2dHelpers.createBox(
-                m_world,
-                0,-10,
-                Settings.SCREEN_WIDTH, 10,
-                true);
-
-        // left
-        Box2dHelpers.createBox(
-                m_world,
-                -10,0,
-                10, Settings.SCREEN_HEIGHT,
-                true);
-
-        // top
-        Box2dHelpers.createBox(
-                m_world,
-                10, Settings.SCREEN_HEIGHT + 1,
-                Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT + 2,
-                true);
-
-        // right
-        Box2dHelpers.createBox(
-                m_world,
-                Settings.SCREEN_WIDTH + 2, 0,
-                Settings.SCREEN_WIDTH + 10, Settings.SCREEN_HEIGHT,
-                true);
-    }
-
-	private TextureAtlas load_atlas(TiledMap tiledMap)
-	{
-		TextureAtlas atlas = new TextureAtlas();
-
-		Iterator<TiledMapTile> tiles = tiledMap.getTileSets().getTileSet("entities").iterator();
-		while (tiles.hasNext())
-		{
-			TiledMapTile tile = tiles.next();
-			if (tile.getProperties().containsKey("tank_name") && tile.getProperties().containsKey("tank_type") && tile.getProperties().containsKey("direction"))
-			{
-					String tank_name = tile.getProperties().get("tank_name", String.class);
-					String tank_type = tile.getProperties().get("tank_type", String.class);
-					String direction = tile.getProperties().get("direction", String.class);
-
-					atlas.addRegion(tank_name + tank_type + "_" + direction, tile.getTextureRegion());
-			}
-		}
-
-		return atlas;
-	}
-
     @Override
     public boolean keyDown(int keycode)
     {
         switch (keycode)
         {
             case Input.Keys.W:
-                m_player.setVelocity(0.0f, m_player.getSpeed());
+                m_layerManager.getPlayer(1).setVelocity(0.0f, m_layerManager.getPlayer(1).getSpeed());
                 break;
             case Input.Keys.A:
-                m_player.setVelocity(-1 * m_player.getSpeed(), 0.0f);
+                m_layerManager.getPlayer(1).setVelocity(-1 * m_layerManager.getPlayer(1).getSpeed(), 0.0f);
                 break;
             case Input.Keys.D:
-                m_player.setVelocity(m_player.getSpeed(), 0.0f);
+                m_layerManager.getPlayer(1).setVelocity(m_layerManager.getPlayer(1).getSpeed(), 0.0f);
                 break;
             case Input.Keys.S:
-                m_player.setVelocity(0.0f, -1 * m_player.getSpeed());
+                m_layerManager.getPlayer(1).setVelocity(0.0f, -1 * m_layerManager.getPlayer(1).getSpeed());
                 break;
         }
 
@@ -239,7 +139,7 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
     @Override
     public boolean keyUp(int keycode)
     {
-        m_player.setVelocity(0.0f, 0.0f);
+        m_layerManager.getPlayer(1).setVelocity(0.0f, 0.0f);
 
         return true;
     }
@@ -259,7 +159,7 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button)
     {
-        m_player.setVelocity(0.0f, 0.0f);
+        m_layerManager.getPlayer(1).setVelocity(0.0f, 0.0f);
         return true;
     }
 
@@ -273,25 +173,25 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
 
         if (screenY < Gdx.graphics.getHeight() * 0.3f)
         {
-            m_player.setVelocity(0, m_player.getSpeed());
+            m_layerManager.getPlayer(1).setVelocity(0, m_layerManager.getPlayer(1).getSpeed());
             return  true;
         }
 
         if (screenY > Gdx.graphics.getHeight() * 0.6f)
         {
-            m_player.setVelocity(0, -1 * m_player.getSpeed());
+            m_layerManager.getPlayer(1).setVelocity(0, -1 * m_layerManager.getPlayer(1).getSpeed());
             return  true;
         }
 
         if (screenX < Gdx.graphics.getWidth() * 0.15f)
         {
-            m_player.setVelocity(-1 * m_player.getSpeed(), 0.0f);
+            m_layerManager.getPlayer(1).setVelocity(-1 * m_layerManager.getPlayer(1).getSpeed(), 0.0f);
             return  true;
         }
 
         if (screenX > Gdx.graphics.getWidth() * 0.15f)
         {
-            m_player.setVelocity(m_player.getSpeed(), 0.0f);
+            m_layerManager.getPlayer(1).setVelocity(m_layerManager.getPlayer(1).getSpeed(), 0.0f);
             return  true;
         }
 
