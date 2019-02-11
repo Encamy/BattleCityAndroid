@@ -70,7 +70,7 @@ public class LayerManager
         {
             if (object instanceof RectangleMapObject &&
                     object.getProperties().containsKey("type") &&
-                    object.getProperties().get("type", String.class).equals("spawn_player1"))
+                    object.getProperties().get("type", String.class).equals("spawn_player" + (index + 1)))
             {
                 spawnpoint.x = ((RectangleMapObject)object).getRectangle().getX();
                 spawnpoint.y = ((RectangleMapObject)object).getRectangle().getY();
@@ -85,10 +85,12 @@ public class LayerManager
 
         Gdx.app.log("Trace", "Loading player " + index + " sprites");
 
-        Animation left = new Animation(ANIMATION_FRAME_DURATION, m_atlas.findRegions("yellow1_left"));
-        Animation top = new Animation(ANIMATION_FRAME_DURATION, m_atlas.findRegions("yellow1_top"));
-        Animation right = new Animation(ANIMATION_FRAME_DURATION, m_atlas.findRegions("yellow1_right"));
-        Animation bottom = new Animation(ANIMATION_FRAME_DURATION, m_atlas.findRegions("yellow1_bottom"));
+        String tank_name = (index == 0)? "yellow" : "green";
+
+        Animation left = new Animation(ANIMATION_FRAME_DURATION, m_atlas.findRegions(tank_name + "1_left"));
+        Animation top = new Animation(ANIMATION_FRAME_DURATION, m_atlas.findRegions(tank_name + "1_top"));
+        Animation right = new Animation(ANIMATION_FRAME_DURATION, m_atlas.findRegions(tank_name + "1_right"));
+        Animation bottom = new Animation(ANIMATION_FRAME_DURATION, m_atlas.findRegions(tank_name + "1_bottom"));
         left.setPlayMode(Animation.PlayMode.LOOP);
         top.setPlayMode(Animation.PlayMode.LOOP);
         right.setPlayMode(Animation.PlayMode.LOOP);

@@ -27,6 +27,7 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
     private Box2DDebugRenderer m_b2drenderer;
     private World m_world;
     private LayerManager m_layerManager;
+    private static final int CURRENT_PLAYER = 1;
 
 	@Override
 	public void create ()
@@ -47,13 +48,13 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
         m_renderer = new OrthogonalTiledMapRenderer(m_layerManager.getTileMap());
         m_renderer.setView(m_camera);
 
-        m_layerManager.loadPlayer(1);
+        m_layerManager.loadPlayer(CURRENT_PLAYER);
 
         m_enemyFactory = new EnemyFactory(
                 m_layerManager.getTileMap().getLayers().get("EnemySpawns").getObjects(),
                 m_layerManager.getAtlas(),
                 m_world,
-                m_layerManager.getPlayer(1).getSteeringEntity()
+                m_layerManager.getPlayer(CURRENT_PLAYER).getSteeringEntity()
         );
 
 		Gdx.input.setInputProcessor(this);
@@ -69,7 +70,7 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
 		m_enemyFactory.update(Gdx.graphics.getDeltaTime());
 
 		m_renderer.getBatch().begin();
-        m_layerManager.getPlayer(1).draw(m_renderer.getBatch());
+        m_layerManager.getPlayer(CURRENT_PLAYER).draw(m_renderer.getBatch());
 		m_enemyFactory.draw(m_renderer.getBatch());
 		m_renderer.getBatch().end();
 
@@ -104,16 +105,16 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
         switch (keycode)
         {
             case Input.Keys.W:
-                m_layerManager.getPlayer(1).setVelocity(0.0f, m_layerManager.getPlayer(1).getSpeed());
+                m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(0.0f, m_layerManager.getPlayer(CURRENT_PLAYER).getSpeed());
                 break;
             case Input.Keys.A:
-                m_layerManager.getPlayer(1).setVelocity(-1 * m_layerManager.getPlayer(1).getSpeed(), 0.0f);
+                m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(-1 * m_layerManager.getPlayer(CURRENT_PLAYER).getSpeed(), 0.0f);
                 break;
             case Input.Keys.D:
-                m_layerManager.getPlayer(1).setVelocity(m_layerManager.getPlayer(1).getSpeed(), 0.0f);
+                m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(m_layerManager.getPlayer(CURRENT_PLAYER).getSpeed(), 0.0f);
                 break;
             case Input.Keys.S:
-                m_layerManager.getPlayer(1).setVelocity(0.0f, -1 * m_layerManager.getPlayer(1).getSpeed());
+                m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(0.0f, -1 * m_layerManager.getPlayer(CURRENT_PLAYER).getSpeed());
                 break;
         }
 
@@ -123,7 +124,7 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
     @Override
     public boolean keyUp(int keycode)
     {
-        m_layerManager.getPlayer(1).setVelocity(0.0f, 0.0f);
+        m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(0.0f, 0.0f);
 
         return true;
     }
@@ -143,7 +144,7 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button)
     {
-        m_layerManager.getPlayer(1).setVelocity(0.0f, 0.0f);
+        m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(0.0f, 0.0f);
         return true;
     }
 
@@ -157,25 +158,25 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
 
         if (screenY < Gdx.graphics.getHeight() * 0.3f)
         {
-            m_layerManager.getPlayer(1).setVelocity(0, m_layerManager.getPlayer(1).getSpeed());
+            m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(0, m_layerManager.getPlayer(CURRENT_PLAYER).getSpeed());
             return  true;
         }
 
         if (screenY > Gdx.graphics.getHeight() * 0.6f)
         {
-            m_layerManager.getPlayer(1).setVelocity(0, -1 * m_layerManager.getPlayer(1).getSpeed());
+            m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(0, -1 * m_layerManager.getPlayer(CURRENT_PLAYER).getSpeed());
             return  true;
         }
 
         if (screenX < Gdx.graphics.getWidth() * 0.15f)
         {
-            m_layerManager.getPlayer(1).setVelocity(-1 * m_layerManager.getPlayer(1).getSpeed(), 0.0f);
+            m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(-1 * m_layerManager.getPlayer(CURRENT_PLAYER).getSpeed(), 0.0f);
             return  true;
         }
 
         if (screenX > Gdx.graphics.getWidth() * 0.15f)
         {
-            m_layerManager.getPlayer(1).setVelocity(m_layerManager.getPlayer(1).getSpeed(), 0.0f);
+            m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(m_layerManager.getPlayer(CURRENT_PLAYER).getSpeed(), 0.0f);
             return  true;
         }
 
