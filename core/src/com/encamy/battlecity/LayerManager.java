@@ -13,7 +13,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.encamy.battlecity.entities.Player;
 import com.encamy.battlecity.utils.Box2dHelpers;
 
@@ -45,7 +44,7 @@ public class LayerManager
         m_atlas = load_atlas(m_tileMap);
 
         m_walls = m_tileMap.getLayers().get("Collisions").getObjects();
-        loadCollission(m_walls);
+        loadCollision(m_walls);
 
         loaded = true;
     }
@@ -139,7 +138,7 @@ public class LayerManager
         return atlas;
     }
 
-    private void loadCollission(MapObjects walls)
+    private void loadCollision(MapObjects walls)
     {
         Gdx.app.log("Trace", "Loading collisions layer");
         for (MapObject object : walls)
