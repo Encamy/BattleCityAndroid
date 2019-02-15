@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.encamy.battlecity.behaviors.RandomBehavior;
 import com.encamy.battlecity.utils.Box2dHelpers;
 import com.encamy.battlecity.Settings;
 
@@ -36,7 +37,8 @@ public class Enemy extends Sprite {
 
         m_steeringEntity = new Box2dSteeringEntity(m_body, 10.0f);
         m_steeringEntity.setMaxLinearSpeed(speed);
-        Arrive<Vector2> arriveSB = new Arrive<Vector2>(m_steeringEntity, playerSteeringEntity).setArrivalTolerance(2f).setDecelerationRadius(10);
+        //Arrive<Vector2> arriveSB = new Arrive<Vector2>(m_steeringEntity, playerSteeringEntity);
+        RandomBehavior<Vector2> arriveSB = new RandomBehavior<Vector2>(m_steeringEntity, playerSteeringEntity);
         m_steeringEntity.setBehavior(arriveSB);
     }
 
