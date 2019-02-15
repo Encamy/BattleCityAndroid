@@ -13,8 +13,7 @@ import com.encamy.battlecity.Settings;
 public class Player extends Sprite {
 
     private Vector2 velocity = new Vector2();
-    //private float m_speed = Settings.BASE_MOVEMENT_SPEED;
-    private float m_speed = 500f;
+    private float m_speed = Settings.MOVEMENT_SPEED;
     private float m_animationTime = 0;
     private Animation m_left, m_top, m_right, m_bottom;
     private Body m_body;

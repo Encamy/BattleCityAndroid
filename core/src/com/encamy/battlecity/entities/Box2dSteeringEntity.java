@@ -9,18 +9,19 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.utils.SteeringUtils;
 
+
 public class Box2dSteeringEntity implements Steerable<Vector2>
 {
-    private Body m_body;
+    private final Body m_body;
     private boolean m_tagged = false;
-    private float m_boundingRadius;
-    private float m_maxLinearSpeed = Settings.BASE_MOVEMENT_SPEED;
-    private float m_maxLinearAcceleration = Settings.BASE_MOVEMENT_SPEED * 100;
+    private final float m_boundingRadius;
+    private float m_maxLinearSpeed = Settings.MOVEMENT_SPEED;
+    private float m_maxLinearAcceleration = Settings.MOVEMENT_SPEED * 100;
     private float m_maxAngularSpeed = 30;
     private float m_maxAngularAcceleration = 5;
 
     private SteeringBehavior<Vector2> m_behavior;
-    private SteeringAcceleration<Vector2> m_steeringOutput;
+    private final SteeringAcceleration<Vector2> m_steeringOutput;
 
     public Box2dSteeringEntity(Body body, float boundingRadius)
     {
@@ -182,10 +183,5 @@ public class Box2dSteeringEntity implements Steerable<Vector2>
     public void setBehavior(SteeringBehavior<Vector2> behavior)
     {
         m_behavior = behavior;
-    }
-
-    public SteeringBehavior<Vector2> getBehavior()
-    {
-        return m_behavior;
     }
 }
