@@ -21,6 +21,7 @@ public class EnemyFactory
 {
     private static Random m_random = new Random();
 
+    // Choose tank level dispersion. Increase difficulty each level.
     private static final int[] m_baseRandomSequence = {0, 0, 0, 1, 1, 2, 3};
     private TextureAtlas m_atlas;
     private MapObjects m_spawnPoints;
@@ -97,7 +98,8 @@ public class EnemyFactory
         // just a placeholder for now
     }
 
-    private Vector2 getSpawnPoint() {
+    private Vector2 getSpawnPoint()
+    {
         List<Vector2> availableSpawns = new ArrayList<Vector2>();
 
         for (MapObject object : m_spawnPoints) {
