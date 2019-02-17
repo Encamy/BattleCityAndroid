@@ -2,49 +2,46 @@ package com.encamy.battlecity.utils;
 
 import com.badlogic.gdx.Gdx;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
 public class VariativeRandom
 {
-    Map<Float, Float> m_probabilities;
-    Random m_random;
+    private Map<Integer, Double> m_probabilities;
+    private double m_sum;
 
     public VariativeRandom()
     {
-        m_random = new Random();
+        m_probabilities = new HashMap<Integer, Double>();
     }
 
-    public boolean addProbability(Float probaility, Float value)
+    public boolean addProbability(Integer value, Double probaility)
     {
-        if (!calculateTotalProbability(value))
+        if (m_probabilities.get(value) != null)
         {
-            return false;
+            m_sum -= m_probabilities.get(value);
         }
 
-        m_probabilities.put(probaility, value);
+        m_probabilities.put(value, probaility);
+        m_sum += probaility;
         return false;
     }
 
-    public Float nextValue()
+    public int nextValue()
     {
-        // TODO:
-        return null;
-    }
+        double rand = Math.random();
+        double ratio = 1.0f / m_sum;
+        double tempDistribution = 0;
 
-    private boolean calculateTotalProbability(Float type)
-    {
-        float totalProbability = 0;
-
-        for (Map.Entry<Float, Float> entry : m_probabilities.entrySet())
+        for (Integer i : m_probabilities.keySet())
         {
-            totalProbability += entry.getValue();
-            if (totalProbability > 1.0f)
+            tempDistribution += m_probabilities.get(i);
+            if (rand / ratio <= tempDistribution)
             {
-                return false;
+                return i;
             }
         }
-
-        return true;
+        return 0;
     }
 }

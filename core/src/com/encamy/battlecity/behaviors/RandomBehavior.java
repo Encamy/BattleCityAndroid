@@ -8,6 +8,7 @@ import com.badlogic.gdx.ai.steer.SteeringBehavior;
 import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
+import com.encamy.battlecity.utils.VariativeRandom;
 
 import java.lang.reflect.Constructor;
 import java.util.Random;
@@ -18,6 +19,7 @@ public class RandomBehavior<T extends Vector<T>> extends SteeringBehavior<T>
 
     protected Location<T> m_target;
     protected float m_moveTimeLeft;
+    protected VariativeRandom m_variativeRandom;
     protected Random m_random;
     protected Direction m_direction;
 
@@ -32,6 +34,12 @@ public class RandomBehavior<T extends Vector<T>> extends SteeringBehavior<T>
         m_target = target;
         m_moveTimeLeft = 0;
         m_random = new Random();
+
+        m_variativeRandom = new VariativeRandom();
+        m_variativeRandom.addProbability(Direction.BOTTOM.ordinal(), 0.5);
+        m_variativeRandom.addProbability(Direction.TOP.ordinal(), 0.1);
+        m_variativeRandom.addProbability(Direction.LEFT.ordinal(), 0.2);
+        m_variativeRandom.addProbability(Direction.RIGHT.ordinal(), 0.2);
     }
 
     @Override
@@ -48,7 +56,7 @@ public class RandomBehavior<T extends Vector<T>> extends SteeringBehavior<T>
         m_moveTimeLeft -= Gdx.graphics.getDeltaTime();
         if (m_moveTimeLeft <= 0)
         {
-            m_direction = Direction.values()[m_random.nextInt(4)];
+            m_direction = Direction.values()[m_variativeRandom.nextValue()];
             Gdx.app.log("Trace", "Moving to " + m_direction.name());
 
             m_moveTimeLeft = m_random.nextInt(3);
