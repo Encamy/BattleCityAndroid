@@ -7,4 +7,6 @@ public class Settings {
     public static final float ANIMATION_FRAME_DURATION = 0.20f;
     private static final float BASE_MOVEMENT_SPEED = 600 * 2;
     public static final float MOVEMENT_SPEED = SCREEN_WIDTH * BASE_MOVEMENT_SPEED;
+
+    public enum Direction {LEFT, TOP, RIGHT, BOTTOM}
 }

@@ -96,7 +96,7 @@ public class LayerManager
         right.setPlayMode(Animation.PlayMode.LOOP);
         bottom.setPlayMode(Animation.PlayMode.LOOP);
 
-        m_players[index] = new Player(left, top, right, bottom, playerBody);
+        m_players[index] = new Player(left, top, right, bottom, playerBody, m_world);
     }
 
     public TiledMap getTileMap()

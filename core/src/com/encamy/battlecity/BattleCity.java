@@ -116,6 +116,11 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
             case Input.Keys.S:
                 m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(0.0f, -1 * m_layerManager.getPlayer(CURRENT_PLAYER).getSpeed());
                 break;
+            case Input.Keys.SPACE:
+            case Input.Keys.ENTER:
+            case Input.Buttons.LEFT:
+                m_layerManager.getPlayer(CURRENT_PLAYER).fire();
+                break;
         }
 
         return true;
@@ -124,7 +129,13 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
     @Override
     public boolean keyUp(int keycode)
     {
-        m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(0.0f, 0.0f);
+        if (keycode == Input.Keys.W ||
+            keycode == Input.Keys.S ||
+            keycode == Input.Keys.A ||
+            keycode == Input.Keys.D)
+        {
+            m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(0.0f, 0.0f);
+        }
 
         return true;
     }

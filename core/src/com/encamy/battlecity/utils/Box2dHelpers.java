@@ -55,4 +55,14 @@ public class Box2dHelpers
 
         return world.createBody(bodyDef).createFixture(fixtureDef).getBody();
     }
+
+    public static float x2Box2d(float x)
+    {
+        return x + Settings.SCREEN_WIDTH * 0.5f - 32;
+    }
+
+    public static float y2Box2d(float y)
+    {
+        return y + Settings.SCREEN_HEIGHT * 0.5f - 32;
+    }
 }
