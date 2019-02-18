@@ -6,6 +6,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2D;
@@ -36,16 +38,17 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
 		Gdx.app.log("Info", "platform = " + Gdx.app.getType().name());
 
 		m_camera = new OrthographicCamera();
-		m_camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
+		m_camera.setToOrtho(false, SCREEN_WIDTH / Settings.PPM, SCREEN_HEIGHT / Settings.PPM);
 
         Box2D.init();
         m_b2drenderer = new Box2DDebugRenderer();
+        m_b2drenderer.setDrawVelocities(true);
         m_world = new World(new Vector2(0,0), true);
 
         m_layerManager = new LayerManager(m_world);
         m_layerManager.loadLevel("general_map.tmx");
 
-        m_renderer = new OrthogonalTiledMapRenderer(m_layerManager.getTileMap());
+        m_renderer = new OrthogonalTiledMapRenderer(m_layerManager.getTileMap(), 1 / Settings.PPM);
         m_renderer.setView(m_camera);
 
         m_layerManager.loadPlayer(CURRENT_PLAYER);
@@ -69,14 +72,15 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
 		m_camera.update();
 		m_enemyFactory.update(Gdx.graphics.getDeltaTime());
 
-		m_renderer.getBatch().begin();
-        m_layerManager.getPlayer(CURRENT_PLAYER).draw(m_renderer.getBatch());
-		m_enemyFactory.draw(m_renderer.getBatch());
-		m_renderer.getBatch().end();
+        SpriteBatch spriteBatch = new SpriteBatch();
+        spriteBatch.begin();
+        m_layerManager.getPlayer(CURRENT_PLAYER).draw(spriteBatch);
+		m_enemyFactory.draw(spriteBatch);
+        spriteBatch.end();
 
         m_renderer.render();
 
-        m_world.step(1/60f, 6, 2);
+        m_world.step(Gdx.graphics.getDeltaTime(), 6, 2);
         m_b2drenderer.render(m_world, m_camera.projection);
     }
 	

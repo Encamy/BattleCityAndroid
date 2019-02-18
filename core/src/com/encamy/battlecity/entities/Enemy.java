@@ -33,7 +33,7 @@ public class Enemy extends Sprite {
         SetProperty(property);
         SetPosition(spawnpoint);
 
-        m_body = Box2dHelpers.createPlayerBox(world, spawnpoint.x, spawnpoint.y, 58, 58);
+        m_body = Box2dHelpers.createBox(world, spawnpoint.x, spawnpoint.y, 58, 58, false);
 
         m_steeringEntity = new Box2dSteeringEntity(m_body, 10.0f);
         m_steeringEntity.setMaxLinearSpeed(speed);
@@ -72,8 +72,8 @@ public class Enemy extends Sprite {
             super.setRegion(((TextureAtlas.AtlasRegion) m_top.getKeyFrame(m_animationTime)));
         }
 
-        setX(m_body.getPosition().x + Settings.SCREEN_WIDTH * 0.5f - 32);
-        setY(m_body.getPosition().y + Settings.SCREEN_HEIGHT * 0.5f - 32);
+        setX(Box2dHelpers.Box2d2x(m_body.getPosition().x));
+        setY(Box2dHelpers.Box2d2y(m_body.getPosition().y));
     }
 
     private void SetPosition(Vector2 spawnpoint)

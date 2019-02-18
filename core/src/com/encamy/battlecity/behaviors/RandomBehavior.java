@@ -35,7 +35,7 @@ public class RandomBehavior<T extends Vector<T>> extends SteeringBehavior<T>
         m_random = new Random();
 
         m_variativeRandom = new VariativeRandom();
-        m_variativeRandom.addProbability(Settings.Direction.BOTTOM.ordinal(), 0.5);
+        m_variativeRandom.addProbability(Settings.Direction.BOTTOM.ordinal(), 0.3);
         m_variativeRandom.addProbability(Settings.Direction.TOP.ordinal(), 0.1);
         m_variativeRandom.addProbability(Settings.Direction.LEFT.ordinal(), 0.2);
         m_variativeRandom.addProbability(Settings.Direction.RIGHT.ordinal(), 0.2);
@@ -56,9 +56,9 @@ public class RandomBehavior<T extends Vector<T>> extends SteeringBehavior<T>
         if (m_moveTimeLeft <= 0)
         {
             m_direction = Settings.Direction.values()[m_variativeRandom.nextValue()];
-            Gdx.app.log("Trace", "Moving to " + m_direction.name());
+           // Gdx.app.log("Trace", "Moving to " + m_direction.name());
 
-            m_moveTimeLeft = m_random.nextInt(3);
+            m_moveTimeLeft = m_random.nextInt(2);
         }
 
         Vector2 linear;

@@ -1,10 +1,12 @@
 package com.encamy.battlecity.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
@@ -12,19 +14,22 @@ import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.utils.Box2dHelpers;
 import com.encamy.battlecity.utils.utils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 
 public class Player extends Sprite {
 
     private Vector2 m_velocity = new Vector2();
-    private float m_speed = Settings.MOVEMENT_SPEED;
+    private float m_speed = Settings.BASE_MOVEMENT_SPEED;
     private float m_animationTime = 0;
     private Animation m_left, m_top, m_right, m_bottom;
     private Body m_body;
     private Box2dSteeringEntity m_steeringEntity;
     private World m_world;
     private Settings.Direction m_direction;
+    private ArrayList<Bullet> m_bullets;
 
     public Player(Animation left, Animation top, Animation right, Animation bottom, Body body, World world)
     {
@@ -38,6 +43,8 @@ public class Player extends Sprite {
         m_steeringEntity = new Box2dSteeringEntity(m_body, 10.0f);
         m_world = world;
         m_direction = Settings.Direction.TOP;
+
+        m_bullets = new ArrayList<Bullet>();
     }
 
     @Override
@@ -103,8 +110,14 @@ public class Player extends Sprite {
         m_body.setLinearVelocity(m_velocity.x, m_velocity.y);
 
         //Gdx.app.log("Trace", "Current player position: " + getX() + ":" + getY());
-        setX(Box2dHelpers.x2Box2d(m_body.getPosition().x));
-        setY(Box2dHelpers.y2Box2d(m_body.getPosition().y));
+
+        setX(Box2dHelpers.Box2d2x(m_body.getPosition().x));
+        setY(Box2dHelpers.Box2d2y(m_body.getPosition().y));
+
+        for (Bullet bullet : m_bullets)
+        {
+            bullet.update(deltaTime);
+        }
     }
 
     public void fire()
@@ -113,23 +126,19 @@ public class Player extends Sprite {
         switch (m_direction)
         {
             case TOP:
-                bulletSpawnPos.set(m_body.getPosition().x + 28, m_body.getPosition().y + 67);
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 82);
                 break;
             case LEFT:
-                bulletSpawnPos.set(m_body.getPosition().x - 10, m_body.getPosition().y + 30);
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 25, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 58);
                 break;
             case RIGHT:
-                bulletSpawnPos.set(m_body.getPosition().x + 70, m_body.getPosition().y + 28);
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 80, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 58);
                 break;
             case BOTTOM:
-                bulletSpawnPos.set(m_body.getPosition().x + 27, m_body.getPosition().y - 8);
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 28);
                 break;
         }
 
-        Box2dHelpers.createBox(m_world,
-                Box2dHelpers.x2Box2d(bulletSpawnPos.x),
-                Box2dHelpers.y2Box2d(bulletSpawnPos.y),
-                10, 10,
-                false);
+        m_bullets.add(new Bullet(m_world, bulletSpawnPos, m_direction));
     }
 }

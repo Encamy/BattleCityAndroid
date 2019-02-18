@@ -15,9 +15,14 @@ public class Box2dHelpers
 {
     public static Body createBox(World world, float x, float y, float w, float h, boolean isStatic)
     {
+        x /= Settings.PPM;
+        y /= Settings.PPM;
+        w /= Settings.PPM;
+        h /= Settings.PPM;
         BodyDef bodyDef = new BodyDef();
         bodyDef.fixedRotation = true;
         bodyDef.linearDamping = 10f;
+        bodyDef.position.set(x + w * 0.5f - Settings.SCREEN_WIDTH / Settings.PPM * 0.5f, y + h * 0.5f - Settings.SCREEN_HEIGHT / Settings.PPM * 0.5f);
 
         if (isStatic)
         {
@@ -27,24 +32,6 @@ public class Box2dHelpers
         {
             bodyDef.type = BodyDef.BodyType.DynamicBody;
         }
-
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(w * 0.5f, h * 0.5f, new Vector2(x + w * 0.5f - Settings.SCREEN_WIDTH * 0.5f, y + h * 0.5f - Settings.SCREEN_HEIGHT * 0.5f), 0.0f);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.density = 1.0f;
-
-        return world.createBody(bodyDef).createFixture(fixtureDef).getBody();
-    }
-
-    public static Body createPlayerBox(World world, float x, float y, float w, float h)
-    {
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.fixedRotation = true;
-        bodyDef.linearDamping = 10f;
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(x - SCREEN_WIDTH * 0.5f + 32, y - SCREEN_HEIGHT * 0.5f + 32);
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(w * 0.5f, h * 0.5f);
@@ -58,11 +45,21 @@ public class Box2dHelpers
 
     public static float x2Box2d(float x)
     {
-        return x + Settings.SCREEN_WIDTH * 0.5f - 32;
+        return x + Settings.SCREEN_WIDTH / Settings.PPM * 0.5f - 32;
+    }
+
+    public static float Box2d2x(float x)
+    {
+        return x * Settings.PPM + Settings.SCREEN_WIDTH * 0.5f - 32;
     }
 
     public static float y2Box2d(float y)
     {
-        return y + Settings.SCREEN_HEIGHT * 0.5f - 32;
+        return y + Settings.SCREEN_HEIGHT / Settings.PPM * 0.5f - 32;
+    }
+
+    public static float Box2d2y(float y)
+    {
+        return y * Settings.PPM + Settings.SCREEN_HEIGHT * 0.5f - 32;
     }
 }

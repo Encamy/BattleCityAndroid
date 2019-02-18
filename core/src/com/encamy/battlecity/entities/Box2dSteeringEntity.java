@@ -15,8 +15,8 @@ public class Box2dSteeringEntity implements Steerable<Vector2>
     private final Body m_body;
     private boolean m_tagged = false;
     private final float m_boundingRadius;
-    private float m_maxLinearSpeed = Settings.MOVEMENT_SPEED;
-    private float m_maxLinearAcceleration = Settings.MOVEMENT_SPEED * 100;
+    private float m_maxLinearSpeed = Settings.BASE_MOVEMENT_SPEED;
+    private float m_maxLinearAcceleration = Settings.BASE_MOVEMENT_SPEED * 100;
     private float m_maxAngularSpeed = 30;
     private float m_maxAngularAcceleration = 5;
 
@@ -50,7 +50,7 @@ public class Box2dSteeringEntity implements Steerable<Vector2>
             return;
         }
 
-        Vector2 force = steering.linear.scl(deltaTime);
+        Vector2 force = steering.linear;
         m_body.setLinearVelocity(force);
     }
 

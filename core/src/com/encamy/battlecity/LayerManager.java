@@ -77,11 +77,12 @@ public class LayerManager
             }
         }
 
-        Body playerBody = Box2dHelpers.createPlayerBox(
+        Body playerBody = Box2dHelpers.createBox(
                 m_world,
                 spawnpoint.x,
                 spawnpoint.y,
-                54, 54);
+                54, 54,
+                false);
 
         Gdx.app.log("Trace", "Loading player " + index + " sprites");
 

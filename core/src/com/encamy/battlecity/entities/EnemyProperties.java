@@ -76,7 +76,7 @@ public class EnemyProperties
         switch (level)
         {
             case 0:
-                property.speed = Settings.MOVEMENT_SPEED;
+                property.speed = Settings.BASE_MOVEMENT_SPEED;
                 property.health = 1;
                 property.score = 100;
                 textureIndex = 1;
@@ -89,7 +89,7 @@ public class EnemyProperties
                 break;
 
             case 1:
-                property.speed = Settings.MOVEMENT_SPEED * 1.5f;
+                property.speed = Settings.BASE_MOVEMENT_SPEED * 1.5f;
                 property.health = 1;
                 property.score = 200;
                 textureIndex = 5;
@@ -101,7 +101,7 @@ public class EnemyProperties
                 break;
 
             case 2:
-                property.speed = Settings.MOVEMENT_SPEED * 1.5f;
+                property.speed = Settings.BASE_MOVEMENT_SPEED * 1.5f;
                 property.health = 2;
                 property.score = 300;
                 textureIndex = 6;
@@ -120,7 +120,7 @@ public class EnemyProperties
                 break;
 
             case 3:
-                property.speed = Settings.MOVEMENT_SPEED * 0.75f;
+                property.speed = Settings.BASE_MOVEMENT_SPEED * 0.75f;
                 property.health = 4;
                 property.score = 400;
                 textureIndex = 8;
