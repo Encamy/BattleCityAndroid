@@ -24,6 +24,7 @@ public class Player extends Sprite {
     private Body m_body;
     private Box2dSteeringEntity m_steeringEntity;
     private World m_world;
+    private Settings.Direction m_direction;
 
     public Player(Animation left, Animation top, Animation right, Animation bottom, Body body, World world)
     {
@@ -36,6 +37,7 @@ public class Player extends Sprite {
         m_body = body;
         m_steeringEntity = new Box2dSteeringEntity(m_body, 10.0f);
         m_world = world;
+        m_direction = Settings.Direction.TOP;
     }
 
     @Override
@@ -74,6 +76,13 @@ public class Player extends Sprite {
 
         if (direction != null)
         {
+            m_direction = direction;
+        }
+
+        // We do not want to use stored direction here.
+        // Animation should be played only while tank is moved
+        if (direction != null)
+        {
             switch (direction)
             {
                 case TOP:
@@ -100,27 +109,20 @@ public class Player extends Sprite {
 
     public void fire()
     {
-        Settings.Direction direction = utils.velocity2Direction(m_velocity);
-
-        if (direction == null)
-        {
-            direction = Settings.Direction.TOP;
-        }
-
         Vector2 bulletSpawnPos = new Vector2();
-        switch (direction)
+        switch (m_direction)
         {
             case TOP:
-                bulletSpawnPos.set(m_body.getPosition().x + 32, m_body.getPosition().y + 74);
+                bulletSpawnPos.set(m_body.getPosition().x + 28, m_body.getPosition().y + 67);
                 break;
             case LEFT:
-                bulletSpawnPos.set(m_body.getPosition().x - 10, m_body.getPosition().y + 32);
+                bulletSpawnPos.set(m_body.getPosition().x - 10, m_body.getPosition().y + 30);
                 break;
             case RIGHT:
-                bulletSpawnPos.set(m_body.getPosition().x + 74, m_body.getPosition().y + 32);
+                bulletSpawnPos.set(m_body.getPosition().x + 70, m_body.getPosition().y + 28);
                 break;
             case BOTTOM:
-                bulletSpawnPos.set(m_body.getPosition().x + 32, m_body.getPosition().y - 10);
+                bulletSpawnPos.set(m_body.getPosition().x + 27, m_body.getPosition().y - 8);
                 break;
         }
 
