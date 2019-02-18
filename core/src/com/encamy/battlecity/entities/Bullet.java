@@ -14,7 +14,7 @@ public class Bullet
     Body m_body;
     Vector2 m_vector;
 
-    public Bullet(World world, Vector2 coords, Settings.Direction direction)
+    public Bullet(World world, Vector2 coords, Settings.Direction direction, String owner)
     {
         m_world = world;
         m_direction = direction;
@@ -25,7 +25,8 @@ public class Bullet
                 Box2dHelpers.x2Box2d(coords.x),
                 Box2dHelpers.y2Box2d(coords.y),
                 2, 2,
-                false);
+                false,
+                owner + "_BULLET");
 
         switch (m_direction)
         {

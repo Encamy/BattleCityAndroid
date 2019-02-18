@@ -29,7 +29,6 @@ public class Box2dSteeringEntity implements Steerable<Vector2>
         m_boundingRadius = boundingRadius;
 
         m_steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
-        m_body.setUserData(this);
     }
 
     public void update(float deltaTime)

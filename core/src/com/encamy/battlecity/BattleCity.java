@@ -10,9 +10,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.ContactFilter;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.encamy.battlecity.entities.EnemyFactory;
 
 import static com.encamy.battlecity.Settings.APPLICATION_VERSION;
@@ -44,6 +47,8 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
         m_b2drenderer = new Box2DDebugRenderer();
         m_b2drenderer.setDrawVelocities(true);
         m_world = new World(new Vector2(0,0), true);
+        CollisionListener listener = new CollisionListener(m_world);
+        m_world.setContactListener(listener);
 
         m_layerManager = new LayerManager(m_world);
         m_layerManager.loadLevel("general_map.tmx");
@@ -82,9 +87,29 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
 
         m_world.step(Gdx.graphics.getDeltaTime(), 6, 2);
         m_b2drenderer.render(m_world, m_camera.projection);
+
+        processHitted();
     }
-	
-	@Override
+
+    private void processHitted()
+    {
+        Array<Body> bodies = new Array<Body>();
+        m_world.getBodies(bodies);
+
+        for (Body body : bodies)
+        {
+            if (body.getUserData() != null)
+            {
+                if ((body.getUserData()).equals("SHOT"))
+                {
+                    Gdx.app.log("Trace", "Body was hitted by bullut. Destroying");
+                    m_world.destroyBody(body);
+                }
+            }
+        }
+    }
+
+    @Override
 	public void dispose ()
     {
         m_layerManager.dispose();

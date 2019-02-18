@@ -13,7 +13,7 @@ import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
 
 public class Box2dHelpers
 {
-    public static Body createBox(World world, float x, float y, float w, float h, boolean isStatic)
+    public static Body createBox(World world, float x, float y, float w, float h, boolean isStatic, String type)
     {
         x /= Settings.PPM;
         y /= Settings.PPM;
@@ -40,7 +40,10 @@ public class Box2dHelpers
         fixtureDef.shape = shape;
         fixtureDef.density = 1.0f;
 
-        return world.createBody(bodyDef).createFixture(fixtureDef).getBody();
+        Body body = world.createBody(bodyDef).createFixture(fixtureDef).getBody();
+        body.setUserData((Object)type);
+
+        return body;
     }
 
     public static float x2Box2d(float x)

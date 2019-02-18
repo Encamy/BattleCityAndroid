@@ -82,7 +82,8 @@ public class LayerManager
                 spawnpoint.x,
                 spawnpoint.y,
                 54, 54,
-                false);
+                false,
+                "PLAYER");
 
         Gdx.app.log("Trace", "Loading player " + index + " sprites");
 
@@ -156,7 +157,8 @@ public class LayerManager
                         rectangle.y,
                         rectangle.width,
                         rectangle.height,
-                        true);
+                        true,
+                        "WALL");
             }
         }
 
@@ -167,27 +169,31 @@ public class LayerManager
                 m_world,
                 0,-10,
                 Settings.SCREEN_WIDTH, 10,
-                true);
+                true,
+                "WALL");
 
         // left
         Box2dHelpers.createBox(
                 m_world,
                 -10,0,
                 10, Settings.SCREEN_HEIGHT,
-                true);
+                true,
+                "WALL");
 
         // top
         Box2dHelpers.createBox(
                 m_world,
                 10, Settings.SCREEN_HEIGHT + 1,
                 Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT + 2,
-                true);
+                true,
+                "WALL");
 
         // right
         Box2dHelpers.createBox(
                 m_world,
                 Settings.SCREEN_WIDTH + 2, 0,
                 Settings.SCREEN_WIDTH + 10, Settings.SCREEN_HEIGHT,
-                true);
+                true,
+                "WALL");
     }
 }

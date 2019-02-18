@@ -33,7 +33,7 @@ public class Enemy extends Sprite {
         SetProperty(property);
         SetPosition(spawnpoint);
 
-        m_body = Box2dHelpers.createBox(world, spawnpoint.x, spawnpoint.y, 58, 58, false);
+        m_body = Box2dHelpers.createBox(world, spawnpoint.x, spawnpoint.y, 58, 58, false, "ENEMY");
 
         m_steeringEntity = new Box2dSteeringEntity(m_body, 10.0f);
         m_steeringEntity.setMaxLinearSpeed(speed);

@@ -126,19 +126,19 @@ public class Player extends Sprite {
         switch (m_direction)
         {
             case TOP:
-                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 82);
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 90);
                 break;
             case LEFT:
-                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 25, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 58);
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 20, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 58);
                 break;
             case RIGHT:
-                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 80, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 58);
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 85, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 58);
                 break;
             case BOTTOM:
-                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 28);
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 20);
                 break;
         }
 
-        m_bullets.add(new Bullet(m_world, bulletSpawnPos, m_direction));
+        m_bullets.add(new Bullet(m_world, bulletSpawnPos, m_direction, "PLAYER"));
     }
 }
