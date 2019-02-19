@@ -8,12 +8,14 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.encamy.battlecity.Settings;
 
+import java.util.EnumSet;
+
 import static com.encamy.battlecity.Settings.SCREEN_HEIGHT;
 import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
 
 public class Box2dHelpers
 {
-    public static Body createBox(World world, float x, float y, float w, float h, boolean isStatic, String type)
+    public static Body createBox(World world, float x, float y, float w, float h, boolean isStatic, EnumSet<Settings.ObjectType> type)
     {
         x /= Settings.PPM;
         y /= Settings.PPM;
@@ -41,7 +43,7 @@ public class Box2dHelpers
         fixtureDef.density = 1.0f;
 
         Body body = world.createBody(bodyDef).createFixture(fixtureDef).getBody();
-        body.setUserData((Object)type);
+        body.setUserData(type);
 
         return body;
     }

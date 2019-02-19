@@ -139,6 +139,6 @@ public class Player extends Sprite {
                 break;
         }
 
-        m_bullets.add(new Bullet(m_world, bulletSpawnPos, m_direction, "PLAYER"));
+        m_bullets.add(new Bullet(m_world, bulletSpawnPos, m_direction, Settings.ObjectType.PLAYER));
     }
 }

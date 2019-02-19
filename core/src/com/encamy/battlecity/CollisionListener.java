@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 
 public class CollisionListener implements ContactListener
 {
@@ -27,20 +28,20 @@ public class CollisionListener implements ContactListener
         Object userDataB = contact.getFixtureB().getBody().getUserData();
         if (userDataA != null && userDataB != null)
         {
-            String objectA = (String)userDataA;
-            String objectB = (String)userDataB;
+            EnumSet<Settings.ObjectType> objectA = (EnumSet<Settings.ObjectType>)userDataA;
+            EnumSet<Settings.ObjectType> objectB = (EnumSet<Settings.ObjectType>)userDataB;
             Gdx.app.log("Trace", objectA + "  " + objectB);
 
-            if (objectA.contains("BULLET") || objectB.contains("BULLET"))
+            if (objectA.contains(Settings.ObjectType.BULLET) || objectB.contains(Settings.ObjectType.BULLET))
             {
-                if (!objectA.equals("PLAYER"))
+                if (!objectA.equals(Settings.ObjectType.PLAYER))
                 {
-                    contact.getFixtureA().getBody().setUserData("SHOT");
+                    contact.getFixtureA().getBody().setUserData(Settings.ObjectType.SHOTTED);
                 }
 
-                if (!objectB.equals("PLAYER"))
+                if (!objectB.equals(Settings.ObjectType.PLAYER))
                 {
-                    contact.getFixtureB().getBody().setUserData("SHOT");
+                    contact.getFixtureB().getBody().setUserData(Settings.ObjectType.SHOTTED);
                 }
             }
         }

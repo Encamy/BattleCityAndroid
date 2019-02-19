@@ -14,6 +14,8 @@ import com.encamy.battlecity.behaviors.RandomBehavior;
 import com.encamy.battlecity.utils.Box2dHelpers;
 import com.encamy.battlecity.Settings;
 
+import java.util.EnumSet;
+
 
 public class Enemy extends Sprite {
     private Vector2 velocity = new Vector2();
@@ -33,7 +35,12 @@ public class Enemy extends Sprite {
         SetProperty(property);
         SetPosition(spawnpoint);
 
-        m_body = Box2dHelpers.createBox(world, spawnpoint.x, spawnpoint.y, 58, 58, false, "ENEMY");
+        m_body = Box2dHelpers.createBox(
+                world,
+                spawnpoint.x, spawnpoint.y,
+                58, 58,
+                false,
+                EnumSet.of(Settings.ObjectType.ENEMY));
 
         m_steeringEntity = new Box2dSteeringEntity(m_body, 10.0f);
         m_steeringEntity.setMaxLinearSpeed(speed);

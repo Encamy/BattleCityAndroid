@@ -100,9 +100,9 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
         {
             if (body.getUserData() != null)
             {
-                if ((body.getUserData()).equals("SHOT"))
+                if ((body.getUserData()).equals(Settings.ObjectType.SHOTTED))
                 {
-                    Gdx.app.log("Trace", "Body was hitted by bullut. Destroying");
+                    Gdx.app.log("Trace", "Body was hitted by bullet. Destroying");
                     m_world.destroyBody(body);
                 }
             }

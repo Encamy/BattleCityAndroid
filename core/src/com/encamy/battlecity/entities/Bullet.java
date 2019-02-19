@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.utils.Box2dHelpers;
 
+import java.util.EnumSet;
+
 public class Bullet
 {
     World m_world;
@@ -14,7 +16,7 @@ public class Bullet
     Body m_body;
     Vector2 m_vector;
 
-    public Bullet(World world, Vector2 coords, Settings.Direction direction, String owner)
+    public Bullet(World world, Vector2 coords, Settings.Direction direction, Settings.ObjectType owner)
     {
         m_world = world;
         m_direction = direction;
@@ -26,7 +28,7 @@ public class Bullet
                 Box2dHelpers.y2Box2d(coords.y),
                 2, 2,
                 false,
-                owner + "_BULLET");
+                EnumSet.of(owner, Settings.ObjectType.BULLET));
 
         switch (m_direction)
         {

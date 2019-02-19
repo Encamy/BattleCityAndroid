@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.encamy.battlecity.entities.Player;
 import com.encamy.battlecity.utils.Box2dHelpers;
 
+import java.util.EnumSet;
 import java.util.Iterator;
 
 import static com.encamy.battlecity.Settings.ANIMATION_FRAME_DURATION;
@@ -83,7 +84,7 @@ public class LayerManager
                 spawnpoint.y,
                 54, 54,
                 false,
-                "PLAYER");
+                EnumSet.of(Settings.ObjectType.PLAYER));
 
         Gdx.app.log("Trace", "Loading player " + index + " sprites");
 
@@ -158,7 +159,7 @@ public class LayerManager
                         rectangle.width,
                         rectangle.height,
                         true,
-                        "WALL");
+                        EnumSet.of(Settings.ObjectType.WALL));
             }
         }
 
@@ -170,7 +171,7 @@ public class LayerManager
                 0,-10,
                 Settings.SCREEN_WIDTH, 10,
                 true,
-                "WALL");
+                EnumSet.of(Settings.ObjectType.WALL));
 
         // left
         Box2dHelpers.createBox(
@@ -178,7 +179,7 @@ public class LayerManager
                 -10,0,
                 10, Settings.SCREEN_HEIGHT,
                 true,
-                "WALL");
+                EnumSet.of(Settings.ObjectType.WALL));
 
         // top
         Box2dHelpers.createBox(
@@ -186,7 +187,7 @@ public class LayerManager
                 10, Settings.SCREEN_HEIGHT + 1,
                 Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT + 2,
                 true,
-                "WALL");
+                EnumSet.of(Settings.ObjectType.WALL));
 
         // right
         Box2dHelpers.createBox(
@@ -194,6 +195,6 @@ public class LayerManager
                 Settings.SCREEN_WIDTH + 2, 0,
                 Settings.SCREEN_WIDTH + 10, Settings.SCREEN_HEIGHT,
                 true,
-                "WALL");
+                EnumSet.of(Settings.ObjectType.WALL));
     }
 }
