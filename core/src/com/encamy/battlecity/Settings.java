@@ -1,5 +1,7 @@
 package com.encamy.battlecity;
 
+import com.encamy.battlecity.entities.Enemy;
+
 import java.util.EnumSet;
 
 public class Settings {
@@ -16,9 +18,16 @@ public class Settings {
     {
         WALL,
         PLAYER,
+        PLAYER_OWNER,
         ENEMY,
+        ENEMY_OWNER,
         FLAG,
         BULLET,
         SHOTTED;
+    }
+
+    public interface EnemyDestroyedCallback
+    {
+        void OnEnemyDestroyed(Enemy enemy);
     }
 }

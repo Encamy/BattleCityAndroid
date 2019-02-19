@@ -18,6 +18,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.encamy.battlecity.entities.EnemyFactory;
 
+import java.util.EnumSet;
+
 import static com.encamy.battlecity.Settings.APPLICATION_VERSION;
 import static com.encamy.battlecity.Settings.SCREEN_HEIGHT;
 import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
@@ -98,14 +100,50 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
 
         for (Body body : bodies)
         {
-            if (body.getUserData() != null)
+            if (body.getUserData() == null)
             {
-                if ((body.getUserData()).equals(Settings.ObjectType.SHOTTED))
-                {
-                    Gdx.app.log("Trace", "Body was hitted by bullet. Destroying");
-                    m_world.destroyBody(body);
-                }
+                continue;
             }
+
+            if (!((EnumSet<Settings.ObjectType>)body.getUserData()).contains(Settings.ObjectType.SHOTTED))
+            {
+                continue;
+            }
+
+            EnumSet<Settings.ObjectType> type = (EnumSet<Settings.ObjectType>)body.getUserData();
+
+            if (type.contains(Settings.ObjectType.ENEMY))
+            {
+                Gdx.app.log("TRACE", "ENEMY");
+                m_enemyFactory.hit(body);
+            }
+            else if (type.contains(Settings.ObjectType.ENEMY_OWNER))
+            {
+                Gdx.app.log("TRACE", "ENEMY_OWNER");
+            }
+            else if (type.contains(Settings.ObjectType.PLAYER))
+            {
+                Gdx.app.log("TRACE", "PLAYER");
+            }
+            else if (type.contains(Settings.ObjectType.PLAYER_OWNER))
+            {
+                Gdx.app.log("TRACE", "PLAYER_OWNER");
+            }
+            else if (type.contains(Settings.ObjectType.WALL))
+            {
+                Gdx.app.log("TRACE", "WALL");
+            }
+            else if (type.contains(Settings.ObjectType.FLAG ))
+            {
+                Gdx.app.log("TRACE", "FLAG");
+            }
+
+
+            /*if ((body.getUserData()).equals(Settings.ObjectType.SHOTTED))
+            {
+                Gdx.app.log("Trace", "Body was hitted by bullet. Destroying");
+                m_world.destroyBody(body);
+            }*/
         }
     }
 

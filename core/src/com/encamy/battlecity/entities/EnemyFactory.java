@@ -11,13 +11,14 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.encamy.battlecity.Settings;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
-public class EnemyFactory
+public class EnemyFactory implements Settings.EnemyDestroyedCallback
 {
     private static Random m_random = new Random();
 
@@ -90,7 +91,9 @@ public class EnemyFactory
 
         PlaySpawnAnimation(spawnpoint);
 
-        m_enemies.add(CreateRandomEnemy(spawnpoint));
+        Enemy enemy = CreateRandomEnemy(spawnpoint);
+        enemy.setOnDestroyedCallback(this);
+        m_enemies.add(enemy);
     }
 
     private void PlaySpawnAnimation(Vector2 spawnpoint)
@@ -148,5 +151,36 @@ public class EnemyFactory
         {
             enemy.draw(batch);
         }
+    }
+
+    public void hit(Body body)
+    {
+        Enemy enemy = getEnemy(body);
+        if (enemy == null)
+        {
+            return;
+        }
+
+        enemy.setHealth(enemy.getHealth() - 1);
+    }
+
+    private Enemy getEnemy(Body body)
+    {
+        for (Enemy enemy : m_enemies)
+        {
+            if (enemy.getBody() == body)
+            {
+                return enemy;
+            }
+        }
+
+        return null;
+    }
+
+
+    @Override
+    public void OnEnemyDestroyed(Enemy enemy)
+    {
+        m_enemies.remove(enemy);
     }
 }

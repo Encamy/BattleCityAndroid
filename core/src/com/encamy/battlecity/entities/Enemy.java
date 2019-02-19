@@ -1,7 +1,6 @@
 package com.encamy.battlecity.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ai.steer.behaviors.Arrive;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -16,17 +15,22 @@ import com.encamy.battlecity.Settings;
 
 import java.util.EnumSet;
 
+import javax.security.auth.callback.Callback;
+
 
 public class Enemy extends Sprite {
     private Vector2 velocity = new Vector2();
     private float speed;
     private float m_animationTime = 0;
-    private float health;
+    private float m_health;
     private int score;
     private Animation m_left, m_top, m_right, m_bottom;
     private MapObjects m_walls;
     private Body m_body;
     private Box2dSteeringEntity m_steeringEntity;
+    private World m_world;
+
+    private Settings.EnemyDestroyedCallback m_OnEnemyDestroyed;
 
     public Enemy(Vector2 spawnpoint, EnemyProperties property, World world, Box2dSteeringEntity playerSteeringEntity)
     {
@@ -42,6 +46,8 @@ public class Enemy extends Sprite {
                 false,
                 EnumSet.of(Settings.ObjectType.ENEMY));
 
+        m_world = world;
+
         m_steeringEntity = new Box2dSteeringEntity(m_body, 10.0f);
         m_steeringEntity.setMaxLinearSpeed(speed);
         //Arrive<Vector2> arriveSB = new Arrive<Vector2>(m_steeringEntity, playerSteeringEntity);
@@ -49,10 +55,20 @@ public class Enemy extends Sprite {
         m_steeringEntity.setBehavior(arriveSB);
     }
 
+    public void setOnDestroyedCallback(Settings.EnemyDestroyedCallback callback)
+    {
+        m_OnEnemyDestroyed = callback;
+    }
+
     @Override
     public void draw(Batch batch) {
         update(Gdx.graphics.getDeltaTime());
         super.draw(batch);
+    }
+
+    public Body getBody()
+    {
+        return m_body;
     }
 
     private void update(float deltaTime)
@@ -96,7 +112,27 @@ public class Enemy extends Sprite {
         m_right = property.rightAnimation;
         m_bottom = property.bottomAnimation;
         speed = property.speed;
-        health = property.health;
+        m_health = property.health;
         score = property.score;
+    }
+
+    public float getHealth()
+    {
+        return m_health;
+    }
+
+    public void setHealth(float health)
+    {
+        m_health = health;
+        if (m_health < 0)
+        {
+            destroy();
+        }
+    }
+
+    private void destroy()
+    {
+        m_world.destroyBody(m_body);
+        m_OnEnemyDestroyed.OnEnemyDestroyed(this);
     }
 }

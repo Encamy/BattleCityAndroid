@@ -30,18 +30,20 @@ public class CollisionListener implements ContactListener
         {
             EnumSet<Settings.ObjectType> objectA = (EnumSet<Settings.ObjectType>)userDataA;
             EnumSet<Settings.ObjectType> objectB = (EnumSet<Settings.ObjectType>)userDataB;
-            Gdx.app.log("Trace", objectA + "  " + objectB);
 
             if (objectA.contains(Settings.ObjectType.BULLET) || objectB.contains(Settings.ObjectType.BULLET))
             {
+                Gdx.app.log("Trace", objectA + "  " + objectB);
                 if (!objectA.equals(Settings.ObjectType.PLAYER))
                 {
-                    contact.getFixtureA().getBody().setUserData(Settings.ObjectType.SHOTTED);
+                    objectA.add(Settings.ObjectType.SHOTTED);
+                    contact.getFixtureA().getBody().setUserData(objectA);
                 }
 
                 if (!objectB.equals(Settings.ObjectType.PLAYER))
                 {
-                    contact.getFixtureB().getBody().setUserData(Settings.ObjectType.SHOTTED);
+                    objectB.add(Settings.ObjectType.SHOTTED);
+                    contact.getFixtureB().getBody().setUserData(objectB);
                 }
             }
         }
