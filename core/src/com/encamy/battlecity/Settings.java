@@ -12,6 +12,7 @@ public class Settings {
     public static final float BASE_MOVEMENT_SPEED = 3.0f;
     public static final float BULLET_SPEED = BASE_MOVEMENT_SPEED * 0.05f;
     public static final float PPM = 64; // Pixels per meter
+    public static final int PLAYER_HEALTH = 3;
 
     public enum Direction {LEFT, TOP, RIGHT, BOTTOM}
     public enum ObjectType

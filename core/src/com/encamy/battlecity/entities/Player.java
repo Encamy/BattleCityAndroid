@@ -30,6 +30,7 @@ public class Player extends Sprite {
     private World m_world;
     private Settings.Direction m_direction;
     private ArrayList<Bullet> m_bullets;
+    private int m_health;
 
     public Player(Animation left, Animation top, Animation right, Animation bottom, Body body, World world)
     {
@@ -45,6 +46,8 @@ public class Player extends Sprite {
         m_direction = Settings.Direction.TOP;
 
         m_bullets = new ArrayList<Bullet>();
+
+        m_health = Settings.PLAYER_HEALTH;
     }
 
     @Override
