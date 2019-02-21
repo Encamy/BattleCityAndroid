@@ -13,9 +13,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.encamy.battlecity.entities.BrickWall;
 import com.encamy.battlecity.entities.Player;
 import com.encamy.battlecity.utils.Box2dHelpers;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Iterator;
 
@@ -26,14 +28,15 @@ public class LayerManager
     private TiledMap m_tileMap;
     private TextureAtlas m_atlas;
     private World m_world;
-    private MapObjects m_walls;
     private Player[] m_players;
+    private ArrayList<BrickWall> m_brickWalls;
 
     private boolean loaded = false;
 
     public LayerManager(World world)
     {
         m_world = world;
+        m_brickWalls = new ArrayList<BrickWall>();
     }
 
     public void loadLevel(String levelTitle)
@@ -44,8 +47,9 @@ public class LayerManager
 
         m_atlas = load_atlas(m_tileMap);
 
-        m_walls = m_tileMap.getLayers().get("Collisions").getObjects();
-        loadCollision(m_walls);
+        MapObjects objects = m_tileMap.getLayers().get("Collisions").getObjects();
+
+        loadCollision(objects);
 
         loaded = true;
     }
@@ -143,23 +147,34 @@ public class LayerManager
         return atlas;
     }
 
-    private void loadCollision(MapObjects walls)
+    private void loadCollision(MapObjects objects)
     {
         Gdx.app.log("Trace", "Loading collisions layer");
-        for (MapObject object : walls)
+        for (MapObject object : objects)
         {
             if (object instanceof RectangleMapObject)
             {
-                Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
+                if (object.getProperties().containsKey("wall_type"))
+                {
+                    Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
 
-                Box2dHelpers.createBox(
-                        m_world,
-                        rectangle.x,
-                        rectangle.y,
-                        rectangle.width,
-                        rectangle.height,
-                        true,
-                        EnumSet.of(Settings.ObjectType.WALL));
+                    String object_type = object.getProperties().get("wall_type", String.class);
+                    switch (object_type)
+                    {
+                        case "brick":
+                            m_brickWalls.add(new BrickWall(m_world, rectangle));
+                            break;
+                        case "stone":
+                            break;
+                        case "grass":
+                            break;
+                        case "water":
+                            break;
+                        default:
+                            Gdx.app.log("ERROR", "Invalid type: " + object_type);
+                            break;
+                    }
+                }
             }
         }
 
