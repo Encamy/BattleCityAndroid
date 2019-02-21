@@ -125,6 +125,7 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
             else if (type.contains(Settings.ObjectType.WALL))
             {
                 Gdx.app.log("TRACE", "WALL");
+                body.setUserData(EnumSet.of(Settings.ObjectType.WALL));
             }
             else if (type.contains(Settings.ObjectType.FLAG ))
             {
@@ -132,7 +133,14 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
             }
             else if (type.contains(Settings.ObjectType.BULLET ))
             {
-                m_world.destroyBody(body);
+                if (type.contains(Settings.ObjectType.PLAYER_OWNER))
+                {
+                    m_layerManager.getPlayer(CURRENT_PLAYER).destroyBullet(body);
+                }
+                else
+                {
+                    m_world.destroyBody(body);
+                }
                 //Gdx.app.log("TRACE", "BULLET");
             }
 

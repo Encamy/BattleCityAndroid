@@ -33,7 +33,7 @@ public class CollisionListener implements ContactListener
 
             if (objectA.contains(Settings.ObjectType.BULLET) || objectB.contains(Settings.ObjectType.BULLET))
             {
-                Gdx.app.log("Trace", objectA + "  " + objectB);
+               // Gdx.app.log("Trace", objectA + "  " + objectB);
                 if (!objectA.equals(Settings.ObjectType.PLAYER))
                 {
                     objectA.add(Settings.ObjectType.SHOTTED);

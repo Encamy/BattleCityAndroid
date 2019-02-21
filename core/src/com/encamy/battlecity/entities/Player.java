@@ -144,4 +144,17 @@ public class Player extends Sprite {
 
         m_bullets.add(new Bullet(m_world, bulletSpawnPos, m_direction, Settings.ObjectType.PLAYER_OWNER));
     }
+
+    public void destroyBullet(Body body)
+    {
+        for (Bullet bullet : m_bullets)
+        {
+            if (bullet.getBody() == body)
+            {
+                m_bullets.remove(bullet);
+                bullet.dispose();
+                break;
+            }
+        }
+    }
 }
