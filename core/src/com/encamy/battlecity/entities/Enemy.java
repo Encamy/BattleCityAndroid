@@ -44,7 +44,8 @@ public class Enemy extends Sprite {
                 spawnpoint.x, spawnpoint.y,
                 58, 58,
                 false,
-                EnumSet.of(Settings.ObjectType.ENEMY));
+                EnumSet.of(Settings.ObjectType.ENEMY),
+                true);
 
         m_world = world;
 

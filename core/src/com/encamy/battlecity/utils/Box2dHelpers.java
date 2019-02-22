@@ -15,7 +15,7 @@ import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
 
 public class Box2dHelpers
 {
-    public static Body createBox(World world, float x, float y, float w, float h, boolean isStatic, EnumSet<Settings.ObjectType> type)
+    public static Body createBox(World world, float x, float y, float w, float h, boolean isStatic, EnumSet<Settings.ObjectType> type, boolean collide)
     {
         x /= Settings.PPM;
         y /= Settings.PPM;
@@ -41,6 +41,11 @@ public class Box2dHelpers
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 1.0f;
+
+        if (!collide)
+        {
+            fixtureDef.isSensor = true;
+        }
 
         Body body = world.createBody(bodyDef).createFixture(fixtureDef).getBody();
         body.setUserData(type);

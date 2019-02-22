@@ -13,8 +13,13 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.compression.lzma.Base;
+import com.encamy.battlecity.entities.BaseWall;
 import com.encamy.battlecity.entities.BrickWall;
+import com.encamy.battlecity.entities.Grass;
 import com.encamy.battlecity.entities.Player;
+import com.encamy.battlecity.entities.StoneWall;
+import com.encamy.battlecity.entities.Water;
 import com.encamy.battlecity.utils.Box2dHelpers;
 
 import java.util.ArrayList;
@@ -29,14 +34,14 @@ public class LayerManager
     private TextureAtlas m_atlas;
     private World m_world;
     private Player[] m_players;
-    private ArrayList<BrickWall> m_brickWalls;
+    private ArrayList<BaseWall> m_walls;
 
     private boolean loaded = false;
 
     public LayerManager(World world)
     {
         m_world = world;
-        m_brickWalls = new ArrayList<BrickWall>();
+        m_walls = new ArrayList<BaseWall>();
     }
 
     public void loadLevel(String levelTitle)
@@ -88,7 +93,8 @@ public class LayerManager
                 spawnpoint.y,
                 54, 54,
                 false,
-                EnumSet.of(Settings.ObjectType.PLAYER));
+                EnumSet.of(Settings.ObjectType.PLAYER),
+                true);
 
         Gdx.app.log("Trace", "Loading player " + index + " sprites");
 
@@ -162,13 +168,16 @@ public class LayerManager
                     switch (object_type)
                     {
                         case "brick":
-                            m_brickWalls.add(new BrickWall(m_world, rectangle));
+                            m_walls.add(new BrickWall(m_world, rectangle));
                             break;
                         case "stone":
+                            m_walls.add(new StoneWall(m_world, rectangle));
                             break;
                         case "grass":
+                            m_walls.add(new Grass(m_world, rectangle));
                             break;
                         case "water":
+                            m_walls.add(new Water(m_world, rectangle));
                             break;
                         default:
                             Gdx.app.log("ERROR", "Invalid type: " + object_type);
@@ -186,7 +195,8 @@ public class LayerManager
                 0,-10,
                 Settings.SCREEN_WIDTH, 10,
                 true,
-                EnumSet.of(Settings.ObjectType.WALL));
+                EnumSet.of(Settings.ObjectType.WALL),
+                true);
 
         // left
         Box2dHelpers.createBox(
@@ -194,7 +204,8 @@ public class LayerManager
                 -10,0,
                 10, Settings.SCREEN_HEIGHT,
                 true,
-                EnumSet.of(Settings.ObjectType.WALL));
+                EnumSet.of(Settings.ObjectType.WALL),
+                true);
 
         // top
         Box2dHelpers.createBox(
@@ -202,7 +213,8 @@ public class LayerManager
                 10, Settings.SCREEN_HEIGHT + 1,
                 Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT + 2,
                 true,
-                EnumSet.of(Settings.ObjectType.WALL));
+                EnumSet.of(Settings.ObjectType.WALL),
+                true);
 
         // right
         Box2dHelpers.createBox(
@@ -210,6 +222,7 @@ public class LayerManager
                 Settings.SCREEN_WIDTH + 2, 0,
                 Settings.SCREEN_WIDTH + 10, Settings.SCREEN_HEIGHT,
                 true,
-                EnumSet.of(Settings.ObjectType.WALL));
+                EnumSet.of(Settings.ObjectType.WALL),
+                true);
     }
 }

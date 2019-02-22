@@ -7,9 +7,9 @@ import com.encamy.battlecity.utils.Box2dHelpers;
 
 import java.util.EnumSet;
 
-public class BrickWall extends BaseWall
+public class StoneWall extends BaseWall
 {
-    public BrickWall(World world, Rectangle rectangle)
+    public StoneWall(World world, Rectangle rectangle)
     {
         Box2dHelpers.createBox(
                 world,

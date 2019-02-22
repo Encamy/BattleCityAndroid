@@ -30,7 +30,8 @@ public class Bullet
                 Box2dHelpers.y2Box2d(coords.y),
                 2, 2,
                 false,
-                EnumSet.of(owner, Settings.ObjectType.BULLET));
+                EnumSet.of(owner, Settings.ObjectType.BULLET),
+                true);
 
         m_body.setLinearVelocity(0.0f, 0.0f);
 
