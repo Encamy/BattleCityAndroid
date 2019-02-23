@@ -1,5 +1,6 @@
 package com.encamy.battlecity;
 
+import com.encamy.battlecity.entities.BaseWall;
 import com.encamy.battlecity.entities.Enemy;
 
 import java.util.EnumSet;
@@ -35,5 +36,10 @@ public class Settings {
     public interface EnemyDestroyedCallback
     {
         void OnEnemyDestroyed(Enemy enemy);
+    }
+
+    public interface WallDestroyedCallback
+    {
+        void OnWallDestroyed(BaseWall wall);
     }
 }

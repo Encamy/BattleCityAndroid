@@ -6,14 +6,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.ContactFilter;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.encamy.battlecity.entities.EnemyFactory;
@@ -27,7 +25,6 @@ import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
 public class BattleCity extends ApplicationAdapter implements InputProcessor {
 	//SpriteBatch batch;
 	private OrthographicCamera m_camera;
-    private OrthogonalTiledMapRenderer m_renderer;
 
     private EnemyFactory m_enemyFactory;
 
@@ -55,9 +52,6 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
         m_layerManager = new LayerManager(m_world);
         m_layerManager.loadLevel("general_map.tmx");
 
-        m_renderer = new OrthogonalTiledMapRenderer(m_layerManager.getTileMap(), 1 / Settings.PPM);
-        m_renderer.setView(m_camera);
-
         m_layerManager.loadPlayer(CURRENT_PLAYER);
 
         m_enemyFactory = new EnemyFactory(
@@ -82,10 +76,9 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
         SpriteBatch spriteBatch = new SpriteBatch();
         spriteBatch.begin();
         m_layerManager.getPlayer(CURRENT_PLAYER).draw(spriteBatch);
+        m_layerManager.drawWalls(spriteBatch);
 		m_enemyFactory.draw(spriteBatch);
         spriteBatch.end();
-
-        m_renderer.render();
 
         m_world.step(Gdx.graphics.getDeltaTime(), 6, 2);
         m_b2drenderer.render(m_world, m_camera.projection);
@@ -165,7 +158,6 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
 	public void dispose ()
     {
         m_layerManager.dispose();
-		m_renderer.dispose();
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package com.encamy.battlecity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -28,7 +29,7 @@ import java.util.Iterator;
 
 import static com.encamy.battlecity.Settings.ANIMATION_FRAME_DURATION;
 
-public class LayerManager
+public class LayerManager implements Settings.WallDestroyedCallback
 {
     private TiledMap m_tileMap;
     private TextureAtlas m_atlas;
@@ -50,7 +51,7 @@ public class LayerManager
         m_players = new Player[2];
         m_tileMap = new TmxMapLoader().load(levelTitle);
 
-        m_atlas = load_atlas(m_tileMap);
+        m_atlas = loadAtlas(m_tileMap);
 
         MapObjects objects = m_tileMap.getLayers().get("Collisions").getObjects();
 
@@ -132,7 +133,7 @@ public class LayerManager
         m_tileMap.dispose();
     }
 
-    private TextureAtlas load_atlas(TiledMap tiledMap)
+    private TextureAtlas loadAtlas(TiledMap tiledMap)
     {
         TextureAtlas atlas = new TextureAtlas();
 
@@ -147,6 +148,17 @@ public class LayerManager
                 String direction = tile.getProperties().get("direction", String.class);
 
                 atlas.addRegion(tank_name + tank_type + "_" + direction, tile.getTextureRegion());
+            }
+        }
+
+        Iterator<TiledMapTile> solidTiles = tiledMap.getTileSets().getTileSet("solids").iterator();
+        while (solidTiles.hasNext())
+        {
+            TiledMapTile tile = solidTiles.next();
+            if (tile.getProperties().containsKey("title"))
+            {
+                String solid_title = tile.getProperties().get("title", String.class);
+                atlas.addRegion(solid_title, tile.getTextureRegion());
             }
         }
 
@@ -168,16 +180,32 @@ public class LayerManager
                     switch (object_type)
                     {
                         case "brick":
-                            m_walls.add(new BrickWall(m_world, rectangle));
+                            {
+                                BaseWall wall = new BrickWall(m_world, rectangle, m_atlas.findRegion("brick"));
+                                wall.setOnDestoryedCallback(this);
+                                m_walls.add(wall);
+                            }
                             break;
                         case "stone":
-                            m_walls.add(new StoneWall(m_world, rectangle));
+                            {
+                                BaseWall wall = new StoneWall(m_world, rectangle, m_atlas.findRegion("stone"));
+                                wall.setOnDestoryedCallback(this);
+                                m_walls.add(wall);
+                            }
                             break;
                         case "grass":
-                            m_walls.add(new Grass(m_world, rectangle));
-                            break;
+                            {
+                                BaseWall wall = new Grass(m_world, rectangle, m_atlas.findRegion("grass"));
+                                wall.setOnDestoryedCallback(this);
+                                m_walls.add(wall);
+                            }
+                                break;
                         case "water":
-                            m_walls.add(new Water(m_world, rectangle));
+                            {
+                                BaseWall wall = new Water(m_world, rectangle, m_atlas.findRegion("water1"));
+                                wall.setOnDestoryedCallback(this);
+                                m_walls.add(wall);
+                            }
                             break;
                         default:
                             Gdx.app.log("ERROR", "Invalid type: " + object_type);
@@ -251,5 +279,19 @@ public class LayerManager
                 return;
             }
         }
+    }
+
+    public void drawWalls(SpriteBatch spriteBatch)
+    {
+        for (BaseWall wall : m_walls)
+        {
+            wall.draw(spriteBatch);
+        }
+    }
+
+    @Override
+    public void OnWallDestroyed(BaseWall wall)
+    {
+        m_walls.remove(wall);
     }
 }
