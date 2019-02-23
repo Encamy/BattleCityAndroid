@@ -1,6 +1,7 @@
 package com.encamy.battlecity.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
@@ -9,11 +10,15 @@ import com.encamy.battlecity.utils.Box2dHelpers;
 
 import java.util.EnumSet;
 
-public class BrickWall extends BaseWall
+public class BrickWall implements BaseWall
 {
+    private Texture m_texture;
+    private World m_world;
+    private Body m_body;
+
     public BrickWall(World world, Rectangle rectangle)
     {
-        super.m_body = Box2dHelpers.createBox(
+        m_body = Box2dHelpers.createBox(
                 world,
                 rectangle.x,
                 rectangle.y,
@@ -23,7 +28,7 @@ public class BrickWall extends BaseWall
                 EnumSet.of(Settings.ObjectType.BRICK_WALL),
                 true);
 
-        super.m_world = world;
+        m_world = world;
     }
 
     @Override
@@ -35,13 +40,13 @@ public class BrickWall extends BaseWall
     @Override
     public void destroy()
     {
-        m_world.destroyBody(super.m_body);
+        m_world.destroyBody(m_body);
     }
 
     @Override
     public Body getBody()
     {
-        return super.m_body;
+        return m_body;
     }
 
     @Override

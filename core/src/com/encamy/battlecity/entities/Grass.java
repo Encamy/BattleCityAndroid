@@ -1,5 +1,6 @@
 package com.encamy.battlecity.entities;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
@@ -8,11 +9,15 @@ import com.encamy.battlecity.utils.Box2dHelpers;
 
 import java.util.EnumSet;
 
-public class Grass extends BaseWall
+public class Grass implements BaseWall
 {
+    private Texture m_texture;
+    private World m_world;
+    private Body m_body;
+
     public Grass(World world, Rectangle rectangle)
     {
-        super.m_body = Box2dHelpers.createBox(
+        m_body = Box2dHelpers.createBox(
                 world,
                 rectangle.x,
                 rectangle.y,
@@ -22,7 +27,7 @@ public class Grass extends BaseWall
                 EnumSet.of(Settings.ObjectType.GRASS),
                 false);
 
-        super.m_world = world;
+        m_world = world;
     }
 
     @Override
@@ -34,13 +39,13 @@ public class Grass extends BaseWall
     @Override
     public void destroy()
     {
-        m_world.destroyBody(super.m_body);
+        m_world.destroyBody(m_body);
     }
 
     @Override
     public Body getBody()
     {
-        return super.m_body;
+        return m_body;
     }
 
     @Override
