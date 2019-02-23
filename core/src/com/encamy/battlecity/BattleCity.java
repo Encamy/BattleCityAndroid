@@ -199,7 +199,6 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
                 break;
             case Input.Keys.SPACE:
             case Input.Keys.ENTER:
-            case Input.Buttons.LEFT:
                 m_layerManager.getPlayer(CURRENT_PLAYER).fire();
                 break;
         }
@@ -230,6 +229,11 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button)
     {
+        if (screenX > Gdx.graphics.getWidth() * 0.5f)
+        {
+            m_layerManager.getPlayer(CURRENT_PLAYER).fire();
+            return true;
+        }
         return false;
     }
 
