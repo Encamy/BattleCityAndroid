@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="35" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="43">
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="35" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="333">
  <tileset firstgid="1" name="solids" tilewidth="32" tileheight="32" tilecount="8" columns="4">
   <image source="solids.png" trans="000000" width="128" height="64"/>
   <tile id="0">
@@ -1834,35 +1834,1260 @@
  </tileset>
  <layer id="1" name="BottomLayer" width="35" height="20">
   <data encoding="base64">
-   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAQAAAAEAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAAEAAAABAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAABAAAAAQAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAQAAAAEAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAIAAAACAAAAAgAAAAAAAAAAAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAAAAAAAAAAACAAAAAgAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAYAAAAGAAAAAwAAAAMAAAAGAAAABgAAAAYAAAAGAAAAAwAAAAMAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAADAAAAAwAAAAYAAAAGAAAABgAAAAYAAAADAAAAAwAAAAYAAAAGAAAABgAAAAYAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABgAAAAYAAAADAAAAAwAAAAYAAAAGAAAABgAAAAYAAAADAAAAAwAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAMAAAADAAAABgAAAAYAAAAGAAAABgAAAAMAAAADAAAABgAAAAYAAAAGAAAABgAAAAAAAAAAAAAAAwAAAAMAAAADAAAAAwAAAAMAAAABAAAAAQAAAAAAAAAAAAAAAgAAAAIAAAACAAAAAgAAAAAAAAAAAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAAAAAAAAAAACAAAAAgAAAAIAAAACAAAAAAAAAAAAAAABAAAAAQAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAwAAAAMAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAABkAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA==
+   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAQAAAAEAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAAEAAAABAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAABAAAAAQAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAQAAAAEAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAIAAAACAAAAAgAAAAAAAAAAAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAAAAAAAAAAACAAAAAgAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAYAAAAGAAAAAAAAAAAAAAAGAAAABgAAAAYAAAAGAAAAAAAAAAAAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAYAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAYAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABgAAAAYAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAYAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAAAAAAAAAAABgAAAAYAAAAGAAAABgAAAAAAAAAAAAAABgAAAAYAAAAGAAAABgAAAAAAAAAAAAAAAwAAAAMAAAADAAAAAwAAAAMAAAABAAAAAQAAAAAAAAAAAAAAAgAAAAIAAAACAAAAAgAAAAAAAAAAAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAAAAAAAAAAACAAAAAgAAAAIAAAACAAAAAAAAAAAAAAABAAAAAQAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAwAAAAMAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAABkAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA==
   </data>
  </layer>
  <objectgroup id="3" name="Collisions">
-  <object id="1" x="64" y="64" width="224" height="64"/>
-  <object id="2" x="352" y="64" width="128" height="64"/>
-  <object id="3" x="544" y="64" width="64" height="64"/>
-  <object id="5" x="672" y="64" width="128" height="64"/>
-  <object id="6" x="864" y="64" width="192" height="64"/>
-  <object id="7" x="64" y="224" width="160" height="64"/>
-  <object id="8" x="288" y="192" width="128" height="128"/>
-  <object id="9" x="480" y="192" width="192" height="128"/>
-  <object id="10" x="736" y="192" width="128" height="128"/>
-  <object id="11" x="928" y="224" width="128" height="64"/>
-  <object id="13" x="160" y="288" width="64" height="160"/>
-  <object id="14" x="0" y="512" width="224" height="64"/>
-  <object id="16" x="352" y="320" width="64" height="128"/>
-  <object id="20" x="352" y="512" width="64" height="64"/>
-  <object id="21" x="512" y="384" width="128" height="64"/>
-  <object id="22" x="544" y="448" width="64" height="64"/>
-  <object id="24" x="512" y="544" width="32" height="96"/>
-  <object id="25" x="544" y="544" width="96" height="32"/>
-  <object id="26" x="608" y="576" width="32" height="64"/>
-  <object id="27" x="736" y="320" width="64" height="128"/>
-  <object id="28" x="928" y="288" width="64" height="160"/>
-  <object id="29" x="736" y="512" width="64" height="64"/>
-  <object id="30" x="928" y="512" width="192" height="64"/>
-  <object id="31" x="160" y="576" width="64" height="64"/>
-  <object id="32" x="928" y="576" width="64" height="64"/>
+  <object id="46" x="64" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="47" x="64" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="48" x="96" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="49" x="96" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="50" x="128" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="51" x="128" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="52" x="160" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="53" x="160" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="54" x="352" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="55" x="352" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="56" x="384" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="57" x="384" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="58" x="416" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="59" x="416" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="60" x="448" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="61" x="448" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="68" x="192" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="69" x="192" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="70" x="224" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="71" x="224" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="72" x="256" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="73" x="256" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="74" x="544" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="75" x="544" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="76" x="576" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="77" x="576" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="78" x="672" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="79" x="672" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="80" x="704" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="81" x="704" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="82" x="736" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="83" x="736" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="84" x="768" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="85" x="768" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="86" x="864" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="87" x="864" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="88" x="896" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="89" x="896" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="90" x="928" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="91" x="928" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="92" x="960" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="93" x="960" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="94" x="992" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="95" x="992" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="96" x="1024" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="97" x="1024" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="98" x="160" y="288" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="99" x="160" y="320" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="100" x="192" y="288" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="101" x="192" y="320" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="102" x="160" y="352" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="103" x="160" y="384" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="104" x="192" y="352" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="105" x="192" y="384" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="106" x="0" y="512" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="107" x="0" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="108" x="32" y="512" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="109" x="32" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="110" x="64" y="512" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="111" x="64" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="112" x="96" y="512" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="113" x="96" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="114" x="160" y="576" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="115" x="160" y="608" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="116" x="192" y="576" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="117" x="192" y="608" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="118" x="128" y="512" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="119" x="128" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="120" x="160" y="512" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="121" x="160" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="122" x="192" y="512" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="123" x="192" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="124" x="160" y="416" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="125" x="192" y="416" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="126" x="352" y="320" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="127" x="352" y="352" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="128" x="384" y="320" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="129" x="384" y="352" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="130" x="352" y="384" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="131" x="352" y="416" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="132" x="384" y="384" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="133" x="384" y="416" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="134" x="736" y="320" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="135" x="736" y="352" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="136" x="768" y="320" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="137" x="768" y="352" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="138" x="736" y="384" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="139" x="736" y="416" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="140" x="768" y="384" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="141" x="768" y="416" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="142" x="928" y="288" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="143" x="928" y="320" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="144" x="960" y="288" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="145" x="960" y="320" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="146" x="928" y="352" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="147" x="928" y="384" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="148" x="960" y="352" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="149" x="960" y="384" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="150" x="928" y="416" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="151" x="960" y="416" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="152" x="928" y="576" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="153" x="928" y="608" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="154" x="960" y="576" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="155" x="960" y="608" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="156" x="928" y="512" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="157" x="928" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="158" x="960" y="512" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="159" x="960" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="160" x="992" y="512" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="161" x="992" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="162" x="1024" y="512" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="163" x="1024" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="164" x="1056" y="512" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="165" x="1056" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="166" x="1088" y="512" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="167" x="1088" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="170" x="352" y="512" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="171" x="352" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="172" x="384" y="512" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="173" x="384" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="174" x="736" y="512" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="175" x="736" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="176" x="768" y="512" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="177" x="768" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="178" x="512" y="384" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="179" x="512" y="416" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="180" x="544" y="384" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="181" x="544" y="416" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="182" x="576" y="384" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="183" x="576" y="416" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="184" x="608" y="384" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="185" x="608" y="416" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="186" x="544" y="448" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="187" x="544" y="480" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="188" x="576" y="448" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="189" x="576" y="480" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="190" x="512" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="191" x="512" y="576" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="192" x="512" y="608" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="193" x="608" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="194" x="608" y="576" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="195" x="608" y="608" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="196" x="544" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="197" x="576" y="544" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="brick"/>
+   </properties>
+  </object>
+  <object id="198" x="288" y="192" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="199" x="320" y="192" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="200" x="352" y="192" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="201" x="384" y="192" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="202" x="288" y="288" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="203" x="320" y="288" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="204" x="352" y="288" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="205" x="384" y="288" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="206" x="480" y="192" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="207" x="512" y="192" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="208" x="544" y="192" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="209" x="576" y="192" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="210" x="480" y="288" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="211" x="512" y="288" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="212" x="544" y="288" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="213" x="576" y="288" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="214" x="608" y="192" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="215" x="640" y="192" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="216" x="608" y="288" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="217" x="640" y="288" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="218" x="736" y="192" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="219" x="768" y="192" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="220" x="800" y="192" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="221" x="832" y="192" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="222" x="736" y="288" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="223" x="768" y="288" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="224" x="800" y="288" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="225" x="832" y="288" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="stone"/>
+   </properties>
+  </object>
+  <object id="226" x="224" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="242" x="256" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="244" x="224" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="253" x="256" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="254" x="416" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="255" x="448" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="256" x="416" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="257" x="448" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="258" x="672" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="259" x="704" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="260" x="672" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="261" x="704" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="262" x="864" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="263" x="896" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="264" x="864" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="265" x="896" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="266" x="288" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="267" x="320" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="268" x="288" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="269" x="320" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="274" x="480" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="275" x="512" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="276" x="480" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="277" x="512" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="278" x="608" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="279" x="640" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="280" x="608" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="281" x="640" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="282" x="800" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="283" x="832" y="64" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="284" x="800" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="285" x="832" y="96" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="286" x="64" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="288" x="64" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="289" x="96" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="290" x="96" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="291" x="128" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="292" x="128" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="293" x="160" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="294" x="160" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="295" x="192" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="296" x="192" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="297" x="288" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="298" x="288" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="299" x="320" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="300" x="320" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="301" x="352" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="302" x="352" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="303" x="384" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="304" x="384" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="305" x="480" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="306" x="480" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="307" x="512" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="308" x="512" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="309" x="544" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="310" x="544" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="311" x="576" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="312" x="576" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="313" x="608" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="314" x="608" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="315" x="640" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="316" x="640" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="317" x="736" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="318" x="736" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="319" x="768" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="320" x="768" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="321" x="800" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="322" x="800" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="323" x="832" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="324" x="832" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="325" x="928" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="326" x="928" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="327" x="960" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="328" x="960" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="329" x="992" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="330" x="992" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="331" x="1024" y="224" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
+  <object id="332" x="1024" y="256" width="32" height="32">
+   <properties>
+    <property name="wall_type" value="water"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="4" name="Objects">
   <object id="33" x="448" y="640">
