@@ -31,8 +31,10 @@ public class Player extends Sprite {
     private Settings.Direction m_direction;
     private ArrayList<Bullet> m_bullets;
     private int m_health;
+    private int m_level;
+    private int m_current_player;
 
-    public Player(Animation left, Animation top, Animation right, Animation bottom, Body body, World world)
+    public Player(Animation left, Animation top, Animation right, Animation bottom, Body body, World world, int current_player)
     {
         super(((TextureAtlas.AtlasRegion) top.getKeyFrame(0)));
         m_left = left;
@@ -48,6 +50,8 @@ public class Player extends Sprite {
         m_bullets = new ArrayList<Bullet>();
 
         m_health = Settings.PLAYER_HEALTH;
+        m_current_player = current_player;
+        m_level = 1;
     }
 
     @Override
@@ -142,7 +146,18 @@ public class Player extends Sprite {
                 break;
         }
 
-        m_bullets.add(new Bullet(m_world, bulletSpawnPos, m_direction, Settings.ObjectType.PLAYER_OWNER));
+        if (m_current_player == 1)
+        {
+            m_bullets.add(new Bullet(m_world, bulletSpawnPos, m_direction, Settings.ObjectType.PLAYER1_OWNER));
+        }
+        else if (m_current_player == 2)
+        {
+            m_bullets.add(new Bullet(m_world, bulletSpawnPos, m_direction, Settings.ObjectType.PLAYER2_OWNER));
+        }
+        else
+        {
+            Gdx.app.log("FATAL", "Invalid player id. Should not happen");
+        }
     }
 
     public void destroyBullet(Body body)
@@ -156,5 +171,10 @@ public class Player extends Sprite {
                 break;
             }
         }
+    }
+
+    public int getLevel()
+    {
+        return m_level;
     }
 }

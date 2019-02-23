@@ -109,7 +109,7 @@ public class LayerManager
         right.setPlayMode(Animation.PlayMode.LOOP);
         bottom.setPlayMode(Animation.PlayMode.LOOP);
 
-        m_players[index] = new Player(left, top, right, bottom, playerBody, m_world);
+        m_players[index] = new Player(left, top, right, bottom, playerBody, m_world, index + 1);
     }
 
     public TiledMap getTileMap()
@@ -224,5 +224,32 @@ public class LayerManager
                 true,
                 EnumSet.of(Settings.ObjectType.WALL),
                 true);
+    }
+
+    public void hit(Body body, EnumSet<Settings.ObjectType> type)
+    {
+        for (BaseWall wall : m_walls)
+        {
+            if (wall.getBody() == body)
+            {
+                int power;
+                if (type.contains(Settings.ObjectType.PLAYER1_OWNER))
+                {
+                    power = m_players[0].getLevel();
+                }
+                else if (type.contains(Settings.ObjectType.PLAYER2_OWNER))
+                {
+                    power = m_players[1].getLevel();
+                }
+                else
+                {
+                    Gdx.app.log("FATAL", "Invalid player id");
+                    return;
+                }
+
+                wall.hit(power);
+                return;
+            }
+        }
     }
 }

@@ -17,9 +17,14 @@ public class Settings {
     public enum Direction {LEFT, TOP, RIGHT, BOTTOM}
     public enum ObjectType
     {
+        BRICK_WALL,
+        STONE_WALL,
+        WATER,
+        GRASS,
         WALL,
         PLAYER,
-        PLAYER_OWNER,
+        PLAYER1_OWNER,
+        PLAYER2_OWNER,
         ENEMY,
         ENEMY_OWNER,
         FLAG,

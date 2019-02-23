@@ -34,7 +34,7 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
     private Box2DDebugRenderer m_b2drenderer;
     private World m_world;
     private LayerManager m_layerManager;
-    private static final int CURRENT_PLAYER = 1;
+    private final int CURRENT_PLAYER = 1;
 
 	@Override
 	public void create ()
@@ -113,7 +113,24 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
             EnumSet<Settings.ObjectType> type = (EnumSet<Settings.ObjectType>)body.getUserData();
             Gdx.app.log("TRACE", type.toString());
 
-            if (type.contains(Settings.ObjectType.ENEMY))
+            if (type.contains(Settings.ObjectType.BULLET ))
+            {
+                if (type.contains(Settings.ObjectType.PLAYER1_OWNER))
+                {
+                    m_layerManager.getPlayer(1).destroyBullet(body);
+                }
+                else if (type.contains(Settings.ObjectType.PLAYER2_OWNER))
+                {
+                    m_layerManager.getPlayer(2).destroyBullet(body);
+                }
+                else
+                {
+                    Gdx.app.log("ERROR", "WTF?!");
+                    m_world.destroyBody(body);
+                }
+                //Gdx.app.log("TRACE", "BULLET");
+            }
+            else if (type.contains(Settings.ObjectType.ENEMY))
             {
                 Gdx.app.log("TRACE", "ENEMY");
                 m_enemyFactory.hit(body);
@@ -122,28 +139,19 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
             {
                 Gdx.app.log("TRACE", "PLAYER");
             }
-            else if (type.contains(Settings.ObjectType.WALL))
+            else if (type.contains(Settings.ObjectType.BRICK_WALL) ||
+                     type.contains(Settings.ObjectType.STONE_WALL) ||
+                     type.contains(Settings.ObjectType.GRASS) ||
+                     type.contains(Settings.ObjectType.WATER))
             {
                 Gdx.app.log("TRACE", "WALL");
-                body.setUserData(EnumSet.of(Settings.ObjectType.WALL));
+                m_layerManager.hit(body, type);
+               // body.setUserData(EnumSet.of(Settings.ObjectType.BRICK_WALL));
             }
             else if (type.contains(Settings.ObjectType.FLAG ))
             {
                 Gdx.app.log("TRACE", "FLAG");
             }
-            else if (type.contains(Settings.ObjectType.BULLET ))
-            {
-                if (type.contains(Settings.ObjectType.PLAYER_OWNER))
-                {
-                    m_layerManager.getPlayer(CURRENT_PLAYER).destroyBullet(body);
-                }
-                else
-                {
-                    m_world.destroyBody(body);
-                }
-                //Gdx.app.log("TRACE", "BULLET");
-            }
-
 
             /*if ((body.getUserData()).equals(Settings.ObjectType.SHOTTED))
             {
