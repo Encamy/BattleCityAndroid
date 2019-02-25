@@ -106,7 +106,7 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
             EnumSet<Settings.ObjectType> type = (EnumSet<Settings.ObjectType>)body.getUserData();
             Gdx.app.log("TRACE", type.toString());
 
-            if (type.contains(Settings.ObjectType.BULLET ))
+            if (type.contains(Settings.ObjectType.BULLET ) && !type.contains(Settings.ObjectType.GRASS))
             {
                 if (type.contains(Settings.ObjectType.PLAYER1_OWNER))
                 {
@@ -123,7 +123,6 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
                     Gdx.app.log("ERROR", "WTF?!");
                     m_world.destroyBody(body);
                 }
-                //Gdx.app.log("TRACE", "BULLET");
             }
             else if (type.contains(Settings.ObjectType.ENEMY))
             {
@@ -154,11 +153,28 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
             }
             else if (type.contains(Settings.ObjectType.GRASS))
             {
-                Gdx.app.log("TRACE", "handled");
                 boolean destroyed = m_layerManager.hit(body, type);
                 if (!destroyed)
                 {
+                    Gdx.app.log("TRACE", "handled");
+                    Gdx.app.log("TRACE", "|" + type.toString() + "|");
+                }
+
+                if (!type.contains(Settings.ObjectType.BULLET))
+                {
                     body.setUserData(EnumSet.of(Settings.ObjectType.GRASS));
+                }
+                else
+                {
+                    if (type.contains(Settings.ObjectType.PLAYER1_OWNER))
+                    {
+                        body.setUserData(EnumSet.of(Settings.ObjectType.BULLET, Settings.ObjectType.PLAYER1_OWNER));
+                    }
+                    else if (type.contains(Settings.ObjectType.PLAYER2_OWNER))
+                    {
+                        body.setUserData(EnumSet.of(Settings.ObjectType.BULLET, Settings.ObjectType.PLAYER2_OWNER));
+                    }
+
                 }
             }
             else if (type.contains(Settings.ObjectType.WATER))
@@ -179,12 +195,6 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
             {
                 Gdx.app.log("TRACE", "FLAG");
             }
-
-            /*if ((body.getUserData()).equals(Settings.ObjectType.SHOTTED))
-            {
-                Gdx.app.log("Trace", "Body was hitted by bullet. Destroying");
-                m_world.destroyBody(body);
-            }*/
         }
     }
 

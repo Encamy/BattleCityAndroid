@@ -54,7 +54,28 @@ public class CollisionListener implements ContactListener
     @Override
     public void endContact(Contact contact)
     {
+        /*Object userDataA = contact.getFixtureA().getBody().getUserData();
+        Object userDataB = contact.getFixtureB().getBody().getUserData();
 
+        if (userDataA != null && userDataB != null) {
+            EnumSet<Settings.ObjectType> objectA = (EnumSet<Settings.ObjectType>) userDataA;
+            EnumSet<Settings.ObjectType> objectB = (EnumSet<Settings.ObjectType>) userDataB;
+
+            if (objectA.contains(Settings.ObjectType.GRASS) || objectB.contains(Settings.ObjectType.GRASS))
+            {
+                Gdx.app.log("TRACE", "endContact" + objectA.toString() + "|" + objectB.toString());
+            }
+
+            if (objectA.contains(Settings.ObjectType.BULLET))
+            {
+                objectA.remove(Settings.ObjectType.GRASS);
+            }
+
+            if (objectB.contains(Settings.ObjectType.BULLET))
+            {
+                objectB.remove(Settings.ObjectType.GRASS);
+            }
+        }*/
     }
 
     @Override

@@ -58,7 +58,7 @@ public class Bullet
     {
         if (active)
         {
-            Gdx.app.log("TRACE", m_vector.toString());
+            //Gdx.app.log("TRACE", m_vector.toString());
             m_body.applyForceToCenter(m_vector, true);
         }
         else
