@@ -254,7 +254,7 @@ public class LayerManager implements Settings.WallDestroyedCallback
                 true);
     }
 
-    public void hit(Body body, EnumSet<Settings.ObjectType> type)
+    public boolean hit(Body body, EnumSet<Settings.ObjectType> type)
     {
         for (BaseWall wall : m_walls)
         {
@@ -272,13 +272,14 @@ public class LayerManager implements Settings.WallDestroyedCallback
                 else
                 {
                     Gdx.app.log("FATAL", "Invalid player id");
-                    return;
+                    return false;
                 }
 
-                wall.hit(power);
-                return;
+                return wall.hit(power);
             }
         }
+
+        return false;
     }
 
     public void drawWalls(SpriteBatch spriteBatch)

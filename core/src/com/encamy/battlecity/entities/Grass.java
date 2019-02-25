@@ -70,11 +70,13 @@ public class Grass extends Sprite implements BaseWall
     }
 
     @Override
-    public void hit(int power)
+    public boolean hit(int power)
     {
         if (power >= 4)
         {
             destroy();
+            return true;
         }
+        return false;
     }
 }

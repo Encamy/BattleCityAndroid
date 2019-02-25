@@ -71,11 +71,13 @@ public class BrickWall extends Sprite implements BaseWall
     }
 
     @Override
-    public void hit(int power)
+    public boolean hit(int power)
     {
         if (power >= 1)
         {
             destroy();
+            return true;
         }
+        return false;
     }
 }

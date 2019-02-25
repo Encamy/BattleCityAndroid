@@ -69,11 +69,13 @@ public class StoneWall extends Sprite implements BaseWall
     }
 
     @Override
-    public void hit(int power)
+    public boolean hit(int power)
     {
         if (power >= 2)
         {
             destroy();
+            return true;
         }
+        return false;
     }
 }

@@ -69,8 +69,9 @@ public class Water extends Sprite implements BaseWall
     }
 
     @Override
-    public void hit(int power)
+    public boolean hit(int power)
     {
         // do nothing
+        return false;
     }
 }

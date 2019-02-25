@@ -9,7 +9,7 @@ public interface BaseWall
     void update();
     void destroy();
     Body getBody();
-    void hit(int power);
+    boolean hit(int power);
     void draw(Batch batch);
     void setOnDestoryedCallback(Settings.WallDestroyedCallback callback);
 }

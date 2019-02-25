@@ -110,10 +110,12 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
             {
                 if (type.contains(Settings.ObjectType.PLAYER1_OWNER))
                 {
+                    Gdx.app.log("TRACE", "Handled");
                     m_layerManager.getPlayer(1).destroyBullet(body);
                 }
                 else if (type.contains(Settings.ObjectType.PLAYER2_OWNER))
                 {
+                    Gdx.app.log("TRACE", "Handled");
                     m_layerManager.getPlayer(2).destroyBullet(body);
                 }
                 else
@@ -125,21 +127,53 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
             }
             else if (type.contains(Settings.ObjectType.ENEMY))
             {
-                Gdx.app.log("TRACE", "ENEMY");
+                Gdx.app.log("TRACE", "Handled");
                 m_enemyFactory.hit(body);
             }
             else if (type.contains(Settings.ObjectType.PLAYER))
             {
                 Gdx.app.log("TRACE", "PLAYER");
             }
-            else if (type.contains(Settings.ObjectType.BRICK_WALL) ||
-                     type.contains(Settings.ObjectType.STONE_WALL) ||
-                     type.contains(Settings.ObjectType.GRASS) ||
-                     type.contains(Settings.ObjectType.WATER))
+            else if (type.contains(Settings.ObjectType.BRICK_WALL))
             {
-                Gdx.app.log("TRACE", "WALL");
-                m_layerManager.hit(body, type);
-               // body.setUserData(EnumSet.of(Settings.ObjectType.BRICK_WALL));
+                Gdx.app.log("TRACE", "handled");
+                boolean destroyed = m_layerManager.hit(body, type);
+                if (!destroyed)
+                {
+                    body.setUserData(EnumSet.of(Settings.ObjectType.BRICK_WALL));
+                }
+            }
+            else if (type.contains(Settings.ObjectType.STONE_WALL))
+            {
+                Gdx.app.log("TRACE", "handled");
+                boolean destroyed = m_layerManager.hit(body, type);
+                if (!destroyed)
+                {
+                    body.setUserData(EnumSet.of(Settings.ObjectType.STONE_WALL));
+                }
+            }
+            else if (type.contains(Settings.ObjectType.GRASS))
+            {
+                Gdx.app.log("TRACE", "handled");
+                boolean destroyed = m_layerManager.hit(body, type);
+                if (!destroyed)
+                {
+                    body.setUserData(EnumSet.of(Settings.ObjectType.GRASS));
+                }
+            }
+            else if (type.contains(Settings.ObjectType.WATER))
+            {
+                Gdx.app.log("TRACE", "handled");
+                boolean destroyed = m_layerManager.hit(body, type);
+                if (!destroyed)
+                {
+                    body.setUserData(EnumSet.of(Settings.ObjectType.WATER));
+                }
+            }
+            else if (type.contains(Settings.ObjectType.WALL))
+            {
+                Gdx.app.log("TRACE", "Handled");
+                body.setUserData(EnumSet.of(Settings.ObjectType.WALL));
             }
             else if (type.contains(Settings.ObjectType.FLAG ))
             {
