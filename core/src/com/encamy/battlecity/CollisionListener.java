@@ -33,27 +33,19 @@ public class CollisionListener implements ContactListener
 
             if (objectA.contains(Settings.ObjectType.BULLET) || objectB.contains(Settings.ObjectType.BULLET))
             {
-               // Gdx.app.log("Trace", objectA + "  " + objectB);
+                EnumSet<Settings.ObjectType> objectAClone = objectA.clone();
+                EnumSet<Settings.ObjectType> objectBClone = objectB.clone();
+                objectAClone.remove(Settings.ObjectType.BULLET);
+                objectBClone.remove(Settings.ObjectType.BULLET);
+
+                //OBJECT A
                 objectA.add(Settings.ObjectType.SHOTTED);
-                if (objectB.contains(Settings.ObjectType.PLAYER1_OWNER))
-                {
-                    objectA.add(Settings.ObjectType.PLAYER1_OWNER);
-                }
-                if (objectB.contains(Settings.ObjectType.PLAYER2_OWNER))
-                {
-                    objectA.add(Settings.ObjectType.PLAYER2_OWNER);
-                }
+                objectB.addAll(objectAClone);
                 contact.getFixtureA().getBody().setUserData(objectA);
 
+                //OBJECT B
                 objectB.add(Settings.ObjectType.SHOTTED);
-                if (objectA.contains(Settings.ObjectType.PLAYER1_OWNER))
-                {
-                    objectB.add(Settings.ObjectType.PLAYER1_OWNER);
-                }
-                if (objectA.contains(Settings.ObjectType.PLAYER2_OWNER))
-                {
-                    objectB.add(Settings.ObjectType.PLAYER2_OWNER);
-                }
+                objectA.addAll(objectBClone);
                 contact.getFixtureB().getBody().setUserData(objectB);
             }
         }
