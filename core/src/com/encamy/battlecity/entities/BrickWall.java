@@ -15,7 +15,6 @@ import java.util.EnumSet;
 
 public class BrickWall extends Sprite implements BaseWall
 {
-    private Texture m_texture;
     private World m_world;
     private Body m_body;
     private Settings.WallDestroyedCallback m_OnWallDestroyed;

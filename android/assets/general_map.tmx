@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="35" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="363">
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="35" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="364">
  <tileset firstgid="1" name="solids" tilewidth="32" tileheight="32" tilecount="8" columns="4">
   <image source="solids.png" trans="003039" width="128" height="64"/>
   <tile id="0">
@@ -149,6 +149,11 @@
     <property name="direction" value="right"/>
     <property name="tank_name" value="white"/>
     <property name="tank_type" value="1"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="title" value="flag"/>
    </properties>
   </tile>
   <tile id="18">
@@ -3214,6 +3219,11 @@
   <object id="362" x="1024" y="352" width="32" height="32">
    <properties>
     <property name="wall_type" value="grass"/>
+   </properties>
+  </object>
+  <object id="363" x="544" y="576" width="64" height="64">
+   <properties>
+    <property name="wall_type" value="flag"/>
    </properties>
   </object>
  </objectgroup>

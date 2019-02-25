@@ -149,6 +149,11 @@ public class LayerManager implements Settings.WallDestroyedCallback
 
                 atlas.addRegion(tank_name + tank_type + "_" + direction, tile.getTextureRegion());
             }
+
+            if (tile.getProperties().containsKey("title"))
+            {
+                atlas.addRegion("flag", tile.getTextureRegion());
+            }
         }
 
         Iterator<TiledMapTile> solidTiles = tiledMap.getTileSets().getTileSet("solids").iterator();
@@ -205,6 +210,13 @@ public class LayerManager implements Settings.WallDestroyedCallback
                                 BaseWall wall = new Water(m_world, rectangle, m_atlas.findRegion("water1"));
                                 wall.setOnDestoryedCallback(this);
                                 m_walls.add(wall);
+                            }
+                            break;
+                        case "flag":
+                            {
+                                Flag flag = new Flag(m_world, rectangle, m_atlas.findRegion("flag"));
+                                flag.setOnDestoryedCallback(this);
+                                m_walls.add(flag);
                             }
                             break;
                         default:

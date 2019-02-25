@@ -1,4 +1,4 @@
-package com.encamy.battlecity.entities;
+package com.encamy.battlecity;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -7,18 +7,19 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.encamy.battlecity.Settings;
+import com.encamy.battlecity.entities.BaseWall;
 import com.encamy.battlecity.utils.Box2dHelpers;
 
 import java.util.EnumSet;
 
-public class Water extends Sprite implements BaseWall
+class Flag extends Sprite implements BaseWall
 {
+    private Texture m_texture;
     private World m_world;
     private Body m_body;
     private Settings.WallDestroyedCallback m_OnWallDestroyed;
 
-    public Water(World world, Rectangle rectangle, TextureAtlas.AtlasRegion region)
+    public Flag(World world, Rectangle rectangle, TextureAtlas.AtlasRegion region)
     {
         super(region);
 
@@ -29,8 +30,8 @@ public class Water extends Sprite implements BaseWall
                 rectangle.width,
                 rectangle.height,
                 true,
-                EnumSet.of(Settings.ObjectType.WATER),
-                true);
+                EnumSet.of(Settings.ObjectType.GRASS),
+                false);
 
         m_world = world;
     }
@@ -38,8 +39,8 @@ public class Water extends Sprite implements BaseWall
     @Override
     public void update()
     {
-        setX(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 16);
-        setY(Box2dHelpers.Box2d2y(m_body.getPosition().y) + 16);
+        setX(Box2dHelpers.Box2d2x(m_body.getPosition().x));
+        setY(Box2dHelpers.Box2d2y(m_body.getPosition().y));
     }
 
     @Override
@@ -50,14 +51,9 @@ public class Water extends Sprite implements BaseWall
     }
 
     @Override
-    public void setOnDestoryedCallback(Settings.WallDestroyedCallback callback)
-    {
-        m_OnWallDestroyed = callback;
-    }
-
-    @Override
     public void destroy()
     {
+        m_world.destroyBody(m_body);
         m_OnWallDestroyed.OnWallDestroyed(this);
     }
 
@@ -70,7 +66,12 @@ public class Water extends Sprite implements BaseWall
     @Override
     public boolean hit(int power)
     {
-        // do nothing
         return false;
+    }
+
+    @Override
+    public void setOnDestoryedCallback(Settings.WallDestroyedCallback callback)
+    {
+        m_OnWallDestroyed = callback;
     }
 }
