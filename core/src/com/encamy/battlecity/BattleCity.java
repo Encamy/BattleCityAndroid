@@ -193,6 +193,10 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
             }
             else if (type.contains(Settings.ObjectType.FLAG ))
             {
+                if (m_layerManager.hit(body, type))
+                {
+                    Gdx.app.log("INFO", "GAME OVER");
+                }
                 Gdx.app.log("TRACE", "FLAG");
             }
         }

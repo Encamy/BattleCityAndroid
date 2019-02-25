@@ -1,5 +1,6 @@
 package com.encamy.battlecity;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -30,7 +31,7 @@ class Flag extends Sprite implements BaseWall
                 rectangle.width,
                 rectangle.height,
                 true,
-                EnumSet.of(Settings.ObjectType.GRASS),
+                EnumSet.of(Settings.ObjectType.FLAG),
                 false);
 
         m_world = world;
@@ -66,7 +67,9 @@ class Flag extends Sprite implements BaseWall
     @Override
     public boolean hit(int power)
     {
-        return false;
+        Gdx.app.log("TRACE", "Flag was hitted");
+        destroy();
+        return true;
     }
 
     @Override
