@@ -76,8 +76,8 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
         SpriteBatch spriteBatch = new SpriteBatch();
         spriteBatch.begin();
         m_layerManager.getPlayer(CURRENT_PLAYER).draw(spriteBatch);
+        m_enemyFactory.draw(spriteBatch);
         m_layerManager.drawWalls(spriteBatch);
-		m_enemyFactory.draw(spriteBatch);
         spriteBatch.end();
 
         m_world.step(Gdx.graphics.getDeltaTime(), 6, 2);
