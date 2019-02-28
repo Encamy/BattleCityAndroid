@@ -19,7 +19,6 @@ import javax.security.auth.callback.Callback;
 
 
 public class Enemy extends Sprite {
-    private Vector2 velocity = new Vector2();
     private float speed;
     private float m_animationTime = 0;
     private float m_health;
@@ -79,19 +78,19 @@ public class Enemy extends Sprite {
 
         // update animation
         m_animationTime += deltaTime;
-        if (velocity.x < 0)
+        if (m_body.getLinearVelocity().x < 0)
         {
             super.setRegion(((TextureAtlas.AtlasRegion) m_left.getKeyFrame(m_animationTime)));
         }
-        else if (velocity.x > 0)
+        else if (m_body.getLinearVelocity().x > 0)
         {
             super.setRegion(((TextureAtlas.AtlasRegion) m_right.getKeyFrame(m_animationTime)));
         }
-        else if (velocity.y < 0)
+        else if (m_body.getLinearVelocity().y < 0)
         {
             super.setRegion(((TextureAtlas.AtlasRegion) m_bottom.getKeyFrame(m_animationTime)));
         }
-        else if (velocity.y > 0)
+        else if (m_body.getLinearVelocity().y > 0)
         {
             super.setRegion(((TextureAtlas.AtlasRegion) m_top.getKeyFrame(m_animationTime)));
         }
