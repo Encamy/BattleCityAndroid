@@ -32,6 +32,7 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
     private World m_world;
     private LayerManager m_layerManager;
     private final int CURRENT_PLAYER = 1;
+    private boolean m_freezeWorld = false;
 
 	@Override
 	public void create ()
@@ -71,16 +72,19 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		m_camera.update();
-		m_enemyFactory.update(Gdx.graphics.getDeltaTime());
+		m_enemyFactory.update(Gdx.graphics.getDeltaTime(), m_freezeWorld);
 
         SpriteBatch spriteBatch = new SpriteBatch();
         spriteBatch.begin();
-        m_layerManager.getPlayer(CURRENT_PLAYER).draw(spriteBatch);
-        m_enemyFactory.draw(spriteBatch);
+        m_layerManager.getPlayer(CURRENT_PLAYER).draw(spriteBatch, m_freezeWorld);
+        m_enemyFactory.draw(spriteBatch, m_freezeWorld);
         m_layerManager.drawWalls(spriteBatch);
         spriteBatch.end();
 
-        m_world.step(Gdx.graphics.getDeltaTime(), 6, 2);
+        if (!m_freezeWorld)
+        {
+            m_world.step(Gdx.graphics.getDeltaTime(), 6, 2);
+        }
         m_b2drenderer.render(m_world, m_camera.projection);
 
         processHitted();
@@ -228,6 +232,7 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
                 if (m_layerManager.hit(body, type))
                 {
                     Gdx.app.log("INFO", "GAME OVER");
+                    m_freezeWorld = true;
                 }
                 Gdx.app.log("TRACE", "FLAG");
             }
@@ -272,6 +277,9 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
             case Input.Keys.SPACE:
             case Input.Keys.ENTER:
                 m_layerManager.getPlayer(CURRENT_PLAYER).fire();
+                break;
+            case Input.Keys.P:
+                m_freezeWorld = !m_freezeWorld;
                 break;
         }
 

@@ -64,9 +64,12 @@ public class Enemy extends Sprite {
         m_OnEnemyDestroyed = callback;
     }
 
-    @Override
-    public void draw(Batch batch) {
-        update(Gdx.graphics.getDeltaTime());
+    public void draw(Batch batch, boolean freeze)
+    {
+        if (!freeze)
+        {
+            update(Gdx.graphics.getDeltaTime());
+        }
         super.draw(batch);
     }
 

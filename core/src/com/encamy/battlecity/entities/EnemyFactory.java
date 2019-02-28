@@ -50,8 +50,13 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
         m_playerSteeringEntity = playerSteeringEntity;
     }
 
-    public void update(float deltaTime)
+    public void update(float deltaTime, boolean freeze)
     {
+        if (freeze)
+        {
+            return;
+        }
+
         m_elapsedTime += deltaTime * 1000;
 
         if (m_elapsedTime > m_spawnIntervalMs)
@@ -145,11 +150,11 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
         return spawnpoint;
     }
 
-    public void draw(Batch batch)
+    public void draw(Batch batch, boolean freeze)
     {
         for (Enemy enemy : m_enemies)
         {
-            enemy.draw(batch);
+            enemy.draw(batch, freeze);
         }
     }
 

@@ -57,10 +57,12 @@ public class Player extends Sprite {
         m_spawnPoint = new Vector2(spawnPoint);
     }
 
-    @Override
-    public void draw(Batch batch)
+    public void draw(Batch batch, boolean freeze)
     {
-        update(Gdx.graphics.getDeltaTime());
+        if (!freeze)
+        {
+            update(Gdx.graphics.getDeltaTime());
+        }
         super.draw(batch);
     }
 
