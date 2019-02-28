@@ -25,10 +25,10 @@ public class Enemy extends Sprite {
     private float m_health;
     private int score;
     private Animation m_left, m_top, m_right, m_bottom;
-    private MapObjects m_walls;
     private Body m_body;
     private Box2dSteeringEntity m_steeringEntity;
     private World m_world;
+    private Settings.Direction m_direction;
 
     private Settings.EnemyDestroyedCallback m_OnEnemyDestroyed;
 
@@ -75,7 +75,7 @@ public class Enemy extends Sprite {
     private void update(float deltaTime)
     {
         // update behavior
-        m_steeringEntity.update(deltaTime);
+        m_direction = m_steeringEntity.update(deltaTime);
 
         // update animation
         m_animationTime += deltaTime;

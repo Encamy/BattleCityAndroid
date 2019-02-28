@@ -15,7 +15,7 @@ public class Settings {
     public static final float PPM = 64; // Pixels per meter
     public static final int PLAYER_HEALTH = 3;
 
-    public enum Direction {LEFT, TOP, RIGHT, BOTTOM}
+    public enum Direction {LEFT, TOP, RIGHT, BOTTOM, NULL}
     public enum ObjectType
     {
         BRICK_WALL,

@@ -1,5 +1,6 @@
 package com.encamy.battlecity.entities;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.ai.steer.SteeringAcceleration;
 import com.badlogic.gdx.ai.steer.SteeringBehavior;
@@ -31,15 +32,35 @@ public class Box2dSteeringEntity implements Steerable<Vector2>
         m_steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
     }
 
-    public void update(float deltaTime)
+    public Settings.Direction update(float deltaTime)
     {
         if (m_behavior == null)
         {
-            return;
+            return Settings.Direction.NULL;
         }
 
         m_behavior.calculateSteering(m_steeringOutput);
         applySteering(m_steeringOutput, deltaTime);
+
+        if (m_steeringOutput.linear.x > 0 && m_steeringOutput.linear.y == 0)
+        {
+            return Settings.Direction.RIGHT;
+        }
+        else if (m_steeringOutput.linear.x < 0 && m_steeringOutput.linear.y == 0)
+        {
+            return Settings.Direction.LEFT;
+        }
+        else if (m_steeringOutput.linear.x == 0 && m_steeringOutput.linear.y > 0)
+        {
+            return Settings.Direction.TOP;
+        }
+        else if (m_steeringOutput.linear.x == 0 && m_steeringOutput.linear.y < 0)
+        {
+            Gdx.app.log("TRACE", "Enemy: BOTTOM");
+            return Settings.Direction.BOTTOM;
+        }
+
+        return Settings.Direction.NULL;
     }
 
     private void applySteering(SteeringAcceleration<Vector2> steering, float deltaTime)
