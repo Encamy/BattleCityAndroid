@@ -36,6 +36,7 @@ public class LayerManager implements Settings.WallDestroyedCallback
     private World m_world;
     private Player[] m_players;
     private ArrayList<BaseWall> m_walls;
+    private Animation m_spawnAnimation;
 
     private boolean loaded = false;
 
@@ -110,6 +111,12 @@ public class LayerManager implements Settings.WallDestroyedCallback
         right.setPlayMode(Animation.PlayMode.LOOP);
         bottom.setPlayMode(Animation.PlayMode.LOOP);
 
+        m_spawnAnimation = new Animation(ANIMATION_FRAME_DURATION,
+                m_atlas.findRegion("spawn_animation_1"),
+                m_atlas.findRegion("spawn_animation_2"),
+                m_atlas.findRegion("spawn_animation_3"),
+                m_atlas.findRegion("spawn_animation_4"));
+
         m_players[index] = new Player(left, top, right, bottom, playerBody, m_world, index + 1, spawnpoint);
     }
 
@@ -153,6 +160,12 @@ public class LayerManager implements Settings.WallDestroyedCallback
             if (tile.getProperties().containsKey("title"))
             {
                 atlas.addRegion("flag", tile.getTextureRegion());
+            }
+
+            if (tile.getProperties().containsKey("spawn_animation"))
+            {
+                String phase = tile.getProperties().get("spawn_animation", String.class);
+                atlas.addRegion("spawn_animation" + "_" + phase, tile.getTextureRegion());
             }
         }
 

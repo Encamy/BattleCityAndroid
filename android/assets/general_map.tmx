@@ -268,6 +268,16 @@
     <property name="tank_type" value="2"/>
    </properties>
   </tile>
+  <tile id="34">
+   <properties>
+    <property name="spawn_animation" value="3"/>
+   </properties>
+  </tile>
+  <tile id="35">
+   <properties>
+    <property name="spawn_animation" value="4"/>
+   </properties>
+  </tile>
   <tile id="36">
    <properties>
     <property name="direction" value="top"/>
@@ -826,6 +836,16 @@
     <property name="direction" value="right"/>
     <property name="tank_name" value="white"/>
     <property name="tank_type" value="7"/>
+   </properties>
+  </tile>
+  <tile id="124">
+   <properties>
+    <property name="spawn_animation" value="1"/>
+   </properties>
+  </tile>
+  <tile id="125">
+   <properties>
+    <property name="spawn_animation" value="2"/>
    </properties>
   </tile>
   <tile id="126">
