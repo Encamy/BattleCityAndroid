@@ -15,6 +15,7 @@ import com.encamy.battlecity.utils.Box2dHelpers;
 import com.encamy.battlecity.utils.utils;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
@@ -33,8 +34,9 @@ public class Player extends Sprite {
     private int m_health;
     private int m_level;
     private int m_current_player;
+    private Vector2 m_spawnPoint;
 
-    public Player(Animation left, Animation top, Animation right, Animation bottom, Body body, World world, int current_player)
+    public Player(Animation left, Animation top, Animation right, Animation bottom, Body body, World world, int current_player, Vector2 spawnPoint)
     {
         super(((TextureAtlas.AtlasRegion) top.getKeyFrame(0)));
         m_left = left;
@@ -52,6 +54,7 @@ public class Player extends Sprite {
         m_health = Settings.PLAYER_HEALTH;
         m_current_player = current_player;
         m_level = 1;
+        m_spawnPoint = new Vector2(spawnPoint);
     }
 
     @Override
@@ -83,6 +86,12 @@ public class Player extends Sprite {
 
     private void update(float deltaTime)
     {
+        if (m_health < 0)
+        {
+            // Just some placeholder. Implement destory mechanics.
+            return;
+        }
+
         // update animation
         m_animationTime += deltaTime;
 
@@ -176,5 +185,22 @@ public class Player extends Sprite {
     public int getLevel()
     {
         return m_level;
+    }
+
+    public void hit()
+    {
+        m_health--;
+        Gdx.app.log("TRACE", "Player was hitted. Current health: " + m_health);
+
+        // Is there a better way to change x and y?ss
+        m_world.destroyBody(m_body);
+        m_body = Box2dHelpers.createBox(
+                m_world,
+                m_spawnPoint.x,
+                m_spawnPoint.y,
+                54, 54,
+                false,
+                EnumSet.of(Settings.ObjectType.PLAYER),
+                true);
     }
 }

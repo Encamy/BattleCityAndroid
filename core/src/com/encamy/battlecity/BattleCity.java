@@ -118,6 +118,11 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
                     Gdx.app.log("TRACE", "Handled");
                     m_layerManager.getPlayer(2).destroyBullet(body);
                 }
+                else if (type.contains(Settings.ObjectType.ENEMY_OWNER))
+                {
+                    Gdx.app.log("TRACE", "Handled");
+                    m_enemyFactory.destroyBullet(body);
+                }
                 else
                 {
                     Gdx.app.log("ERROR", "WTF?!");
@@ -126,12 +131,40 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
             }
             else if (type.contains(Settings.ObjectType.ENEMY))
             {
-                Gdx.app.log("TRACE", "Handled");
-                m_enemyFactory.hit(body);
+                if (!type.contains(Settings.ObjectType.ENEMY_OWNER))
+                {
+                    Gdx.app.log("TRACE", "Handled");
+                    m_enemyFactory.hit(body);
+                }
+                else
+                {
+                    Gdx.app.log("TRACE", "Handled");
+                    body.setUserData(EnumSet.of(Settings.ObjectType.ENEMY));
+                }
             }
             else if (type.contains(Settings.ObjectType.PLAYER))
             {
-                Gdx.app.log("TRACE", "PLAYER");
+                if (m_layerManager.getPlayer(1) != null)
+                {
+                    if (m_layerManager.getPlayer(1).getBody() == body) {
+                        Gdx.app.log("TRACE", "Handled");
+                        m_layerManager.getPlayer(1).hit();
+                        body.setUserData(EnumSet.of(Settings.ObjectType.PLAYER));
+                    }
+                }
+                else if (m_layerManager.getPlayer(2) != null)
+                {
+                    if (m_layerManager.getPlayer(2).getBody() == body)
+                    {
+                        Gdx.app.log("TRACE", "Handled");
+                        m_layerManager.getPlayer(2).hit();
+                        body.setUserData(EnumSet.of(Settings.ObjectType.PLAYER));
+                    }
+                }
+                else
+                {
+                    Gdx.app.log("FATAL", "Invalid player was hitted");
+                }
             }
             else if (type.contains(Settings.ObjectType.BRICK_WALL))
             {
@@ -157,7 +190,6 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
                 if (!destroyed)
                 {
                     Gdx.app.log("TRACE", "handled");
-                    Gdx.app.log("TRACE", "|" + type.toString() + "|");
                 }
 
                 if (!type.contains(Settings.ObjectType.BULLET))

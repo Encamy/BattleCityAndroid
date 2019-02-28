@@ -110,7 +110,7 @@ public class LayerManager implements Settings.WallDestroyedCallback
         right.setPlayMode(Animation.PlayMode.LOOP);
         bottom.setPlayMode(Animation.PlayMode.LOOP);
 
-        m_players[index] = new Player(left, top, right, bottom, playerBody, m_world, index + 1);
+        m_players[index] = new Player(left, top, right, bottom, playerBody, m_world, index + 1, spawnpoint);
     }
 
     public TiledMap getTileMap()
@@ -280,6 +280,10 @@ public class LayerManager implements Settings.WallDestroyedCallback
                 else if (type.contains(Settings.ObjectType.PLAYER2_OWNER))
                 {
                     power = m_players[1].getLevel();
+                }
+                else if (type.contains(Settings.ObjectType.ENEMY_OWNER))
+                {
+                    power = 1;
                 }
                 else
                 {

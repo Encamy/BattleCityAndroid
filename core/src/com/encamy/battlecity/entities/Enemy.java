@@ -13,6 +13,7 @@ import com.encamy.battlecity.behaviors.RandomBehavior;
 import com.encamy.battlecity.utils.Box2dHelpers;
 import com.encamy.battlecity.Settings;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 
 import javax.security.auth.callback.Callback;
@@ -28,6 +29,7 @@ public class Enemy extends Sprite {
     private Box2dSteeringEntity m_steeringEntity;
     private World m_world;
     private Settings.Direction m_direction;
+    private ArrayList<Bullet> m_bullets;
 
     private Settings.EnemyDestroyedCallback m_OnEnemyDestroyed;
 
@@ -47,6 +49,8 @@ public class Enemy extends Sprite {
                 true);
 
         m_world = world;
+
+        m_bullets = new ArrayList<Bullet>();
 
         m_steeringEntity = new Box2dSteeringEntity(m_body, 10.0f);
         m_steeringEntity.setMaxLinearSpeed(speed);
@@ -97,6 +101,40 @@ public class Enemy extends Sprite {
 
         setX(Box2dHelpers.Box2d2x(m_body.getPosition().x));
         setY(Box2dHelpers.Box2d2y(m_body.getPosition().y));
+
+        if (m_animationTime * 1000 > Settings.FIRE_RATE)
+        {
+            Gdx.app.log("TRACE", "FIRE");
+            fire();
+            m_animationTime = 0;
+        }
+
+        for (Bullet bullet : m_bullets)
+        {
+            bullet.update(deltaTime);
+        }
+    }
+
+    private void fire()
+    {
+        Vector2 bulletSpawnPos = new Vector2();
+        switch (m_direction)
+        {
+            case TOP:
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 90);
+                break;
+            case LEFT:
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 20, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 58);
+                break;
+            case RIGHT:
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 85, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 58);
+                break;
+            case BOTTOM:
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 20);
+                break;
+        }
+
+        m_bullets.add(new Bullet(m_world, bulletSpawnPos, m_direction, Settings.ObjectType.ENEMY_OWNER));
     }
 
     private void SetPosition(Vector2 spawnpoint)
@@ -133,6 +171,26 @@ public class Enemy extends Sprite {
     private void destroy()
     {
         m_world.destroyBody(m_body);
+        for (Bullet bullet : m_bullets)
+        {
+            bullet.dispose();
+        }
+        m_bullets.clear();
         m_OnEnemyDestroyed.OnEnemyDestroyed(this);
+    }
+
+    public boolean destroyBullet(Body body)
+    {
+        for (Bullet bullet : m_bullets)
+        {
+            if (bullet.getBody() == body)
+            {
+                m_bullets.remove(bullet);
+                bullet.dispose();
+                return true;
+            }
+        }
+
+        return false;
     }
 }

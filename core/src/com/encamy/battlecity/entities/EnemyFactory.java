@@ -183,4 +183,15 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
     {
         m_enemies.remove(enemy);
     }
+
+    public void destroyBullet(Body body)
+    {
+        for (Enemy enemy : m_enemies)
+        {
+            if (enemy.destroyBullet(body))
+            {
+                break;
+            }
+        }
+    }
 }

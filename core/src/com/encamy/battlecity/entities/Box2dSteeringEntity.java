@@ -56,7 +56,6 @@ public class Box2dSteeringEntity implements Steerable<Vector2>
         }
         else if (m_steeringOutput.linear.x == 0 && m_steeringOutput.linear.y < 0)
         {
-            Gdx.app.log("TRACE", "Enemy: BOTTOM");
             return Settings.Direction.BOTTOM;
         }
 
