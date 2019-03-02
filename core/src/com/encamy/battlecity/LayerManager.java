@@ -262,7 +262,7 @@ public class LayerManager implements Settings.WallDestroyedCallback
         // bottom
         Box2dHelpers.createBox(
                 m_world,
-                0,-10,
+                0, -15,
                 Settings.SCREEN_WIDTH, 10,
                 true,
                 EnumSet.of(Settings.ObjectType.WALL),
