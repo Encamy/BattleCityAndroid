@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.encamy.battlecity.AnimationContainer;
 import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.utils.Box2dHelpers;
 import com.encamy.battlecity.utils.utils;
@@ -47,21 +48,19 @@ public class Player extends Sprite implements InputProcessor {
 
     private State m_state;
 
-    public Player(Animation left, Animation top, Animation right, Animation bottom,
-                  Animation playerSpawnAnimation, Animation invulnerabilityAnimation,
-                  Body body, World world, int current_player, Vector2 spawnPoint)
+    public Player(AnimationContainer animation, Body body, int current_player, Vector2 spawnPoint)
     {
-        super(((TextureAtlas.AtlasRegion) top.getKeyFrame(0)));
-        m_left = left;
-        m_top = top;
-        m_right = right;
-        m_bottom = bottom;
-        m_playerSpawAnimation = playerSpawnAnimation;
-        m_invulnerabilityAnimation = invulnerabilityAnimation;
+        super(((TextureAtlas.AtlasRegion) animation.getTopAnimation().getKeyFrame(0)));
+        m_left = animation.getLeftAnimation();
+        m_top = animation.getTopAnimation();
+        m_right = animation.getRightAnimation();
+        m_bottom = animation.getBottomAnimation();
+        m_playerSpawAnimation = animation.getSpawnAnimation();
+        m_invulnerabilityAnimation = animation.getInvulnerabilityAnimation();
 
         m_body = body;
         m_steeringEntity = new Box2dSteeringEntity(m_body, 10.0f);
-        m_world = world;
+        m_world = body.getWorld();
         m_direction = Settings.Direction.TOP;
 
         m_bullets = new ArrayList<Bullet>();

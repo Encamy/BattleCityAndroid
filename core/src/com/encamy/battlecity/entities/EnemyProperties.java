@@ -3,6 +3,7 @@ package com.encamy.battlecity.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.encamy.battlecity.AnimationContainer;
 import com.encamy.battlecity.Settings;
 
 import java.util.ArrayList;
@@ -29,11 +30,7 @@ public class EnemyProperties
 {
     public int level;
     public float speed;
-    public Animation leftAnimation;
-    public Animation rightAnimation;
-    public Animation topAnimation;
-    public Animation bottomAnimation;
-    public Animation spawningAnimation;
+    public AnimationContainer animation;
     public float health;
     public int score;
 
@@ -68,6 +65,7 @@ public class EnemyProperties
     private EnemyProperties CreateProperty(int level, TextureAtlas atlas)
     {
         EnemyProperties property = new EnemyProperties();
+        property.animation = new AnimationContainer();
         property.level = level;
 
         int textureIndex;
@@ -146,20 +144,15 @@ public class EnemyProperties
                 return null;
         }
 
-        property.leftAnimation = new Animation(Settings.ANIMATION_FRAME_DURATION, left_animationTextures.toArray());
-        property.rightAnimation = new Animation(Settings.ANIMATION_FRAME_DURATION, right_animationTextures.toArray());
-        property.topAnimation = new Animation(Settings.ANIMATION_FRAME_DURATION, top_animationTextures.toArray());
-        property.bottomAnimation = new Animation(Settings.ANIMATION_FRAME_DURATION, bottom_animationTextures.toArray());
-        property.spawningAnimation = new Animation(ANIMATION_FRAME_DURATION * 0.5f,
+        property.animation.setLeftAnimation(new Animation(Settings.ANIMATION_FRAME_DURATION, left_animationTextures.toArray()));
+        property.animation.setRightAnimation(new Animation(Settings.ANIMATION_FRAME_DURATION, right_animationTextures.toArray()));
+        property.animation.setTopAnimation(new Animation(Settings.ANIMATION_FRAME_DURATION, top_animationTextures.toArray()));
+        property.animation.setBottomAnimation(new Animation(Settings.ANIMATION_FRAME_DURATION, bottom_animationTextures.toArray()));
+        property.animation.setSpawnAnimation(new Animation(ANIMATION_FRAME_DURATION * 0.5f,
                 atlas.findRegion("spawn_animation_1"),
                 atlas.findRegion("spawn_animation_2"),
                 atlas.findRegion("spawn_animation_3"),
-                atlas.findRegion("spawn_animation_4"));
-
-        property.leftAnimation.setPlayMode(Animation.PlayMode.LOOP);
-        property.rightAnimation.setPlayMode(Animation.PlayMode.LOOP);
-        property.topAnimation.setPlayMode(Animation.PlayMode.LOOP);
-        property.bottomAnimation.setPlayMode(Animation.PlayMode.LOOP);
+                atlas.findRegion("spawn_animation_4")));
 
         return property;
     }

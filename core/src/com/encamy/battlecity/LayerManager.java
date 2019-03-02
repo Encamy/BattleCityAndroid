@@ -121,8 +121,15 @@ public class LayerManager implements Settings.WallDestroyedCallback
                 m_atlas.findRegion("invulnerability_animation_2"));
         invulnerabilityAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
-        m_players[index] = new Player(left, top, right, bottom, playerSpawnAnimation, invulnerabilityAnimation,
-                                      playerBody, m_world, index + 1, spawnpoint);
+        AnimationContainer animationContainer = new AnimationContainer();
+        animationContainer.setLeftAnimation(left);
+        animationContainer.setTopAnimation(top);
+        animationContainer.setRightAnimation(right);
+        animationContainer.setBottomAnimation(bottom);
+        animationContainer.setInvulnerabilityAnimation(invulnerabilityAnimation);
+        animationContainer.setSpawnAnimation(playerSpawnAnimation);
+
+        m_players[index] = new Player(animationContainer, playerBody, index + 1, spawnpoint);
     }
 
     public TiledMap getTileMap()

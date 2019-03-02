@@ -44,7 +44,7 @@ public class Enemy extends Sprite {
 
     public Enemy(Vector2 spawnpoint, EnemyProperties property, World world, Box2dSteeringEntity playerSteeringEntity)
     {
-        super((TextureAtlas.AtlasRegion)property.bottomAnimation.getKeyFrame(0));
+        super((TextureAtlas.AtlasRegion)property.animation.getBottomAnimation().getKeyFrame(0));
 
         SetProperty(property);
         SetPosition(spawnpoint);
@@ -185,11 +185,11 @@ public class Enemy extends Sprite {
 
     private void SetProperty(EnemyProperties property)
     {
-        m_left = property.leftAnimation;
-        m_top = property.topAnimation;
-        m_right = property.rightAnimation;
-        m_bottom = property.bottomAnimation;
-        m_spawning = property.spawningAnimation;
+        m_left = property.animation.getLeftAnimation();
+        m_top = property.animation.getTopAnimation();
+        m_right = property.animation.getRightAnimation();
+        m_bottom = property.animation.getBottomAnimation();
+        m_spawning = property.animation.getSpawnAnimation();
         speed = property.speed;
         m_health = property.health;
         score = property.score;
