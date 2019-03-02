@@ -195,14 +195,9 @@ public class Enemy extends Sprite {
         score = property.score;
     }
 
-    public float getHealth()
+    public void hit()
     {
-        return m_health;
-    }
-
-    public void setHealth(float health)
-    {
-        m_health = health;
+        m_health--;
         if (m_health < 0)
         {
             destroy();

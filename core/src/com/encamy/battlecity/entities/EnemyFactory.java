@@ -164,7 +164,7 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
             return;
         }
 
-        enemy.setHealth(enemy.getHealth() - 1);
+        enemy.hit();
     }
 
     private Enemy getEnemy(Body body)
