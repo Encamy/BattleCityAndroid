@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.encamy.battlecity.BattleCityGame;
 import com.encamy.battlecity.Settings;
 
@@ -19,6 +21,7 @@ public class MainMenuScreen implements Screen, InputProcessor
     private OrthographicCamera m_camera;
     private Texture background;
     private Game m_game;
+    private SpriteBatch m_spriteBatch;
 
     public MainMenuScreen(BattleCityGame game)
     {
@@ -30,6 +33,7 @@ public class MainMenuScreen implements Screen, InputProcessor
     {
         m_camera = new OrthographicCamera();
         m_camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
+        m_spriteBatch = new SpriteBatch();
         background = new Texture("background.jpg");
         Gdx.input.setInputProcessor(this);
     }
@@ -41,16 +45,18 @@ public class MainMenuScreen implements Screen, InputProcessor
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         m_camera.update();
-        SpriteBatch spriteBatch = new SpriteBatch();
-        spriteBatch.begin();
-        spriteBatch.draw(background, 0, 0);
-        spriteBatch.end();
+
+        m_spriteBatch.setProjectionMatrix(m_camera.combined);
+
+        m_spriteBatch.begin();
+        m_spriteBatch.draw(background, 0, 0);
+        m_spriteBatch.end();
     }
 
     @Override
     public void resize(int width, int height)
     {
-
+        
     }
 
     @Override
