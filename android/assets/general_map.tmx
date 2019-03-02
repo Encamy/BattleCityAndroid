@@ -1184,6 +1184,16 @@
     <property name="tank_type" value="2"/>
    </properties>
   </tile>
+  <tile id="178">
+   <properties>
+    <property name="invulnerability_animation" value="1"/>
+   </properties>
+  </tile>
+  <tile id="179">
+   <properties>
+    <property name="invulnerability_animation" value="2"/>
+   </properties>
+  </tile>
   <tile id="180">
    <properties>
     <property name="direction" value="top"/>

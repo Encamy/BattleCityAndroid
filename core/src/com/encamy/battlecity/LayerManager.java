@@ -116,7 +116,13 @@ public class LayerManager implements Settings.WallDestroyedCallback
                 m_atlas.findRegion("spawn_animation_3"),
                 m_atlas.findRegion("spawn_animation_4"));
 
-        m_players[index] = new Player(left, top, right, bottom, playerSpawnAnimation, playerBody, m_world, index + 1, spawnpoint);
+        Animation invulnerabilityAnimation = new Animation(ANIMATION_FRAME_DURATION * 0.5f,
+                m_atlas.findRegion("invulnerability_animation_1"),
+                m_atlas.findRegion("invulnerability_animation_2"));
+        invulnerabilityAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        m_players[index] = new Player(left, top, right, bottom, playerSpawnAnimation, invulnerabilityAnimation,
+                                      playerBody, m_world, index + 1, spawnpoint);
     }
 
     public TiledMap getTileMap()
@@ -164,7 +170,13 @@ public class LayerManager implements Settings.WallDestroyedCallback
             if (tile.getProperties().containsKey("spawn_animation"))
             {
                 String phase = tile.getProperties().get("spawn_animation", String.class);
-                atlas.addRegion("spawn_animation" + "_" + phase, tile.getTextureRegion());
+                atlas.addRegion("spawn_animation_" + phase, tile.getTextureRegion());
+            }
+
+            if (tile.getProperties().containsKey("invulnerability_animation"))
+            {
+                String phase = tile.getProperties().get("invulnerability_animation", String.class);
+                atlas.addRegion("invulnerability_animation_" + phase, tile.getTextureRegion());
             }
         }
 

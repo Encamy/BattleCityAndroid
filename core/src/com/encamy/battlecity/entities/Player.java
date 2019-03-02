@@ -1,12 +1,10 @@
 package com.encamy.battlecity.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
@@ -16,8 +14,6 @@ import com.encamy.battlecity.utils.utils;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.List;
-import java.util.Set;
 
 
 public class Player extends Sprite {
@@ -27,6 +23,7 @@ public class Player extends Sprite {
     private float m_animationTime = 0;
     private Animation m_left, m_top, m_right, m_bottom;
     private Animation m_playerSpawAnimation;
+    private Animation m_invulnerabilityAnimation;
     private Body m_body;
     private Box2dSteeringEntity m_steeringEntity;
     private World m_world;
@@ -36,15 +33,20 @@ public class Player extends Sprite {
     private int m_level;
     private int m_current_player;
     private Vector2 m_spawnPoint;
+    private Sprite m_invulnarableSprite;
+
+    private static final float INVULNARABLE_ANIMATION_TIME = 3000;
 
     private enum State {
         SPAWNING,
+        INVULNERABLE,
         ALIVE
     }
 
     private State m_state;
 
-    public Player(Animation left, Animation top, Animation right, Animation bottom, Animation playerSpawnAnimation,
+    public Player(Animation left, Animation top, Animation right, Animation bottom,
+                  Animation playerSpawnAnimation, Animation invulnerabilityAnimation,
                   Body body, World world, int current_player, Vector2 spawnPoint)
     {
         super(((TextureAtlas.AtlasRegion) top.getKeyFrame(0)));
@@ -53,6 +55,7 @@ public class Player extends Sprite {
         m_right = right;
         m_bottom = bottom;
         m_playerSpawAnimation = playerSpawnAnimation;
+        m_invulnerabilityAnimation = invulnerabilityAnimation;
 
         m_body = body;
         m_steeringEntity = new Box2dSteeringEntity(m_body, 10.0f);
@@ -67,6 +70,10 @@ public class Player extends Sprite {
         m_spawnPoint = new Vector2(spawnPoint);
 
         m_state = State.SPAWNING;
+
+        m_invulnarableSprite = new Sprite((TextureAtlas.AtlasRegion)m_invulnerabilityAnimation.getKeyFrame(0.0f));
+        m_invulnarableSprite.setPosition(spawnPoint.x, spawnPoint.y);
+        //m_invulnarableSprite.setAlpha(0.5f);
     }
 
     public void draw(Batch batch, boolean freeze)
@@ -76,6 +83,11 @@ public class Player extends Sprite {
             update(Gdx.graphics.getDeltaTime());
         }
         super.draw(batch);
+
+        if (m_state == State.INVULNERABLE)
+        {
+            m_invulnarableSprite.draw(batch);
+        }
     }
 
     public void setVelocity(float x, float y)
@@ -102,6 +114,16 @@ public class Player extends Sprite {
     {
         super.setRegion((TextureAtlas.AtlasRegion) m_playerSpawAnimation.getKeyFrame(animationTime));
         if (m_playerSpawAnimation.isAnimationFinished(animationTime))
+        {
+            m_animationTime = 0f;
+            m_state = State.INVULNERABLE;
+        }
+    }
+
+    private void updateIvulnerableAnimation(float animationTime)
+    {
+        m_invulnarableSprite.setRegion((TextureAtlas.AtlasRegion) m_invulnerabilityAnimation.getKeyFrame(animationTime));
+        if (animationTime * 1000.0f > INVULNARABLE_ANIMATION_TIME)
         {
             m_state = State.ALIVE;
         }
@@ -147,19 +169,24 @@ public class Player extends Sprite {
             case SPAWNING:
                 updateSpawnAnimation(m_animationTime);
                 break;
-            case ALIVE:
-            {
-                Settings.Direction direction = utils.velocity2Direction(m_velocity);
-
-                if (direction != Settings.Direction.NULL)
+            case INVULNERABLE:
                 {
-                    m_direction = direction;
+                    updateIvulnerableAnimation(m_animationTime);
                 }
+               // break;
+            case ALIVE:
+                {
+                    Settings.Direction direction = utils.velocity2Direction(m_velocity);
 
-                updateAliveAnimation(m_animationTime, m_direction);
+                    if (direction != Settings.Direction.NULL)
+                    {
+                        m_direction = direction;
+                    }
 
-                m_body.setLinearVelocity(m_velocity.x, m_velocity.y);
-            }
+                    updateAliveAnimation(m_animationTime, m_direction);
+
+                    m_body.setLinearVelocity(m_velocity.x, m_velocity.y);
+                }
                 break;
             default:
                 Gdx.app.log("FATAL", "Invalid state");
@@ -168,6 +195,9 @@ public class Player extends Sprite {
 
         setX(Box2dHelpers.Box2d2x(m_body.getPosition().x));
         setY(Box2dHelpers.Box2d2y(m_body.getPosition().y));
+
+        m_invulnarableSprite.setX(Box2dHelpers.Box2d2x(m_body.getPosition().x));
+        m_invulnarableSprite.setY(Box2dHelpers.Box2d2y(m_body.getPosition().y));
 
         for (Bullet bullet : m_bullets)
         {
