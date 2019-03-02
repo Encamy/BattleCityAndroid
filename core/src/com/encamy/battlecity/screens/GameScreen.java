@@ -1,7 +1,7 @@
-package com.encamy.battlecity;
+package com.encamy.battlecity.screens;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,6 +11,9 @@ import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.encamy.battlecity.CollisionListener;
+import com.encamy.battlecity.LayerManager;
+import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.entities.EnemyFactory;
 
 import java.util.EnumSet;
@@ -19,7 +22,7 @@ import static com.encamy.battlecity.Settings.APPLICATION_VERSION;
 import static com.encamy.battlecity.Settings.SCREEN_HEIGHT;
 import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
 
-public class BattleCity extends ApplicationAdapter {
+public class GameScreen implements Screen {
 
 	private OrthographicCamera m_camera;
 
@@ -32,7 +35,7 @@ public class BattleCity extends ApplicationAdapter {
     private boolean m_freezeWorld = false;
 
 	@Override
-	public void create ()
+	public void show()
     {
 		Gdx.app.log("Info", this.getClass().getName() + " started. v" + APPLICATION_VERSION);
 		Gdx.app.log("Info", "platform = " + Gdx.app.getType().name());
@@ -61,7 +64,7 @@ public class BattleCity extends ApplicationAdapter {
 	}
 
     @Override
-	public void render ()
+    public void render(float delta)
     {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -83,6 +86,24 @@ public class BattleCity extends ApplicationAdapter {
         m_b2drenderer.render(m_world, m_camera.projection);
 
         processHitted();
+    }
+
+    @Override
+    public void resize(int width, int height)
+    {
+
+    }
+
+    @Override
+    public void pause()
+    {
+        m_freezeWorld = true;
+    }
+
+    @Override
+    public void resume()
+    {
+        m_freezeWorld = false;
     }
 
     private void processHitted()
@@ -240,15 +261,8 @@ public class BattleCity extends ApplicationAdapter {
         m_layerManager.dispose();
 	}
 
-	@Override
-	public void pause()
-    {
-		super.pause();
-	}
+    @Override
+    public void hide() {
 
-	@Override
-	public void resume()
-    {
-		super.resume();
-	}
+    }
 }

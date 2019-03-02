@@ -3,11 +3,10 @@ package com.encamy.battlecity;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.encamy.battlecity.BattleCity;
+import com.encamy.battlecity.screens.GameScreen;
 
 public class AndroidLauncher extends AndroidApplication
 {
@@ -30,6 +29,6 @@ public class AndroidLauncher extends AndroidApplication
         Log.d("ApplicationTagName", "Application have started");
 		Log.d("ApplicationTagName", "Display size: " + width + ":" + height);
 
-		initialize(new BattleCity(), config);
+		initialize(new BattleCityGame(), config);
 	}
 }
