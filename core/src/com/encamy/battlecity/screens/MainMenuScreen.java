@@ -29,7 +29,7 @@ public class MainMenuScreen implements Screen, InputProcessor
     public void show()
     {
         m_camera = new OrthographicCamera();
-        m_camera.setToOrtho(false, SCREEN_WIDTH / Settings.PPM, SCREEN_HEIGHT / Settings.PPM);
+        m_camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
         background = new Texture("background.jpg");
         Gdx.input.setInputProcessor(this);
     }
@@ -111,6 +111,11 @@ public class MainMenuScreen implements Screen, InputProcessor
                 Gdx.app.log("INFO", "2 PLAYER");
             }
         }
+        else
+        {
+            Gdx.app.log("TRACE", screenX + ":" + screenY);
+        }
+
         return false;
     }
 

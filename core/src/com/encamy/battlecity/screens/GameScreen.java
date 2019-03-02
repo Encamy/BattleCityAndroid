@@ -25,6 +25,8 @@ import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
 public class GameScreen implements Screen {
 
 	private OrthographicCamera m_camera;
+	private OrthographicCamera m_debugCamera;
+    private SpriteBatch m_spriteBatch;
 
     private EnemyFactory m_enemyFactory;
 
@@ -41,7 +43,12 @@ public class GameScreen implements Screen {
 		Gdx.app.log("Info", "platform = " + Gdx.app.getType().name());
 
 		m_camera = new OrthographicCamera();
-        m_camera.setToOrtho(false, SCREEN_WIDTH / Settings.PPM, SCREEN_HEIGHT / Settings.PPM);
+        m_camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+        m_debugCamera = new OrthographicCamera();
+        m_debugCamera.setToOrtho(false, SCREEN_WIDTH / Settings.PPM, SCREEN_HEIGHT / Settings.PPM);
+
+        m_spriteBatch = new SpriteBatch();
 
         Box2D.init();
         m_b2drenderer = new Box2DDebugRenderer();
@@ -70,20 +77,21 @@ public class GameScreen implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		m_camera.update();
+        m_debugCamera.update();
 		m_enemyFactory.update(Gdx.graphics.getDeltaTime(), m_freezeWorld);
 
-        SpriteBatch spriteBatch = new SpriteBatch();
-        spriteBatch.begin();
-        m_layerManager.getPlayer(CURRENT_PLAYER).draw(spriteBatch, m_freezeWorld);
-        m_enemyFactory.draw(spriteBatch, m_freezeWorld);
-        m_layerManager.drawWalls(spriteBatch);
-        spriteBatch.end();
-
+        m_spriteBatch.setProjectionMatrix(m_camera.combined);
+        m_spriteBatch.begin();
+        m_layerManager.getPlayer(CURRENT_PLAYER).draw(m_spriteBatch, m_freezeWorld);
+        m_enemyFactory.draw(m_spriteBatch, m_freezeWorld);
+        m_layerManager.drawWalls(m_spriteBatch);
+        m_spriteBatch.end();
         if (!m_freezeWorld)
         {
             m_world.step(Gdx.graphics.getDeltaTime(), 6, 2);
         }
-        m_b2drenderer.render(m_world, m_camera.projection);
+
+        m_b2drenderer.render(m_world, m_debugCamera.projection);
 
         processHitted();
     }
