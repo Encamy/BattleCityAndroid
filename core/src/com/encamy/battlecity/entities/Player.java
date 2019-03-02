@@ -1,6 +1,8 @@
 package com.encamy.battlecity.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 
 
-public class Player extends Sprite {
+public class Player extends Sprite implements InputProcessor {
 
     private Vector2 m_velocity = new Vector2();
     private float m_speed = Settings.BASE_MOVEMENT_SPEED;
@@ -35,7 +37,7 @@ public class Player extends Sprite {
     private Vector2 m_spawnPoint;
     private Sprite m_invulnarableSprite;
 
-    private static final float INVULNARABLE_ANIMATION_TIME = 3000;
+    private static final float INVULNERABLE_ANIMATION_TIME = 3000;
 
     private enum State {
         SPAWNING,
@@ -73,6 +75,8 @@ public class Player extends Sprite {
 
         m_invulnarableSprite = new Sprite((TextureAtlas.AtlasRegion)m_invulnerabilityAnimation.getKeyFrame(0.0f));
         m_invulnarableSprite.setPosition(spawnPoint.x, spawnPoint.y);
+
+        Gdx.input.setInputProcessor(this);
         //m_invulnarableSprite.setAlpha(0.5f);
     }
 
@@ -123,7 +127,7 @@ public class Player extends Sprite {
     private void updateIvulnerableAnimation(float animationTime)
     {
         m_invulnarableSprite.setRegion((TextureAtlas.AtlasRegion) m_invulnerabilityAnimation.getKeyFrame(animationTime));
-        if (animationTime * 1000.0f > INVULNARABLE_ANIMATION_TIME)
+        if (animationTime * 1000.0f > INVULNERABLE_ANIMATION_TIME)
         {
             m_state = State.ALIVE;
         }
@@ -279,5 +283,116 @@ public class Player extends Sprite {
 
         m_animationTime = 0f;
         m_state = State.SPAWNING;
+    }
+
+    @Override
+    public boolean keyDown(int keycode)
+    {
+        switch (keycode)
+        {
+            case Input.Keys.W:
+                setVelocity(0.0f,getSpeed());
+                break;
+            case Input.Keys.A:
+                setVelocity(-1 * getSpeed(), 0.0f);
+                break;
+            case Input.Keys.D:
+                setVelocity(getSpeed(), 0.0f);
+                break;
+            case Input.Keys.S:
+                setVelocity(0.0f, -1 * getSpeed());
+                break;
+            case Input.Keys.SPACE:
+            case Input.Keys.ENTER:
+                fire();
+                break;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean keyUp(int keycode)
+    {
+        if (keycode == Input.Keys.W ||
+                keycode == Input.Keys.S ||
+                keycode == Input.Keys.A ||
+                keycode == Input.Keys.D)
+        {
+            setVelocity(0.0f, 0.0f);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean keyTyped(char character)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button)
+    {
+        if (screenX > Gdx.graphics.getWidth() * 0.5f)
+        {
+            fire();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button)
+    {
+        setVelocity(0.0f, 0.0f);
+        return true;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer)
+    {
+        if (screenX > Gdx.graphics.getWidth() * 0.3f)
+        {
+            return false;
+        }
+
+        if (screenY < Gdx.graphics.getHeight() * 0.3f)
+        {
+            setVelocity(0, getSpeed());
+            return true;
+        }
+
+        if (screenY > Gdx.graphics.getHeight() * 0.6f)
+        {
+            setVelocity(0, -1 * getSpeed());
+            return true;
+        }
+
+        if (screenX < Gdx.graphics.getWidth() * 0.15f)
+        {
+            setVelocity(-1 * getSpeed(), 0.0f);
+            return true;
+        }
+
+        if (screenX > Gdx.graphics.getWidth() * 0.15f)
+        {
+           setVelocity(getSpeed(), 0.0f);
+            return true;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount)
+    {
+        return false;
     }
 }

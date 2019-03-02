@@ -2,12 +2,9 @@ package com.encamy.battlecity;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2D;
@@ -22,8 +19,8 @@ import static com.encamy.battlecity.Settings.APPLICATION_VERSION;
 import static com.encamy.battlecity.Settings.SCREEN_HEIGHT;
 import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
 
-public class BattleCity extends ApplicationAdapter implements InputProcessor {
-	//SpriteBatch batch;
+public class BattleCity extends ApplicationAdapter {
+
 	private OrthographicCamera m_camera;
 
     private EnemyFactory m_enemyFactory;
@@ -61,8 +58,6 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
                 m_world,
                 m_layerManager.getPlayer(CURRENT_PLAYER).getSteeringEntity()
         );
-
-		Gdx.input.setInputProcessor(this);
 	}
 
     @Override
@@ -256,118 +251,4 @@ public class BattleCity extends ApplicationAdapter implements InputProcessor {
     {
 		super.resume();
 	}
-
-    @Override
-    public boolean keyDown(int keycode)
-    {
-        switch (keycode)
-        {
-            case Input.Keys.W:
-                m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(0.0f, m_layerManager.getPlayer(CURRENT_PLAYER).getSpeed());
-                break;
-            case Input.Keys.A:
-                m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(-1 * m_layerManager.getPlayer(CURRENT_PLAYER).getSpeed(), 0.0f);
-                break;
-            case Input.Keys.D:
-                m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(m_layerManager.getPlayer(CURRENT_PLAYER).getSpeed(), 0.0f);
-                break;
-            case Input.Keys.S:
-                m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(0.0f, -1 * m_layerManager.getPlayer(CURRENT_PLAYER).getSpeed());
-                break;
-            case Input.Keys.SPACE:
-            case Input.Keys.ENTER:
-                m_layerManager.getPlayer(CURRENT_PLAYER).fire();
-                break;
-            case Input.Keys.P:
-                m_freezeWorld = !m_freezeWorld;
-                break;
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean keyUp(int keycode)
-    {
-        if (keycode == Input.Keys.W ||
-            keycode == Input.Keys.S ||
-            keycode == Input.Keys.A ||
-            keycode == Input.Keys.D)
-        {
-            m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(0.0f, 0.0f);
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean keyTyped(char character)
-    {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button)
-    {
-        if (screenX > Gdx.graphics.getWidth() * 0.5f)
-        {
-            m_layerManager.getPlayer(CURRENT_PLAYER).fire();
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button)
-    {
-        m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(0.0f, 0.0f);
-        return true;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer)
-    {
-        if (screenX > Gdx.graphics.getWidth() * 0.3f)
-        {
-            return false;
-        }
-
-        if (screenY < Gdx.graphics.getHeight() * 0.3f)
-        {
-            m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(0, m_layerManager.getPlayer(CURRENT_PLAYER).getSpeed());
-            return  true;
-        }
-
-        if (screenY > Gdx.graphics.getHeight() * 0.6f)
-        {
-            m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(0, -1 * m_layerManager.getPlayer(CURRENT_PLAYER).getSpeed());
-            return  true;
-        }
-
-        if (screenX < Gdx.graphics.getWidth() * 0.15f)
-        {
-            m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(-1 * m_layerManager.getPlayer(CURRENT_PLAYER).getSpeed(), 0.0f);
-            return  true;
-        }
-
-        if (screenX > Gdx.graphics.getWidth() * 0.15f)
-        {
-            m_layerManager.getPlayer(CURRENT_PLAYER).setVelocity(m_layerManager.getPlayer(CURRENT_PLAYER).getSpeed(), 0.0f);
-            return  true;
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY)
-    {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount)
-    {
-        return false;
-    }
 }
