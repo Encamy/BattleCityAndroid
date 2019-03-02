@@ -258,6 +258,11 @@ public class Player extends Sprite {
 
     public void hit()
     {
+        if (m_state == State.INVULNERABLE)
+        {
+            return;
+        }
+
         m_health--;
         Gdx.app.log("TRACE", "Player was hitted. Current health: " + m_health);
 
