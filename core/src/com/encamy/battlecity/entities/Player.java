@@ -26,6 +26,7 @@ public class Player extends Sprite {
     private float m_speed = Settings.BASE_MOVEMENT_SPEED;
     private float m_animationTime = 0;
     private Animation m_left, m_top, m_right, m_bottom;
+    private Animation m_playerSpawAnimation;
     private Body m_body;
     private Box2dSteeringEntity m_steeringEntity;
     private World m_world;
@@ -36,13 +37,22 @@ public class Player extends Sprite {
     private int m_current_player;
     private Vector2 m_spawnPoint;
 
-    public Player(Animation left, Animation top, Animation right, Animation bottom, Body body, World world, int current_player, Vector2 spawnPoint)
+    private enum State {
+        SPAWNING,
+        ALIVE
+    }
+
+    private State m_state;
+
+    public Player(Animation left, Animation top, Animation right, Animation bottom, Animation playerSpawnAnimation,
+                  Body body, World world, int current_player, Vector2 spawnPoint)
     {
         super(((TextureAtlas.AtlasRegion) top.getKeyFrame(0)));
         m_left = left;
         m_top = top;
         m_right = right;
         m_bottom = bottom;
+        m_playerSpawAnimation = playerSpawnAnimation;
 
         m_body = body;
         m_steeringEntity = new Box2dSteeringEntity(m_body, 10.0f);
@@ -55,6 +65,8 @@ public class Player extends Sprite {
         m_current_player = current_player;
         m_level = 1;
         m_spawnPoint = new Vector2(spawnPoint);
+
+        m_state = State.SPAWNING;
     }
 
     public void draw(Batch batch, boolean freeze)
@@ -86,24 +98,17 @@ public class Player extends Sprite {
         return m_steeringEntity;
     }
 
-    private void update(float deltaTime)
+    private void updateSpawnAnimation(float animationTime)
     {
-        if (m_health < 0)
+        super.setRegion((TextureAtlas.AtlasRegion) m_playerSpawAnimation.getKeyFrame(animationTime));
+        if (m_playerSpawAnimation.isAnimationFinished(animationTime))
         {
-            // Just some placeholder. Implement destory mechanics.
-            return;
+            m_state = State.ALIVE;
         }
+    }
 
-        // update animation
-        m_animationTime += deltaTime;
-
-        Settings.Direction direction = utils.velocity2Direction(m_velocity);
-
-        if (direction != null)
-        {
-            m_direction = direction;
-        }
-
+    private void updateAliveAnimation(float animationTime, Settings.Direction direction)
+    {
         // We do not want to use stored direction here.
         // Animation should be played only while tank is moved
         if (direction != null)
@@ -124,10 +129,42 @@ public class Player extends Sprite {
                     break;
             }
         }
+    }
 
-        m_body.setLinearVelocity(m_velocity.x, m_velocity.y);
+    private void update(float deltaTime)
+    {
+        if (m_health < 0)
+        {
+            // Just some placeholder. Implement destory mechanics.
+            return;
+        }
 
-        //Gdx.app.log("Trace", "Current player position: " + getX() + ":" + getY());
+        // update animation
+        m_animationTime += deltaTime;
+
+        switch (m_state)
+        {
+            case SPAWNING:
+                updateSpawnAnimation(m_animationTime);
+                break;
+            case ALIVE:
+            {
+                Settings.Direction direction = utils.velocity2Direction(m_velocity);
+
+                if (direction != Settings.Direction.NULL)
+                {
+                    m_direction = direction;
+                }
+
+                updateAliveAnimation(m_animationTime, m_direction);
+
+                m_body.setLinearVelocity(m_velocity.x, m_velocity.y);
+            }
+                break;
+            default:
+                Gdx.app.log("FATAL", "Invalid state");
+                break;
+        }
 
         setX(Box2dHelpers.Box2d2x(m_body.getPosition().x));
         setY(Box2dHelpers.Box2d2y(m_body.getPosition().y));
@@ -204,5 +241,8 @@ public class Player extends Sprite {
                 false,
                 EnumSet.of(Settings.ObjectType.PLAYER),
                 true);
+
+        m_animationTime = 0f;
+        m_state = State.SPAWNING;
     }
 }

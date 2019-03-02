@@ -25,6 +25,7 @@ public class Enemy extends Sprite {
     private float m_health;
     private int score;
     private Animation m_left, m_top, m_right, m_bottom;
+    private Animation m_spawning;
     private Body m_body;
     private Box2dSteeringEntity m_steeringEntity;
     private World m_world;
@@ -32,6 +33,14 @@ public class Enemy extends Sprite {
     private ArrayList<Bullet> m_bullets;
 
     private Settings.EnemyDestroyedCallback m_OnEnemyDestroyed;
+
+    private enum State
+    {
+        SPAWNING,
+        ALIVE
+    }
+
+    private State m_state;
 
     public Enemy(Vector2 spawnpoint, EnemyProperties property, World world, Box2dSteeringEntity playerSteeringEntity)
     {
@@ -57,6 +66,7 @@ public class Enemy extends Sprite {
         //Arrive<Vector2> arriveSB = new Arrive<Vector2>(m_steeringEntity, playerSteeringEntity);
         RandomBehavior<Vector2> arriveSB = new RandomBehavior<Vector2>(m_steeringEntity, playerSteeringEntity);
         m_steeringEntity.setBehavior(arriveSB);
+        m_state = State.SPAWNING;
     }
 
     public void setOnDestroyedCallback(Settings.EnemyDestroyedCallback callback)
@@ -78,39 +88,66 @@ public class Enemy extends Sprite {
         return m_body;
     }
 
-    private void update(float deltaTime)
+    private void updateAliveAnimation(float animationTime)
     {
-        // update behavior
-        m_direction = m_steeringEntity.update(deltaTime);
-
-        // update animation
-        m_animationTime += deltaTime;
         if (m_body.getLinearVelocity().x < 0)
         {
-            super.setRegion(((TextureAtlas.AtlasRegion) m_left.getKeyFrame(m_animationTime)));
+            super.setRegion(((TextureAtlas.AtlasRegion) m_left.getKeyFrame(animationTime)));
         }
         else if (m_body.getLinearVelocity().x > 0)
         {
-            super.setRegion(((TextureAtlas.AtlasRegion) m_right.getKeyFrame(m_animationTime)));
+            super.setRegion(((TextureAtlas.AtlasRegion) m_right.getKeyFrame(animationTime)));
         }
         else if (m_body.getLinearVelocity().y < 0)
         {
-            super.setRegion(((TextureAtlas.AtlasRegion) m_bottom.getKeyFrame(m_animationTime)));
+            super.setRegion(((TextureAtlas.AtlasRegion) m_bottom.getKeyFrame(animationTime)));
         }
         else if (m_body.getLinearVelocity().y > 0)
         {
-            super.setRegion(((TextureAtlas.AtlasRegion) m_top.getKeyFrame(m_animationTime)));
+            super.setRegion(((TextureAtlas.AtlasRegion) m_top.getKeyFrame(animationTime)));
+        }
+    }
+
+    private void updateSpawnAnimation(float animationTime)
+    {
+        super.setRegion((TextureAtlas.AtlasRegion) m_spawning.getKeyFrame(animationTime));
+        if (m_spawning.isAnimationFinished(animationTime))
+        {
+            m_state = State.ALIVE;
+        }
+    }
+
+
+    private void update(float deltaTime)
+    {
+        m_animationTime += deltaTime;
+
+        switch (m_state)
+        {
+            case SPAWNING:
+                updateSpawnAnimation(m_animationTime);
+                break;
+            case ALIVE:
+            {
+                // update behavior
+                m_direction = m_steeringEntity.update(deltaTime);
+                updateAliveAnimation(m_animationTime);
+
+                if (m_animationTime * 1000 > Settings.FIRE_RATE)
+                {
+                    Gdx.app.log("TRACE", "FIRE");
+                    fire();
+                    m_animationTime = 0;
+                }
+            }
+            break;
+            default:
+                Gdx.app.log("FATAL", "Invalid state");
+                break;
         }
 
         setX(Box2dHelpers.Box2d2x(m_body.getPosition().x));
         setY(Box2dHelpers.Box2d2y(m_body.getPosition().y));
-
-        if (m_animationTime * 1000 > Settings.FIRE_RATE)
-        {
-            Gdx.app.log("TRACE", "FIRE");
-            fire();
-            m_animationTime = 0;
-        }
 
         for (Bullet bullet : m_bullets)
         {
@@ -152,6 +189,7 @@ public class Enemy extends Sprite {
         m_top = property.topAnimation;
         m_right = property.rightAnimation;
         m_bottom = property.bottomAnimation;
+        m_spawning = property.spawningAnimation;
         speed = property.speed;
         m_health = property.health;
         score = property.score;

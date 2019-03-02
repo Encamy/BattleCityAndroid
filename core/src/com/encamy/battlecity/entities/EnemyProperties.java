@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.encamy.battlecity.Settings.ANIMATION_FRAME_DURATION;
+
 /*
     Enemy levels:
     >Level 0: Basically identical to your first tank, slow and basic.
@@ -31,6 +33,7 @@ public class EnemyProperties
     public Animation rightAnimation;
     public Animation topAnimation;
     public Animation bottomAnimation;
+    public Animation spawningAnimation;
     public float health;
     public int score;
 
@@ -147,6 +150,11 @@ public class EnemyProperties
         property.rightAnimation = new Animation(Settings.ANIMATION_FRAME_DURATION, right_animationTextures.toArray());
         property.topAnimation = new Animation(Settings.ANIMATION_FRAME_DURATION, top_animationTextures.toArray());
         property.bottomAnimation = new Animation(Settings.ANIMATION_FRAME_DURATION, bottom_animationTextures.toArray());
+        property.spawningAnimation = new Animation(ANIMATION_FRAME_DURATION * 0.5f,
+                atlas.findRegion("spawn_animation_1"),
+                atlas.findRegion("spawn_animation_2"),
+                atlas.findRegion("spawn_animation_3"),
+                atlas.findRegion("spawn_animation_4"));
 
         property.leftAnimation.setPlayMode(Animation.PlayMode.LOOP);
         property.rightAnimation.setPlayMode(Animation.PlayMode.LOOP);

@@ -94,16 +94,9 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
             return;
         }
 
-        PlaySpawnAnimation(spawnpoint);
-
         Enemy enemy = CreateRandomEnemy(spawnpoint);
         enemy.setOnDestroyedCallback(this);
         m_enemies.add(enemy);
-    }
-
-    private void PlaySpawnAnimation(Vector2 spawnpoint)
-    {
-        // just a placeholder for now
     }
 
     private Vector2 getSpawnPoint()

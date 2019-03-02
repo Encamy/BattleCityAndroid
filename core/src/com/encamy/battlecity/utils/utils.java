@@ -25,6 +25,6 @@ public class utils
             return Settings.Direction.TOP;
         }
 
-        return null;
+        return Settings.Direction.NULL;
     }
 }

@@ -36,7 +36,6 @@ public class LayerManager implements Settings.WallDestroyedCallback
     private World m_world;
     private Player[] m_players;
     private ArrayList<BaseWall> m_walls;
-    private Animation m_spawnAnimation;
 
     private boolean loaded = false;
 
@@ -111,13 +110,13 @@ public class LayerManager implements Settings.WallDestroyedCallback
         right.setPlayMode(Animation.PlayMode.LOOP);
         bottom.setPlayMode(Animation.PlayMode.LOOP);
 
-        m_spawnAnimation = new Animation(ANIMATION_FRAME_DURATION,
+        Animation playerSpawnAnimation = new Animation(ANIMATION_FRAME_DURATION * 0.5f,
                 m_atlas.findRegion("spawn_animation_1"),
                 m_atlas.findRegion("spawn_animation_2"),
                 m_atlas.findRegion("spawn_animation_3"),
                 m_atlas.findRegion("spawn_animation_4"));
 
-        m_players[index] = new Player(left, top, right, bottom, playerBody, m_world, index + 1, spawnpoint);
+        m_players[index] = new Player(left, top, right, bottom, playerSpawnAnimation, playerBody, m_world, index + 1, spawnpoint);
     }
 
     public TiledMap getTileMap()
