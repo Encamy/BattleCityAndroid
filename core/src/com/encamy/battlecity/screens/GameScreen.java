@@ -41,7 +41,7 @@ public class GameScreen implements Screen {
 		Gdx.app.log("Info", "platform = " + Gdx.app.getType().name());
 
 		m_camera = new OrthographicCamera();
-		m_camera.setToOrtho(false, SCREEN_WIDTH / Settings.PPM, SCREEN_HEIGHT / Settings.PPM);
+        m_camera.setToOrtho(false, SCREEN_WIDTH / Settings.PPM, SCREEN_HEIGHT / Settings.PPM);
 
         Box2D.init();
         m_b2drenderer = new Box2DDebugRenderer();
