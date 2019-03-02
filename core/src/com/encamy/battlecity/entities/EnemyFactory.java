@@ -110,15 +110,18 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
     {
         List<Vector2> availableSpawns = new ArrayList<Vector2>();
 
-        for (MapObject object : m_spawnPoints) {
-            if (object instanceof RectangleMapObject) {
+        for (MapObject object : m_spawnPoints)
+        {
+            if (object instanceof RectangleMapObject)
+            {
                 Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
                 rectangle.width = 64;
                 rectangle.height = 64;
 
                 boolean intersect = false;
 
-                for (Enemy enemy : m_enemies) {
+                for (Enemy enemy : m_enemies)
+                {
                     Rectangle enemyRectangle = new Rectangle();
 
                     enemyRectangle.x = enemy.getX();
@@ -126,13 +129,15 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
                     enemyRectangle.width = 64;
                     enemyRectangle.height = 64;
 
-                    if (Intersector.overlaps(rectangle, enemyRectangle)) {
+                    if (Intersector.overlaps(rectangle, enemyRectangle))
+                    {
                         intersect = true;
                         break;
                     }
                 }
 
-                if (intersect == false) {
+                if (!intersect)
+                {
                     availableSpawns.add(new Vector2(rectangle.getX(), rectangle.getY()));
                 }
             }
