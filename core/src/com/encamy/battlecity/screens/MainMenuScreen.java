@@ -56,7 +56,7 @@ public class MainMenuScreen implements Screen, InputProcessor
     @Override
     public void resize(int width, int height)
     {
-        
+
     }
 
     @Override
@@ -103,15 +103,15 @@ public class MainMenuScreen implements Screen, InputProcessor
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button)
     {
-        if (screenX > 430 && screenX < 850)
+        if (screenX > 0.33f * Gdx.graphics.getWidth() && screenX < 0.66f * Gdx.graphics.getWidth())
         {
-            if (screenY > 460 && screenY < 550)
+            if (screenY > 0.63f * Gdx.graphics.getHeight() && screenY < 0.76f * Gdx.graphics.getHeight())
             {
                 // 1 Player
                 Gdx.app.log("INFO", "1 PLAYER");
                 m_game.setScreen(new GameScreen());
             }
-            else if (screenY > 550 && screenY < 620)
+            else if (screenY > 0.76f * Gdx.graphics.getHeight() && screenY < 0.86f * Gdx.graphics.getHeight())
             {
                 // 2 Player
                 Gdx.app.log("INFO", "2 PLAYER");
