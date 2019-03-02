@@ -14,7 +14,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.compression.lzma.Base;
 import com.encamy.battlecity.entities.BaseWall;
 import com.encamy.battlecity.entities.BrickWall;
 import com.encamy.battlecity.entities.Grass;
@@ -281,8 +280,8 @@ public class LayerManager implements Settings.WallDestroyedCallback
         // top
         Box2dHelpers.createBox(
                 m_world,
-                10, Settings.SCREEN_HEIGHT + 1,
-                Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT + 2,
+                0, Settings.SCREEN_HEIGHT + 1,
+                Settings.SCREEN_WIDTH, 10,
                 true,
                 EnumSet.of(Settings.ObjectType.WALL),
                 true);
@@ -291,7 +290,7 @@ public class LayerManager implements Settings.WallDestroyedCallback
         Box2dHelpers.createBox(
                 m_world,
                 Settings.SCREEN_WIDTH + 2, 0,
-                Settings.SCREEN_WIDTH + 10, Settings.SCREEN_HEIGHT,
+                10, Settings.SCREEN_HEIGHT,
                 true,
                 EnumSet.of(Settings.ObjectType.WALL),
                 true);
