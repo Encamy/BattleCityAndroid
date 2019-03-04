@@ -14,7 +14,9 @@ import com.badlogic.gdx.utils.Array;
 import com.encamy.battlecity.CollisionListener;
 import com.encamy.battlecity.LayerManager;
 import com.encamy.battlecity.Settings;
+import com.encamy.battlecity.entities.Enemy;
 import com.encamy.battlecity.entities.EnemyFactory;
+import com.encamy.battlecity.utils.Dictionary;
 
 import java.util.EnumSet;
 
@@ -162,7 +164,22 @@ public class GameScreen implements Screen {
                 if (!type.contains(Settings.ObjectType.ENEMY_OWNER))
                 {
                     Gdx.app.log("TRACE", "Handled");
-                    m_enemyFactory.hit(body);
+
+                    Enemy enemy = m_enemyFactory.getEnemy(body);
+                    int score = enemy.getScore();
+                    int level = enemy.getLevel();
+
+                    if (enemy.hit())
+                    {
+                        if (type.contains(Settings.ObjectType.PLAYER1_OWNER))
+                        {
+                            m_layerManager.getPlayer(1).enemyDestroyed(level, score);
+                        }
+                        else if (type.contains(Settings.ObjectType.PLAYER2_OWNER))
+                        {
+                            m_layerManager.getPlayer(2).enemyDestroyed(level, score);
+                        }
+                    }
                 }
                 else
                 {
@@ -261,6 +278,13 @@ public class GameScreen implements Screen {
                 {
                     Gdx.app.log("INFO", "GAME OVER");
                     m_freezeWorld = true;
+
+                    Dictionary<Integer, Integer> dictionary = m_layerManager.getPlayer(1).getDestroyedEnemies();
+                    for(int i = 0; i < dictionary.size(); i++)
+                    {
+                        Dictionary.Entry entry = dictionary.getAt(i);
+                        Gdx.app.log("TRACE","level = " + entry.getKey() + " score = " + entry.getValue());
+                    }
                 }
                 Gdx.app.log("TRACE", "FLAG");
             }

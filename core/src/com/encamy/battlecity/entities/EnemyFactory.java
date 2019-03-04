@@ -156,18 +156,18 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
         }
     }
 
-    public void hit(Body body)
+    public boolean hit(Body body)
     {
         Enemy enemy = getEnemy(body);
         if (enemy == null)
         {
-            return;
+            return false;
         }
 
-        enemy.hit();
+        return enemy.hit();
     }
 
-    private Enemy getEnemy(Body body)
+    public Enemy getEnemy(Body body)
     {
         for (Enemy enemy : m_enemies)
         {

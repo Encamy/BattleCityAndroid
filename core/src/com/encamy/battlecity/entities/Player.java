@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.encamy.battlecity.AnimationContainer;
 import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.utils.Box2dHelpers;
+import com.encamy.battlecity.utils.Dictionary;
 import com.encamy.battlecity.utils.utils;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class Player extends Sprite implements InputProcessor {
     private int m_current_player;
     private Vector2 m_spawnPoint;
     private Sprite m_invulnarableSprite;
+    private Dictionary<Integer, Integer> m_destroyedEnemies;
 
     private static final float INVULNERABLE_ANIMATION_TIME = 3000;
 
@@ -76,6 +78,7 @@ public class Player extends Sprite implements InputProcessor {
 
         Gdx.input.setInputProcessor(this);
         //m_invulnarableSprite.setAlpha(0.5f);
+        m_destroyedEnemies = new Dictionary<Integer, Integer>();
     }
 
     public void draw(Batch batch, boolean freeze)
@@ -110,6 +113,16 @@ public class Player extends Sprite implements InputProcessor {
     public Box2dSteeringEntity getSteeringEntity()
     {
         return m_steeringEntity;
+    }
+
+    public void enemyDestroyed(int level, int score)
+    {
+        m_destroyedEnemies.put(level, score);
+    }
+
+    public Dictionary<Integer, Integer> getDestroyedEnemies()
+    {
+        return m_destroyedEnemies;
     }
 
     private void updateSpawnAnimation(float animationTime)

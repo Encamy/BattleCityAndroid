@@ -23,7 +23,8 @@ public class Enemy extends Sprite {
     private float speed;
     private float m_animationTime = 0;
     private float m_health;
-    private int score;
+    private int m_score;
+    private int m_level;
     private Animation m_left, m_top, m_right, m_bottom;
     private Animation m_spawning;
     private Body m_body;
@@ -86,6 +87,16 @@ public class Enemy extends Sprite {
     public Body getBody()
     {
         return m_body;
+    }
+
+    public int getScore()
+    {
+        return m_score;
+    }
+
+    public int getLevel()
+    {
+        return m_level;
     }
 
     private void updateAliveAnimation(float animationTime)
@@ -192,16 +203,20 @@ public class Enemy extends Sprite {
         m_spawning = property.animation.getSpawnAnimation();
         speed = property.speed;
         m_health = property.health;
-        score = property.score;
+        m_score = property.score;
+        m_level = property.level;
     }
 
-    public void hit()
+    public boolean hit()
     {
         m_health--;
         if (m_health < 0)
         {
             destroy();
+            return true;
         }
+
+        return false;
     }
 
     private void destroy()
