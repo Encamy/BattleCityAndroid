@@ -22,7 +22,6 @@ import java.util.EnumSet;
 public class Player extends Sprite implements InputProcessor {
 
     private Vector2 m_velocity = new Vector2();
-    private float m_speed = Settings.BASE_MOVEMENT_SPEED;
     private float m_animationTime = 0;
     private Animation m_left, m_top, m_right, m_bottom;
     private Animation m_playerSpawAnimation;
@@ -100,7 +99,7 @@ public class Player extends Sprite implements InputProcessor {
 
     public float getSpeed()
     {
-        return m_speed;
+        return Settings.BASE_MOVEMENT_SPEED;
     }
 
     public Body getBody()
