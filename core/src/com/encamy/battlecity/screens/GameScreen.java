@@ -234,6 +234,10 @@ public class GameScreen implements Screen {
                     {
                         body.setUserData(EnumSet.of(Settings.ObjectType.BULLET, Settings.ObjectType.PLAYER2_OWNER));
                     }
+                    else if (type.contains(Settings.ObjectType.ENEMY_OWNER))
+                    {
+                        body.setUserData(EnumSet.of(Settings.ObjectType.BULLET, Settings.ObjectType.ENEMY_OWNER));
+                    }
 
                 }
             }
