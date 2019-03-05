@@ -212,7 +212,8 @@ public class Enemy extends Sprite {
     public boolean hit()
     {
         m_health--;
-        if (m_health < 0)
+        Gdx.app.log("TRACE", "Current enemy health = " + m_health);
+        if (m_health <= 0)
         {
             destroy();
             return true;

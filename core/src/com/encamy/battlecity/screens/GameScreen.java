@@ -180,6 +180,10 @@ public class GameScreen implements Screen {
                             m_layerManager.getPlayer(2).enemyDestroyed(level, score);
                         }
                     }
+                    else
+                    {
+                        body.setUserData(EnumSet.of(Settings.ObjectType.ENEMY));
+                    }
                 }
                 else
                 {
