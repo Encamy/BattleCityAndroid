@@ -1,6 +1,8 @@
 package com.encamy.battlecity.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -10,7 +12,7 @@ import com.encamy.battlecity.utils.Box2dHelpers;
 
 import java.util.EnumSet;
 
-public class Bullet
+public class Bullet extends Sprite
 {
     private World m_world;
     private Settings.Direction m_direction;
@@ -18,16 +20,18 @@ public class Bullet
     private Vector2 m_vector;
     private boolean active = true;
 
-    public Bullet(World world, Vector2 coords, Settings.Direction direction, Settings.ObjectType owner)
+    public Bullet(World world, Vector2 coords, Settings.Direction direction, Settings.ObjectType owner, TextureAtlas atlas)
     {
+        super(atlas.findRegion("bullet_top"));
+
         m_world = world;
         m_direction = direction;
 
         // Should we set box2d fixture to 'bullet'?
         // Need testing for collision tunneling.
         m_body = Box2dHelpers.createBox(world,
-                Box2dHelpers.x2Box2d(coords.x),
-                Box2dHelpers.y2Box2d(coords.y),
+                Box2dHelpers.x2Box2d(coords.x, 32),
+                Box2dHelpers.y2Box2d(coords.y, 32),
                 2, 2,
                 false,
                 EnumSet.of(owner, Settings.ObjectType.BULLET),
@@ -39,22 +43,26 @@ public class Bullet
         {
             case TOP:
                 m_vector = new Vector2(0.0f, Settings.BULLET_SPEED);
+                super.setRegion(atlas.findRegion("bullet_top"));
                 break;
             case LEFT:
                 m_vector = new Vector2(-Settings.BULLET_SPEED, 0.0f);
+                super.setRegion(atlas.findRegion("bullet_left"));
                 break;
             case RIGHT:
                 m_vector = new Vector2(Settings.BULLET_SPEED, 0.0f);
+                super.setRegion(atlas.findRegion("bullet_right"));
                 break;
             case BOTTOM:
                 m_vector = new Vector2(0.0f, -Settings.BULLET_SPEED);
+                super.setRegion(atlas.findRegion("bullet_bottom"));
                 break;
         }
 
         active = true;
     }
 
-    public void update(float deltaTime)
+    private void update(float deltaTime)
     {
         if (active)
         {
@@ -65,6 +73,15 @@ public class Bullet
         {
             Gdx.app.log("ERROR", "Trying to update dead bullet");
         }
+
+        setX(Box2dHelpers.Box2d2x(m_body.getPosition().x, 16));
+        setY(Box2dHelpers.Box2d2y(m_body.getPosition().y, 16));
+    }
+
+    public void draw(Batch batch)
+    {
+        super.draw(batch);
+        update(Gdx.graphics.getDeltaTime());
     }
 
     public Body getBody()

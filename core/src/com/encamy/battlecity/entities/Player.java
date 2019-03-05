@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -38,6 +39,7 @@ public class Player extends Sprite implements InputProcessor {
     private Vector2 m_spawnPoint;
     private Sprite m_invulnarableSprite;
     private Dictionary<Integer, Integer> m_destroyedEnemies;
+    private TextureAtlas m_atlas;
 
     private static final float INVULNERABLE_ANIMATION_TIME = 3000;
 
@@ -49,7 +51,7 @@ public class Player extends Sprite implements InputProcessor {
 
     private State m_state;
 
-    public Player(AnimationContainer animation, Body body, int current_player, Vector2 spawnPoint)
+    public Player(AnimationContainer animation, Body body, int current_player, Vector2 spawnPoint, TextureAtlas atlas)
     {
         super(((TextureAtlas.AtlasRegion) animation.getTopAnimation().getKeyFrame(0)));
         m_left = animation.getLeftAnimation();
@@ -65,6 +67,7 @@ public class Player extends Sprite implements InputProcessor {
         m_direction = Settings.Direction.TOP;
 
         m_bullets = new ArrayList<Bullet>();
+        m_atlas = atlas;
 
         m_health = Settings.PLAYER_HEALTH;
         m_current_player = current_player;
@@ -85,7 +88,7 @@ public class Player extends Sprite implements InputProcessor {
     {
         if (!freeze)
         {
-            update(Gdx.graphics.getDeltaTime());
+            update(Gdx.graphics.getDeltaTime(), batch);
         }
         super.draw(batch);
 
@@ -168,7 +171,7 @@ public class Player extends Sprite implements InputProcessor {
         }
     }
 
-    private void update(float deltaTime)
+    private void update(float deltaTime, Batch batch)
     {
         if (m_health < 0)
         {
@@ -208,15 +211,15 @@ public class Player extends Sprite implements InputProcessor {
                 break;
         }
 
-        setX(Box2dHelpers.Box2d2x(m_body.getPosition().x));
-        setY(Box2dHelpers.Box2d2y(m_body.getPosition().y));
+        setX(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32));
+        setY(Box2dHelpers.Box2d2y(m_body.getPosition().y, 32));
 
-        m_invulnarableSprite.setX(Box2dHelpers.Box2d2x(m_body.getPosition().x));
-        m_invulnarableSprite.setY(Box2dHelpers.Box2d2y(m_body.getPosition().y));
+        m_invulnarableSprite.setX(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32));
+        m_invulnarableSprite.setY(Box2dHelpers.Box2d2y(m_body.getPosition().y, 32));
 
         for (Bullet bullet : m_bullets)
         {
-            bullet.update(deltaTime);
+            bullet.draw(batch);
         }
     }
 
@@ -226,26 +229,26 @@ public class Player extends Sprite implements InputProcessor {
         switch (m_direction)
         {
             case TOP:
-                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 90);
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y, 32) + 90);
                 break;
             case LEFT:
-                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 20, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 58);
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32) + 20, Box2dHelpers.Box2d2y(m_body.getPosition().y, 32) + 58);
                 break;
             case RIGHT:
-                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 85, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 58);
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32) + 85, Box2dHelpers.Box2d2y(m_body.getPosition().y, 32) + 58);
                 break;
             case BOTTOM:
-                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 20);
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y, 32) + 20);
                 break;
         }
 
         if (m_current_player == 1)
         {
-            m_bullets.add(new Bullet(m_world, bulletSpawnPos, m_direction, Settings.ObjectType.PLAYER1_OWNER));
+            m_bullets.add(new Bullet(m_world, bulletSpawnPos, m_direction, Settings.ObjectType.PLAYER1_OWNER, m_atlas));
         }
         else if (m_current_player == 2)
         {
-            m_bullets.add(new Bullet(m_world, bulletSpawnPos, m_direction, Settings.ObjectType.PLAYER2_OWNER));
+            m_bullets.add(new Bullet(m_world, bulletSpawnPos, m_direction, Settings.ObjectType.PLAYER2_OWNER, m_atlas));
         }
         else
         {

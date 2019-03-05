@@ -38,8 +38,8 @@ public class Grass extends Sprite implements BaseWall
     @Override
     public void update()
     {
-        setX(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 16);
-        setY(Box2dHelpers.Box2d2y(m_body.getPosition().y) + 16);
+        setX(Box2dHelpers.Box2d2x(m_body.getPosition().x, 16));
+        setY(Box2dHelpers.Box2d2y(m_body.getPosition().y, 16));
     }
 
     @Override

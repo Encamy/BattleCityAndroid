@@ -32,6 +32,7 @@ public class Enemy extends Sprite {
     private World m_world;
     private Settings.Direction m_direction;
     private ArrayList<Bullet> m_bullets;
+    private TextureAtlas m_atlas;
 
     private Settings.EnemyDestroyedCallback m_OnEnemyDestroyed;
 
@@ -43,7 +44,7 @@ public class Enemy extends Sprite {
 
     private State m_state;
 
-    public Enemy(Vector2 spawnpoint, EnemyProperties property, World world, Box2dSteeringEntity playerSteeringEntity)
+    public Enemy(Vector2 spawnpoint, EnemyProperties property, World world, Box2dSteeringEntity playerSteeringEntity, TextureAtlas atlas)
     {
         super((TextureAtlas.AtlasRegion)property.animation.getBottomAnimation().getKeyFrame(0));
 
@@ -59,6 +60,7 @@ public class Enemy extends Sprite {
                 true);
 
         m_world = world;
+        m_atlas = atlas;
 
         m_bullets = new ArrayList<Bullet>();
 
@@ -79,7 +81,7 @@ public class Enemy extends Sprite {
     {
         if (!freeze)
         {
-            update(Gdx.graphics.getDeltaTime());
+            update(Gdx.graphics.getDeltaTime(), batch);
         }
         super.draw(batch);
     }
@@ -129,7 +131,7 @@ public class Enemy extends Sprite {
     }
 
 
-    private void update(float deltaTime)
+    private void update(float deltaTime, Batch batch)
     {
         m_animationTime += deltaTime;
 
@@ -157,12 +159,12 @@ public class Enemy extends Sprite {
                 break;
         }
 
-        setX(Box2dHelpers.Box2d2x(m_body.getPosition().x));
-        setY(Box2dHelpers.Box2d2y(m_body.getPosition().y));
+        setX(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32));
+        setY(Box2dHelpers.Box2d2y(m_body.getPosition().y, 32));
 
         for (Bullet bullet : m_bullets)
         {
-            bullet.update(deltaTime);
+            bullet.draw(batch);
         }
     }
 
@@ -172,20 +174,20 @@ public class Enemy extends Sprite {
         switch (m_direction)
         {
             case TOP:
-                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 90);
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y, 32) + 90);
                 break;
             case LEFT:
-                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 20, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 58);
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32) + 20, Box2dHelpers.Box2d2y(m_body.getPosition().y, 32) + 58);
                 break;
             case RIGHT:
-                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 85, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 58);
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32) + 85, Box2dHelpers.Box2d2y(m_body.getPosition().y, 32) + 58);
                 break;
             case BOTTOM:
-                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y) + 20);
+                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y, 32) + 20);
                 break;
         }
 
-        m_bullets.add(new Bullet(m_world, bulletSpawnPos, m_direction, Settings.ObjectType.ENEMY_OWNER));
+        m_bullets.add(new Bullet(m_world, bulletSpawnPos, m_direction, Settings.ObjectType.ENEMY_OWNER, m_atlas));
     }
 
     private void SetPosition(Vector2 spawnpoint)

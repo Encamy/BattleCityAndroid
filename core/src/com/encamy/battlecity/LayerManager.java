@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -128,7 +129,7 @@ public class LayerManager implements Settings.WallDestroyedCallback
         animationContainer.setInvulnerabilityAnimation(invulnerabilityAnimation);
         animationContainer.setSpawnAnimation(playerSpawnAnimation);
 
-        m_players[index] = new Player(animationContainer, playerBody, index + 1, spawnpoint);
+        m_players[index] = new Player(animationContainer, playerBody, index + 1, spawnpoint, m_atlas);
     }
 
     public TiledMap getTileMap()
@@ -194,6 +195,17 @@ public class LayerManager implements Settings.WallDestroyedCallback
             {
                 String solid_title = tile.getProperties().get("title", String.class);
                 atlas.addRegion(solid_title, tile.getTextureRegion());
+            }
+        }
+
+        Iterator<TiledMapTile> bulletTiles =  tiledMap.getTileSets().getTileSet("bullets").iterator();
+        while (bulletTiles.hasNext())
+        {
+            TiledMapTile tile = bulletTiles.next();
+            if (tile.getProperties().containsKey("direction"))
+            {
+                String bullet_direction = tile.getProperties().get("direction", String.class);
+                atlas.addRegion("bullet_" + bullet_direction, tile.getTextureRegion());
             }
         }
 

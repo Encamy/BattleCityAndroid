@@ -81,7 +81,7 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
             level = m_random.nextInt(4);
         }
 
-        return new Enemy(spawnpoint, m_properties.Get(level), m_world, m_playerSteeringEntity);
+        return new Enemy(spawnpoint, m_properties.Get(level), m_world, m_playerSteeringEntity, m_atlas);
     }
 
     private void spawn()

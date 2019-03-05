@@ -40,8 +40,8 @@ class Flag extends Sprite implements BaseWall
     @Override
     public void update()
     {
-        setX(Box2dHelpers.Box2d2x(m_body.getPosition().x));
-        setY(Box2dHelpers.Box2d2y(m_body.getPosition().y));
+        setX(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32));
+        setY(Box2dHelpers.Box2d2y(m_body.getPosition().y, 32));
     }
 
     @Override

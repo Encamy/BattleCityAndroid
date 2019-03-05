@@ -53,23 +53,23 @@ public class Box2dHelpers
         return body;
     }
 
-    public static float x2Box2d(float x)
+    public static float x2Box2d(float x, int offset)
     {
-        return x + Settings.SCREEN_WIDTH / Settings.PPM * 0.5f - 32;
+        return x + Settings.SCREEN_WIDTH / Settings.PPM * 0.5f - offset;
     }
 
-    public static float Box2d2x(float x)
+    public static float Box2d2x(float x, int offset)
     {
-        return x * Settings.PPM + Settings.SCREEN_WIDTH * 0.5f - 32;
+        return x * Settings.PPM + Settings.SCREEN_WIDTH * 0.5f - offset;
     }
 
-    public static float y2Box2d(float y)
+    public static float y2Box2d(float y, int offset)
     {
-        return y + Settings.SCREEN_HEIGHT / Settings.PPM * 0.5f - 32;
+        return y + Settings.SCREEN_HEIGHT / Settings.PPM * 0.5f - offset;
     }
 
-    public static float Box2d2y(float y)
+    public static float Box2d2y(float y, int offset)
     {
-        return y * Settings.PPM + Settings.SCREEN_HEIGHT * 0.5f - 32;
+        return y * Settings.PPM + Settings.SCREEN_HEIGHT * 0.5f - offset;
     }
 }
