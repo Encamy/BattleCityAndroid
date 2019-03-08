@@ -15,6 +15,9 @@ public class Settings {
     public static final int PLAYER_HEALTH = 3;
     public static final int FIRE_RATE = 800;
 
+    public static final int BROADCAST_PORT = 5060;
+    public static final int BROADCAST_TIMEOUT = 5000;
+
     public enum Direction {LEFT, TOP, RIGHT, BOTTOM, NULL}
     public enum ObjectType
     {
