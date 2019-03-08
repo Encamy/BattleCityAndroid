@@ -36,13 +36,15 @@ public class LayerManager implements Settings.WallDestroyedCallback
     private World m_world;
     private Player[] m_players;
     private ArrayList<BaseWall> m_walls;
+    private BulletManager m_bulletManager;
 
     private boolean loaded = false;
 
-    public LayerManager(World world)
+    public LayerManager(World world, BulletManager bulletManager)
     {
         m_world = world;
         m_walls = new ArrayList<BaseWall>();
+        m_bulletManager = bulletManager;
     }
 
     public void loadLevel(String levelTitle)
@@ -129,7 +131,7 @@ public class LayerManager implements Settings.WallDestroyedCallback
         animationContainer.setInvulnerabilityAnimation(invulnerabilityAnimation);
         animationContainer.setSpawnAnimation(playerSpawnAnimation);
 
-        m_players[index] = new Player(animationContainer, playerBody, index + 1, spawnpoint, m_atlas);
+        m_players[index] = new Player(animationContainer, playerBody, index + 1, spawnpoint, m_bulletManager);
     }
 
     public TiledMap getTileMap()

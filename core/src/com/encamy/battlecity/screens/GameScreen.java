@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.encamy.battlecity.BulletManager;
 import com.encamy.battlecity.CollisionListener;
 import com.encamy.battlecity.LayerManager;
 import com.encamy.battlecity.Settings;
@@ -35,6 +36,7 @@ public class GameScreen implements Screen {
     private Box2DDebugRenderer m_b2drenderer;
     private World m_world;
     private LayerManager m_layerManager;
+    private BulletManager m_bulletManager;
     private final int CURRENT_PLAYER = 1;
     private boolean m_freezeWorld = false;
 
@@ -59,16 +61,21 @@ public class GameScreen implements Screen {
         CollisionListener listener = new CollisionListener(m_world);
         m_world.setContactListener(listener);
 
-        m_layerManager = new LayerManager(m_world);
-        m_layerManager.loadLevel("general_map.tmx");
+        m_bulletManager = new BulletManager(m_world);
 
+        m_layerManager = new LayerManager(m_world, m_bulletManager);
+
+        m_layerManager.loadLevel("general_map.tmx");
         m_layerManager.loadPlayer(CURRENT_PLAYER);
+
+        m_bulletManager.setAtlas(m_layerManager.getAtlas());
 
         m_enemyFactory = new EnemyFactory(
                 m_layerManager.getTileMap().getLayers().get("EnemySpawns").getObjects(),
                 m_layerManager.getAtlas(),
                 m_world,
-                m_layerManager.getPlayer(CURRENT_PLAYER).getSteeringEntity()
+                m_layerManager.getPlayer(CURRENT_PLAYER).getSteeringEntity(),
+                m_bulletManager
         );
 	}
 
@@ -87,6 +94,7 @@ public class GameScreen implements Screen {
         m_layerManager.getPlayer(CURRENT_PLAYER).draw(m_spriteBatch, m_freezeWorld);
         m_enemyFactory.draw(m_spriteBatch, m_freezeWorld);
         m_layerManager.drawWalls(m_spriteBatch);
+        m_bulletManager.update(m_spriteBatch);
         m_spriteBatch.end();
         if (!m_freezeWorld)
         {
@@ -138,26 +146,8 @@ public class GameScreen implements Screen {
 
             if (type.contains(Settings.ObjectType.BULLET ) && !type.contains(Settings.ObjectType.GRASS))
             {
-                if (type.contains(Settings.ObjectType.PLAYER1_OWNER))
-                {
-                    Gdx.app.log("TRACE", "Handled");
-                    m_layerManager.getPlayer(1).destroyBullet(body);
-                }
-                else if (type.contains(Settings.ObjectType.PLAYER2_OWNER))
-                {
-                    Gdx.app.log("TRACE", "Handled");
-                    m_layerManager.getPlayer(2).destroyBullet(body);
-                }
-                else if (type.contains(Settings.ObjectType.ENEMY_OWNER))
-                {
-                    Gdx.app.log("TRACE", "Handled");
-                    m_enemyFactory.destroyBullet(body);
-                }
-                else
-                {
-                    Gdx.app.log("ERROR", "WTF?!");
-                    m_world.destroyBody(body);
-                }
+                Gdx.app.log("TRACE", "Handled");
+                m_bulletManager.removeBullet(body);
             }
             else if (type.contains(Settings.ObjectType.ENEMY))
             {

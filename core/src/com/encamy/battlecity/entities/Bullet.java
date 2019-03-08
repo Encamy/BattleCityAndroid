@@ -18,7 +18,14 @@ public class Bullet extends Sprite
     private Settings.Direction m_direction;
     private Body m_body;
     private Vector2 m_vector;
-    private boolean active = true;
+
+    public enum State {
+        ALIVE,
+        DESTROYING,
+        DESTROYED
+    }
+
+    private State m_state;
 
     public Bullet(World world, Vector2 coords, Settings.Direction direction, Settings.ObjectType owner, TextureAtlas atlas)
     {
@@ -59,29 +66,39 @@ public class Bullet extends Sprite
                 break;
         }
 
-        active = true;
+        m_state = State.ALIVE;
     }
 
-    private void update(float deltaTime)
+    public boolean update(Batch batch)
     {
-        if (active)
+        switch (m_state)
         {
-            //Gdx.app.log("TRACE", m_vector.toString());
-            m_body.applyForceToCenter(m_vector, true);
-        }
-        else
-        {
-            Gdx.app.log("ERROR", "Trying to update dead bullet");
+            case ALIVE:
+                m_body.applyForceToCenter(m_vector, true);
+                break;
+            case DESTROYING:
+                return true;
+                //break;
+            case DESTROYED:
+                return true;
         }
 
         setX(Box2dHelpers.Box2d2x(m_body.getPosition().x, 16));
         setY(Box2dHelpers.Box2d2y(m_body.getPosition().y, 16));
+
+        super.draw(batch);
+
+        return false;
+    }
+
+    public void setState(State state)
+    {
+        m_state = state;
     }
 
     public void draw(Batch batch)
     {
-        super.draw(batch);
-        update(Gdx.graphics.getDeltaTime());
+        // placeholder
     }
 
     public Body getBody()
@@ -92,6 +109,5 @@ public class Bullet extends Sprite
     public void dispose()
     {
         m_world.destroyBody(m_body);
-        active = false;
     }
 }

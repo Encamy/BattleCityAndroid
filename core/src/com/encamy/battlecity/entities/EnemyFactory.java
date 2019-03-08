@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.encamy.battlecity.BulletManager;
 import com.encamy.battlecity.Settings;
 
 import java.util.ArrayList;
@@ -37,8 +38,9 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
 
     private World m_world;
     private Box2dSteeringEntity m_playerSteeringEntity;
+    private BulletManager m_bulletManager;
 
-    public EnemyFactory(MapObjects spawnPoints, TextureAtlas atlas, World world, Box2dSteeringEntity playerSteeringEntity)
+    public EnemyFactory(MapObjects spawnPoints, TextureAtlas atlas, World world, Box2dSteeringEntity playerSteeringEntity, BulletManager bulletManager)
     {
         Gdx.app.log("Trace", "Creating enemy factory");
         m_spawnPoints = spawnPoints;
@@ -48,6 +50,7 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
 
         m_world = world;
         m_playerSteeringEntity = playerSteeringEntity;
+        m_bulletManager = bulletManager;
     }
 
     public void update(float deltaTime, boolean freeze)
@@ -81,7 +84,7 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
             level = m_random.nextInt(4);
         }
 
-        return new Enemy(spawnpoint, m_properties.Get(level), m_world, m_playerSteeringEntity, m_atlas);
+        return new Enemy(spawnpoint, m_properties.Get(level), m_world, m_playerSteeringEntity, m_bulletManager);
     }
 
     private void spawn()
@@ -185,16 +188,5 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
     public void OnEnemyDestroyed(Enemy enemy)
     {
         m_enemies.remove(enemy);
-    }
-
-    public void destroyBullet(Body body)
-    {
-        for (Enemy enemy : m_enemies)
-        {
-            if (enemy.destroyBullet(body))
-            {
-                break;
-            }
-        }
     }
 }

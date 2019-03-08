@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.encamy.battlecity.AnimationContainer;
+import com.encamy.battlecity.BulletManager;
 import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.utils.Box2dHelpers;
 import com.encamy.battlecity.utils.Dictionary;
@@ -32,14 +33,13 @@ public class Player extends Sprite implements InputProcessor {
     private Box2dSteeringEntity m_steeringEntity;
     private World m_world;
     private Settings.Direction m_direction;
-    private ArrayList<Bullet> m_bullets;
     private int m_health;
     private int m_level;
     private int m_current_player;
     private Vector2 m_spawnPoint;
     private Sprite m_invulnarableSprite;
     private Dictionary<Integer, Integer> m_destroyedEnemies;
-    private TextureAtlas m_atlas;
+    private BulletManager m_bulletManager;
 
     private static final float INVULNERABLE_ANIMATION_TIME = 3000;
 
@@ -51,7 +51,7 @@ public class Player extends Sprite implements InputProcessor {
 
     private State m_state;
 
-    public Player(AnimationContainer animation, Body body, int current_player, Vector2 spawnPoint, TextureAtlas atlas)
+    public Player(AnimationContainer animation, Body body, int current_player, Vector2 spawnPoint, BulletManager bulletManager)
     {
         super(((TextureAtlas.AtlasRegion) animation.getTopAnimation().getKeyFrame(0)));
         m_left = animation.getLeftAnimation();
@@ -66,8 +66,7 @@ public class Player extends Sprite implements InputProcessor {
         m_world = body.getWorld();
         m_direction = Settings.Direction.TOP;
 
-        m_bullets = new ArrayList<Bullet>();
-        m_atlas = atlas;
+        m_bulletManager = bulletManager;
 
         m_health = Settings.PLAYER_HEALTH;
         m_current_player = current_player;
@@ -216,11 +215,6 @@ public class Player extends Sprite implements InputProcessor {
 
         m_invulnarableSprite.setX(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32));
         m_invulnarableSprite.setY(Box2dHelpers.Box2d2y(m_body.getPosition().y, 32));
-
-        for (Bullet bullet : m_bullets)
-        {
-            bullet.draw(batch);
-        }
     }
 
     public void fire()
@@ -244,28 +238,15 @@ public class Player extends Sprite implements InputProcessor {
 
         if (m_current_player == 1)
         {
-            m_bullets.add(new Bullet(m_world, bulletSpawnPos, m_direction, Settings.ObjectType.PLAYER1_OWNER, m_atlas));
+            m_bulletManager.addBullet(bulletSpawnPos, m_direction, Settings.ObjectType.PLAYER1_OWNER);
         }
         else if (m_current_player == 2)
         {
-            m_bullets.add(new Bullet(m_world, bulletSpawnPos, m_direction, Settings.ObjectType.PLAYER2_OWNER, m_atlas));
+            m_bulletManager.addBullet(bulletSpawnPos, m_direction, Settings.ObjectType.PLAYER2_OWNER);
         }
         else
         {
             Gdx.app.log("FATAL", "Invalid player id. Should not happen");
-        }
-    }
-
-    public void destroyBullet(Body body)
-    {
-        for (Bullet bullet : m_bullets)
-        {
-            if (bullet.getBody() == body)
-            {
-                m_bullets.remove(bullet);
-                bullet.dispose();
-                break;
-            }
         }
     }
 
