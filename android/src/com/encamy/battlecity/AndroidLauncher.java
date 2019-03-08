@@ -2,13 +2,15 @@ package com.encamy.battlecity;
 
 import android.graphics.Point;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.encamy.battlecity.network.AndroidInterface;
 import com.encamy.battlecity.screens.GameScreen;
 
-public class AndroidLauncher extends AndroidApplication
+public class AndroidLauncher extends AndroidApplication implements AndroidInterface
 {
 	@Override
 	protected void onCreate (Bundle savedInstanceState)
@@ -29,6 +31,12 @@ public class AndroidLauncher extends AndroidApplication
         Log.d("ApplicationTagName", "Application have started");
 		Log.d("ApplicationTagName", "Display size: " + width + ":" + height);
 
-		initialize(new BattleCityGame(), config);
+		initialize(new BattleCityGame(this), config);
+	}
+
+	@Override
+	public String getDeviceName()
+	{
+		return Settings.Secure.getString(getContentResolver(), "bluetooth_name");
 	}
 }

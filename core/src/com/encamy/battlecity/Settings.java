@@ -6,7 +6,6 @@ import com.encamy.battlecity.entities.Enemy;
 import java.util.EnumSet;
 
 public class Settings {
-    public static String APPLICATION_VERSION = "0.2";
     public static int SCREEN_WIDTH = 1280;
     public static int SCREEN_HEIGHT = 720;
     public static final float ANIMATION_FRAME_DURATION = 0.20f;

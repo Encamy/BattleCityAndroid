@@ -21,7 +21,6 @@ import com.encamy.battlecity.utils.Dictionary;
 
 import java.util.EnumSet;
 
-import static com.encamy.battlecity.Settings.APPLICATION_VERSION;
 import static com.encamy.battlecity.Settings.SCREEN_HEIGHT;
 import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
 
@@ -43,7 +42,7 @@ public class GameScreen implements Screen {
 	@Override
 	public void show()
     {
-		Gdx.app.log("Info", this.getClass().getName() + " started. v" + APPLICATION_VERSION);
+		Gdx.app.log("Info", this.getClass().getName() + " started");
 		Gdx.app.log("Info", "platform = " + Gdx.app.getType().name());
 
 		m_camera = new OrthographicCamera();

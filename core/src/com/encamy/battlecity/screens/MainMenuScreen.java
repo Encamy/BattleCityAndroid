@@ -12,6 +12,8 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.encamy.battlecity.BattleCityGame;
 import com.encamy.battlecity.Settings;
+import com.encamy.battlecity.network.AndroidInterface;
+import com.encamy.battlecity.network.NetworkManager;
 
 import static com.encamy.battlecity.Settings.SCREEN_HEIGHT;
 import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
@@ -22,10 +24,12 @@ public class MainMenuScreen implements Screen, InputProcessor
     private Texture background;
     private Game m_game;
     private SpriteBatch m_spriteBatch;
+    private AndroidInterface m_androidAPI;
 
-    public MainMenuScreen(BattleCityGame game)
+    public MainMenuScreen(BattleCityGame game, AndroidInterface androidAPI)
     {
         m_game = game;
+        m_androidAPI = androidAPI;
     }
 
     @Override
@@ -114,6 +118,7 @@ public class MainMenuScreen implements Screen, InputProcessor
             else if (screenY > 0.76f * Gdx.graphics.getHeight() && screenY < 0.86f * Gdx.graphics.getHeight())
             {
                 // 2 Player
+                NetworkManager networkManager = new NetworkManager(m_androidAPI);
                 Gdx.app.log("INFO", "2 PLAYER");
             }
         }
