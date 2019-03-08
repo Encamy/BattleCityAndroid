@@ -1072,6 +1072,16 @@
     <property name="tank_type" value="1"/>
    </properties>
   </tile>
+  <tile id="160">
+   <properties>
+    <property name="hit_animation" value="1"/>
+   </properties>
+  </tile>
+  <tile id="161">
+   <properties>
+    <property name="hit_animation" value="2"/>
+   </properties>
+  </tile>
   <tile id="162">
    <properties>
     <property name="direction" value="top"/>
@@ -1528,6 +1538,11 @@
     <property name="direction" value="right"/>
     <property name="tank_name" value="red"/>
     <property name="tank_type" value="5"/>
+   </properties>
+  </tile>
+  <tile id="233">
+   <properties>
+    <property name="hit_animation" value="3"/>
    </properties>
   </tile>
   <tile id="234">

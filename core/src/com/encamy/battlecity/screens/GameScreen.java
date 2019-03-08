@@ -159,31 +159,40 @@ public class GameScreen implements Screen {
 
                     int score = 0;
                     int level = 0;
-                    if (enemy == null)
-                    {
-                        score = 100;
-                        level = 1;
-                    }
-                    else
+                    if (enemy != null)
                     {
                         score = enemy.getScore();
                         level = enemy.getLevel();
-                    }
 
-                    if (enemy.hit())
-                    {
-                        if (type.contains(Settings.ObjectType.PLAYER1_OWNER))
+                        if (enemy.hit())
                         {
-                            m_layerManager.getPlayer(1).enemyDestroyed(level, score);
+                            if (type.contains(Settings.ObjectType.PLAYER1_OWNER))
+                            {
+                                m_layerManager.getPlayer(1).enemyDestroyed(level, score);
+                            }
+                            else if (type.contains(Settings.ObjectType.PLAYER2_OWNER))
+                            {
+                                m_layerManager.getPlayer(2).enemyDestroyed(level, score);
+                            }
                         }
-                        else if (type.contains(Settings.ObjectType.PLAYER2_OWNER))
+                        else
                         {
-                            m_layerManager.getPlayer(2).enemyDestroyed(level, score);
+                            body.setUserData(EnumSet.of(Settings.ObjectType.ENEMY));
                         }
                     }
                     else
                     {
-                        body.setUserData(EnumSet.of(Settings.ObjectType.ENEMY));
+                        if (type.contains(Settings.ObjectType.PLAYER))
+                        {
+                            Gdx.app.log("ERROR", "Some strange thing happened. Seems like enemy and player joined?");
+                            body.setUserData(EnumSet.of(Settings.ObjectType.PLAYER));
+                        }
+                        else
+                        {
+                            body.setUserData(EnumSet.of(Settings.ObjectType.ENEMY));
+                            //m_world.destroyBody(body);
+                        }
+                        break;
                     }
                 }
                 else
@@ -292,6 +301,7 @@ public class GameScreen implements Screen {
                     }
                 }
                 Gdx.app.log("TRACE", "FLAG");
+                break;
             }
         }
     }

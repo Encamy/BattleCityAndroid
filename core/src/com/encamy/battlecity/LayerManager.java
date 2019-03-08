@@ -187,6 +187,12 @@ public class LayerManager implements Settings.WallDestroyedCallback
                 String phase = tile.getProperties().get("invulnerability_animation", String.class);
                 atlas.addRegion("invulnerability_animation_" + phase, tile.getTextureRegion());
             }
+
+            if (tile.getProperties().containsKey("hit_animation"))
+            {
+                String phase = tile.getProperties().get("hit_animation", String.class);
+                atlas.addRegion("hit_animation_" + phase, tile.getTextureRegion());
+            }
         }
 
         Iterator<TiledMapTile> solidTiles = tiledMap.getTileSets().getTileSet("solids").iterator();

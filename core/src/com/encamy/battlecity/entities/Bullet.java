@@ -1,6 +1,7 @@
 package com.encamy.battlecity.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -18,6 +19,8 @@ public class Bullet extends Sprite
     private Settings.Direction m_direction;
     private Body m_body;
     private Vector2 m_vector;
+    private Animation m_destroyAnimation;
+    private float m_animationDuration;
 
     public enum State {
         ALIVE,
@@ -67,6 +70,13 @@ public class Bullet extends Sprite
         }
 
         m_state = State.ALIVE;
+
+        m_destroyAnimation = new Animation(Settings.ANIMATION_FRAME_DURATION * 0.5f,
+                atlas.findRegion("hit_animation_1"),
+                atlas.findRegion("hit_animation_2"),
+                atlas.findRegion("hit_animation_3"));
+
+        m_animationDuration = 0;
     }
 
     public boolean update(Batch batch)
@@ -77,8 +87,17 @@ public class Bullet extends Sprite
                 m_body.applyForceToCenter(m_vector, true);
                 break;
             case DESTROYING:
-                return true;
-                //break;
+                {
+                    if (!m_destroyAnimation.isAnimationFinished(m_animationDuration))
+                    {
+                        playDestroyAnimation(Gdx.graphics.getDeltaTime());
+                    }
+                    else
+                    {
+                        m_state = State.DESTROYED;
+                    }
+                    break;
+                }
             case DESTROYED:
                 return true;
         }
@@ -93,7 +112,10 @@ public class Bullet extends Sprite
 
     public void setState(State state)
     {
-        m_state = state;
+        if (m_state == State.ALIVE)
+         {
+            m_state = state;
+        }
     }
 
     public void draw(Batch batch)
@@ -109,5 +131,11 @@ public class Bullet extends Sprite
     public void dispose()
     {
         m_world.destroyBody(m_body);
+    }
+
+    private void playDestroyAnimation(float deltaTime)
+    {
+        m_animationDuration += deltaTime;
+        super.setRegion(((TextureAtlas.AtlasRegion) m_destroyAnimation.getKeyFrame(m_animationDuration)));
     }
 }
