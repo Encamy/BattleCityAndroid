@@ -180,6 +180,7 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
             }
         }
 
+        Gdx.app.log("TRACE", "Enemy was not found");
         return null;
     }
 

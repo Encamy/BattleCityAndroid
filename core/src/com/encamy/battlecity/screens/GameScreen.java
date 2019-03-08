@@ -156,8 +156,19 @@ public class GameScreen implements Screen {
                     Gdx.app.log("TRACE", "Handled");
 
                     Enemy enemy = m_enemyFactory.getEnemy(body);
-                    int score = enemy.getScore();
-                    int level = enemy.getLevel();
+
+                    int score = 0;
+                    int level = 0;
+                    if (enemy == null)
+                    {
+                        score = 100;
+                        level = 1;
+                    }
+                    else
+                    {
+                        score = enemy.getScore();
+                        level = enemy.getLevel();
+                    }
 
                     if (enemy.hit())
                     {
