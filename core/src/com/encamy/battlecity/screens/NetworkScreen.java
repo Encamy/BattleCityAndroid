@@ -7,6 +7,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.network.AndroidInterface;
@@ -23,15 +25,22 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
     private NetworkManager m_networkManager;
     private OrthographicCamera m_camera;
     private Texture background;
+    private Texture serverIndicator;
     private Game m_game;
     private SpriteBatch m_spriteBatch;
     private volatile ArrayList<NetworkDevice> m_devices;
+    private BitmapFont m_font;
+    private GlyphLayout m_glyphLayout;
+    private float m_maxDeviceNameLength = 0;
 
     public NetworkScreen(Game game, AndroidInterface androidInterface)
     {
         m_game = game;
         m_networkManager = new NetworkManager(androidInterface, this);
         m_devices = new ArrayList<>();
+        m_font = new BitmapFont(Gdx.files.internal("bcFont.fnt"), Gdx.files.internal("bcFont.png"), false);
+        m_font.getData().setScale(0.75f);
+        m_glyphLayout = new GlyphLayout();
     }
 
     @Override
@@ -41,6 +50,7 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
         m_camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
         m_spriteBatch = new SpriteBatch();
         background = new Texture("network_background.jpg");
+        serverIndicator = new Texture("server_indicator.png");
         Gdx.input.setInputProcessor(this);
     }
 
@@ -56,7 +66,39 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
 
         m_spriteBatch.begin();
         m_spriteBatch.draw(background, 0, 0);
+        drawDevices(m_spriteBatch);
         m_spriteBatch.end();
+    }
+
+    private void drawDevices(SpriteBatch spriteBatch)
+    {
+        float YOffset = 0.42f;
+        float XOffset = 0.47f - (m_maxDeviceNameLength * 0.5f / SCREEN_WIDTH);
+
+        for (NetworkDevice device : m_devices)
+        {
+            m_glyphLayout.setText(m_font, device.Host.toUpperCase());
+            m_font.draw(spriteBatch, m_glyphLayout, SCREEN_WIDTH * XOffset, SCREEN_HEIGHT * YOffset);
+
+            if (!device.IsServer)
+            {
+                spriteBatch.draw(serverIndicator, SCREEN_WIDTH * XOffset + m_glyphLayout.width + 20, SCREEN_HEIGHT * YOffset - 16);
+            }
+
+            YOffset -= 0.0772f;
+        }
+    }
+
+    private void getLongestDeviceName(ArrayList<NetworkDevice> devices)
+    {
+        for (NetworkDevice device : devices)
+        {
+            m_glyphLayout.setText(m_font, device.Host.toUpperCase());
+            if (m_glyphLayout.width > m_maxDeviceNameLength)
+            {
+                m_maxDeviceNameLength = m_glyphLayout.width;
+            }
+        }
     }
 
     @Override
@@ -140,10 +182,25 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
     @Override
     public void OnDeviceFound(NetworkDevice device)
     {
-        if (!m_devices.contains(device))
+        if (!have(m_devices, device))
         {
             m_devices.add(device);
             Gdx.app.log("INFO", "Found network device " + device.Host + " " + device.Address + ":" + device.Port + " " + ((device.IsServer)?"Server":"Client"));
+
+            getLongestDeviceName(m_devices);
         }
+    }
+
+    private boolean have(ArrayList<NetworkDevice> devices, NetworkDevice device)
+    {
+        for (NetworkDevice currentDevice : devices)
+        {
+            if (currentDevice.Address.equals(device.Address) && currentDevice.Port.equals(device.Port))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
