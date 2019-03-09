@@ -95,4 +95,9 @@ public class utils
             }
         }
     }
+
+    public static String formatString(String string)
+    {
+        return string.replaceAll("[^\\d^\\w.]", " ");
+    }
 }

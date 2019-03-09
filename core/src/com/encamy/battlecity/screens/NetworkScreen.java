@@ -14,6 +14,7 @@ import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.network.AndroidInterface;
 import com.encamy.battlecity.network.NetworkDevice;
 import com.encamy.battlecity.network.NetworkManager;
+import com.encamy.battlecity.utils.utils;
 
 import java.util.ArrayList;
 
@@ -77,10 +78,10 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
 
         for (NetworkDevice device : m_devices)
         {
-            m_glyphLayout.setText(m_font, device.Host.toUpperCase());
+            m_glyphLayout.setText(m_font, utils.formatString(device.Host.toUpperCase()));
             m_font.draw(spriteBatch, m_glyphLayout, SCREEN_WIDTH * XOffset, SCREEN_HEIGHT * YOffset);
 
-            if (!device.IsServer)
+            if (device.IsServer)
             {
                 spriteBatch.draw(serverIndicator, SCREEN_WIDTH * XOffset + m_glyphLayout.width + 20, SCREEN_HEIGHT * YOffset - 16);
             }
