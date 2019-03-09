@@ -9,17 +9,21 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 public class BroadcastAnnouncer extends Thread
 {
-    volatile int attempts = 0;
+    volatile boolean m_stopThread;
     private AndroidInterface m_androidAPI;
     private DatagramSocket m_socket;
+    private Settings.OnDeviceFoundCallback m_onDeviceFound;
 
-    public BroadcastAnnouncer(AndroidInterface androidInterface)
+    public BroadcastAnnouncer(AndroidInterface androidInterface, Settings.OnDeviceFoundCallback callback)
     {
         m_androidAPI = androidInterface;
+        m_stopThread = false;
+        m_onDeviceFound = callback;
     }
 
     @Override
@@ -27,7 +31,7 @@ public class BroadcastAnnouncer extends Thread
     {
         while (true)
         {
-            if (++attempts > 5)
+            if (m_stopThread)
             {
                 break;
             }
@@ -64,6 +68,14 @@ public class BroadcastAnnouncer extends Thread
 
             String sentence = new String(packet.getData(), 0, packet.getLength());
             Gdx.app.log("TRACE", "GOT MESSAGE: \r\n" + sentence);
+
+            NetworkDevice device = ParseDevice(sentence);
+            m_onDeviceFound.OnDeviceFound(device);
+
+        }
+        catch (SocketTimeoutException e)
+        {
+            // do nothing
         }
         catch (SocketException e)
         {
@@ -74,6 +86,28 @@ public class BroadcastAnnouncer extends Thread
         {
             e.printStackTrace();
         }
+    }
+
+    private NetworkDevice ParseDevice(String sentence)
+    {
+        NetworkDevice device = new NetworkDevice();
+
+        String[] parts = sentence.split("\r\n");
+        if (parts.length < 1)
+        {
+            return null;
+        }
+
+        device.Address = parts[0].split("=")[1].split(":")[0].substring(1);
+        device.Port = Integer.parseInt(parts[0].split("=")[1].split(":")[1]);
+        device.Host = parts[1].split("=")[1].substring(1);
+
+        if (sentence.contains("Server"))
+        {
+            device.IsServer = true;
+        }
+
+        return device;
     }
 
     private void sendBroadcast()
@@ -93,7 +127,7 @@ public class BroadcastAnnouncer extends Thread
             e.printStackTrace();
         }
 
-        String message = "BattleCity server address = " + utils.getIPAddress(true) + "\r\nHost name = " + utils.getHostName(m_androidAPI);
+        String message = "BattleCity. Address = " + utils.getIPAddress(true) + ":" + Settings.GAME_PORT + "\r\nHost name = " + utils.getHostName(m_androidAPI);
 
         byte[] buffer = message.getBytes();
 

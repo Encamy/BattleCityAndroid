@@ -2,6 +2,7 @@ package com.encamy.battlecity;
 
 import com.encamy.battlecity.entities.BaseWall;
 import com.encamy.battlecity.entities.Enemy;
+import com.encamy.battlecity.network.NetworkDevice;
 
 import java.util.EnumSet;
 
@@ -15,6 +16,7 @@ public class Settings {
     public static final int PLAYER_HEALTH = 3;
     public static final int FIRE_RATE = 800;
 
+    public static final int GAME_PORT = 6060;
     public static final int BROADCAST_PORT = 5060;
     public static final int BROADCAST_TIMEOUT = 5000;
 
@@ -44,5 +46,10 @@ public class Settings {
     public interface WallDestroyedCallback
     {
         void OnWallDestroyed(BaseWall wall);
+    }
+
+    public interface OnDeviceFoundCallback
+    {
+        void OnDeviceFound(NetworkDevice device);
     }
 }

@@ -8,28 +8,30 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.encamy.battlecity.BattleCityGame;
 import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.network.AndroidInterface;
+import com.encamy.battlecity.network.NetworkDevice;
 import com.encamy.battlecity.network.NetworkManager;
+
+import java.util.ArrayList;
 
 import static com.encamy.battlecity.Settings.SCREEN_HEIGHT;
 import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
 
-public class MainMenuScreen implements Screen, InputProcessor
+public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceFoundCallback
 {
+    private NetworkManager m_networkManager;
     private OrthographicCamera m_camera;
     private Texture background;
     private Game m_game;
     private SpriteBatch m_spriteBatch;
-    private AndroidInterface m_androidAPI;
+    private volatile ArrayList<NetworkDevice> m_devices;
 
-    public MainMenuScreen(BattleCityGame game, AndroidInterface androidAPI)
+    public NetworkScreen(Game game, AndroidInterface androidInterface)
     {
         m_game = game;
-        m_androidAPI = androidAPI;
+        m_networkManager = new NetworkManager(androidInterface, this);
+        m_devices = new ArrayList<>();
     }
 
     @Override
@@ -38,7 +40,7 @@ public class MainMenuScreen implements Screen, InputProcessor
         m_camera = new OrthographicCamera();
         m_camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
         m_spriteBatch = new SpriteBatch();
-        background = new Texture("background.jpg");
+        background = new Texture("network_background.jpg");
         Gdx.input.setInputProcessor(this);
     }
 
@@ -76,7 +78,8 @@ public class MainMenuScreen implements Screen, InputProcessor
     }
 
     @Override
-    public void hide() {
+    public void hide()
+    {
 
     }
 
@@ -107,26 +110,6 @@ public class MainMenuScreen implements Screen, InputProcessor
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button)
     {
-        if (screenX > 0.33f * Gdx.graphics.getWidth() && screenX < 0.66f * Gdx.graphics.getWidth())
-        {
-            if (screenY > 0.63f * Gdx.graphics.getHeight() && screenY < 0.76f * Gdx.graphics.getHeight())
-            {
-                // 1 Player
-                Gdx.app.log("INFO", "1 PLAYER");
-                m_game.setScreen(new GameScreen());
-            }
-            else if (screenY > 0.76f * Gdx.graphics.getHeight() && screenY < 0.86f * Gdx.graphics.getHeight())
-            {
-                // 2 Player
-                Gdx.app.log("INFO", "2 PLAYER");
-                m_game.setScreen(new NetworkScreen(m_game, m_androidAPI));
-            }
-        }
-        else
-        {
-            Gdx.app.log("TRACE", screenX + ":" + screenY);
-        }
-
         return false;
     }
 
@@ -152,5 +135,15 @@ public class MainMenuScreen implements Screen, InputProcessor
     public boolean scrolled(int amount)
     {
         return false;
+    }
+
+    @Override
+    public void OnDeviceFound(NetworkDevice device)
+    {
+        if (!m_devices.contains(device))
+        {
+            m_devices.add(device);
+            Gdx.app.log("INFO", "Found network device " + device.Host + " " + device.Address + ":" + device.Port + " " + ((device.IsServer)?"Server":"Client"));
+        }
     }
 }
