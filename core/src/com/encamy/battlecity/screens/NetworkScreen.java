@@ -33,6 +33,7 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
     private BitmapFont m_font;
     private GlyphLayout m_glyphLayout;
     private float m_maxDeviceNameLength = 0;
+    private AndroidInterface m_androidInterface;
 
     public NetworkScreen(Game game, AndroidInterface androidInterface)
     {
@@ -42,6 +43,7 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
         m_font = new BitmapFont(Gdx.files.internal("bcFont.fnt"), Gdx.files.internal("bcFont.png"), false);
         m_font.getData().setScale(0.75f);
         m_glyphLayout = new GlyphLayout();
+        m_androidInterface = androidInterface;
     }
 
     @Override
@@ -153,7 +155,52 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button)
     {
-        return false;
+        int index = 0;
+        float height = Gdx.graphics.getHeight();
+
+        if (height - screenY > 0.49f * height)
+        {
+            return true;
+        }
+
+        if (height - screenY > 0.34f * height)
+        {
+            index = 0;
+        }
+        else if (height - screenY > 0.27f * height)
+        {
+            index = 1;
+        }
+        else if (height - screenY > 0.2f * height)
+        {
+            index = 2;
+        }
+        else if (height - screenY > 0.125f * height)
+        {
+            index = 3;
+        }
+        else if (height - screenY > 0.055f / height)
+        {
+            index = 4;
+        }
+
+        if (m_devices.size() < index + 1)
+        {
+            return true;
+        }
+
+        if (!m_devices.get(index).IsServer)
+        {
+            Gdx.app.log("INFO", "Device is not server");
+            if (m_androidInterface != null)
+            {
+                m_androidInterface.showToast("Device is not a server");
+            }
+        }
+
+        m_networkManager.stopAnnouncement();
+
+        return true;
     }
 
     @Override

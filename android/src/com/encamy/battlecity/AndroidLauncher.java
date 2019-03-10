@@ -1,9 +1,11 @@
 package com.encamy.battlecity;
 
+import android.app.Activity;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -38,5 +40,17 @@ public class AndroidLauncher extends AndroidApplication implements AndroidInterf
 	public String getDeviceName()
 	{
 		return Settings.Secure.getString(getContentResolver(), "bluetooth_name");
+	}
+
+	@Override
+	public void showToast(final String message)
+	{
+		runOnUiThread(new Runnable() {
+			String inner_message = message;
+			@Override
+			public void run () {
+				Toast.makeText(getContext(), inner_message,
+						Toast.LENGTH_SHORT).show();}
+			});
 	}
 }

@@ -14,7 +14,7 @@ import java.net.UnknownHostException;
 
 public class BroadcastAnnouncer extends Thread
 {
-    volatile boolean m_stopThread;
+    private volatile boolean m_stopThread;
     private AndroidInterface m_androidAPI;
     private DatagramSocket m_socket;
     private Settings.OnDeviceFoundCallback m_onDeviceFound;
@@ -48,6 +48,12 @@ public class BroadcastAnnouncer extends Thread
                 e.printStackTrace();
             }
         }
+    }
+
+    public void stopAnnouncement()
+    {
+        Gdx.app.log("TRACE", "Stopping announcement");
+        m_stopThread = true;
     }
 
     private void receiveBroadcast()
