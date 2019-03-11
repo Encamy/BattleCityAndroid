@@ -18,12 +18,14 @@ public class BroadcastAnnouncer extends Thread
     private AndroidInterface m_androidAPI;
     private DatagramSocket m_socket;
     private Settings.OnDeviceFoundCallback m_onDeviceFound;
+    private boolean m_isServer;
 
     public BroadcastAnnouncer(AndroidInterface androidInterface, Settings.OnDeviceFoundCallback callback)
     {
         m_androidAPI = androidInterface;
         m_stopThread = false;
         m_onDeviceFound = callback;
+        m_isServer = false;
     }
 
     @Override
@@ -135,6 +137,11 @@ public class BroadcastAnnouncer extends Thread
 
         String message = "BattleCity. Address = " + utils.getIPAddress(true) + ":" + Settings.GAME_PORT + "\r\nHost name = " + utils.getHostName(m_androidAPI);
 
+        if (m_isServer)
+        {
+            message += "\r\nServer";
+        }
+
         byte[] buffer = message.getBytes();
 
         DatagramPacket packet = null;
@@ -156,5 +163,10 @@ public class BroadcastAnnouncer extends Thread
         {
             e.printStackTrace();
         }
+    }
+
+    public void setServer(boolean isServer)
+    {
+        m_isServer = isServer;
     }
 }

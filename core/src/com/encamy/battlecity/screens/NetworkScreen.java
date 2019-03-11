@@ -7,9 +7,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.network.AndroidInterface;
 import com.encamy.battlecity.network.NetworkDevice;
@@ -34,6 +37,10 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
     private GlyphLayout m_glyphLayout;
     private float m_maxDeviceNameLength = 0;
     private AndroidInterface m_androidInterface;
+    private boolean m_isServer = false;
+    private Animation m_waitingAnimation;
+    private Sprite m_waiting;
+    private float m_animationDuration = 0.0f;
 
     public NetworkScreen(Game game, AndroidInterface androidInterface)
     {
@@ -44,6 +51,18 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
         m_font.getData().setScale(0.75f);
         m_glyphLayout = new GlyphLayout();
         m_androidInterface = androidInterface;
+
+        m_waitingAnimation = new Animation(Settings.ANIMATION_FRAME_DURATION * 0.5f,
+            new TextureAtlas.AtlasRegion(new Texture("network_waiting_0.jpg"), 0, 0, 48, 16),
+            new TextureAtlas.AtlasRegion(new Texture("network_waiting_1.jpg"), 0, 0, 48, 16),
+            new TextureAtlas.AtlasRegion(new Texture("network_waiting_2.jpg"), 0, 0, 48, 16),
+            new TextureAtlas.AtlasRegion(new Texture("network_waiting_3.jpg"), 0, 0, 48, 16),
+            new TextureAtlas.AtlasRegion(new Texture("network_waiting_4.jpg"), 0, 0, 48, 16),
+            new TextureAtlas.AtlasRegion(new Texture("network_waiting_5.jpg"), 0, 0, 48, 16)
+            );
+        m_waitingAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        m_waiting = new Sprite((TextureAtlas.AtlasRegion)m_waitingAnimation.getKeyFrame(m_animationDuration));
     }
 
     @Override
@@ -69,7 +88,20 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
 
         m_spriteBatch.begin();
         m_spriteBatch.draw(background, 0, 0);
-        drawDevices(m_spriteBatch);
+
+        if (!m_isServer)
+        {
+            drawDevices(m_spriteBatch);
+        }
+        else
+        {
+            m_animationDuration += delta;
+            m_waiting.setRegion((TextureAtlas.AtlasRegion)m_waitingAnimation.getKeyFrame(m_animationDuration));
+            m_waiting.draw(m_spriteBatch);
+            m_waiting.setX(0.76f * Settings.SCREEN_WIDTH);
+            m_waiting.setY(0.48f * Settings.SCREEN_HEIGHT);
+        }
+
         m_spriteBatch.end();
     }
 
@@ -102,6 +134,13 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
                 m_maxDeviceNameLength = m_glyphLayout.width;
             }
         }
+    }
+
+    private void becomeServer()
+    {
+        background = new Texture("network_background_waiting.jpg");
+        m_isServer = true;
+        m_networkManager.setServer(true);
     }
 
     @Override
@@ -179,9 +218,11 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
         {
             index = 3;
         }
-        else if (height - screenY > 0.055f / height)
+        else
         {
-            index = 4;
+            Gdx.app.log("TRACE", "Becoming a server");
+            becomeServer();
+            return true;
         }
 
         if (m_devices.size() < index + 1)
@@ -230,25 +271,50 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
     @Override
     public void OnDeviceFound(NetworkDevice device)
     {
-        if (!have(m_devices, device))
+        _Placeholder clear = new _Placeholder(false);
+        if (!have(m_devices, device, clear))
         {
+            if (clear.value)
+            {
+                m_devices.clear();
+            }
+            
             m_devices.add(device);
             Gdx.app.log("INFO", "Found network device " + device.Host + " " + device.Address + ":" + device.Port + " " + ((device.IsServer)?"Server":"Client"));
 
             getLongestDeviceName(m_devices);
         }
+
+        Gdx.app.log("TRACE", "shouldBeChanged = " + clear.value);
     }
 
-    private boolean have(ArrayList<NetworkDevice> devices, NetworkDevice device)
+    private boolean have(ArrayList<NetworkDevice> devices, NetworkDevice device, _Placeholder clear)
     {
         for (NetworkDevice currentDevice : devices)
         {
-            if (currentDevice.Address.equals(device.Address) && currentDevice.Port.equals(device.Port))
+            if (currentDevice.Address.equals(device.Address) &&
+                currentDevice.Port.equals(device.Port))
+            {
+                clear.value = true;
+            }
+
+            if (currentDevice.Address.equals(device.Address) &&
+                currentDevice.Port.equals(device.Port) &&
+                currentDevice.IsServer == device.IsServer)
             {
                 return true;
             }
         }
 
         return false;
+    }
+
+    private class _Placeholder
+    {
+        boolean value;
+        _Placeholder(boolean value)
+        {
+            this.value = value;
+        }
     }
 }

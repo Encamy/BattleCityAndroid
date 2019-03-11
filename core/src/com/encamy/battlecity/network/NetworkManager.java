@@ -16,4 +16,9 @@ public class NetworkManager
     {
         m_broadcastAnnouncer.stopAnnouncement();
     }
+
+    public void setServer(boolean isServer)
+    {
+        m_broadcastAnnouncer.setServer(isServer);
+    }
 }
