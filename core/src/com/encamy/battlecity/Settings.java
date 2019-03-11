@@ -19,6 +19,7 @@ public class Settings {
     public static final int GAME_PORT = 6060;
     public static final int BROADCAST_PORT = 5060;
     public static final int BROADCAST_TIMEOUT = 5000;
+    public static final int PACKET_MAX_LENGTH = 4096;
 
     public enum Direction {LEFT, TOP, RIGHT, BOTTOM, NULL}
     public enum ObjectType
@@ -51,5 +52,10 @@ public class Settings {
     public interface OnDeviceFoundCallback
     {
         void OnDeviceFound(NetworkDevice device);
+    }
+
+    public interface OnMessageReceivedCallback
+    {
+        void OnMessageReceived(byte[] data);
     }
 }

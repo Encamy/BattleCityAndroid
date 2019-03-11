@@ -19,6 +19,8 @@ import com.encamy.battlecity.network.NetworkDevice;
 import com.encamy.battlecity.network.NetworkManager;
 import com.encamy.battlecity.utils.utils;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import static com.encamy.battlecity.Settings.SCREEN_HEIGHT;
@@ -140,7 +142,16 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
     {
         background = new Texture("network_background_waiting.jpg");
         m_isServer = true;
-        m_networkManager.setServer(true);
+
+        try
+        {
+            m_networkManager.createServer();
+        }
+        catch (IOException e)
+        {
+            Gdx.app.log("ERROR", "Failed to create server");
+            m_androidInterface.showToast("Failed to create server");
+        }
     }
 
     @Override
@@ -240,6 +251,15 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
         }
 
         m_networkManager.stopAnnouncement();
+        try
+        {
+            m_networkManager.connect(m_devices.get(index));
+        }
+        catch (IOException e)
+        {
+            Gdx.app.log("ERROR", "Failed to connect");
+            m_androidInterface.showToast("Failed to connect");
+        }
 
         return true;
     }
@@ -278,14 +298,12 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
             {
                 m_devices.clear();
             }
-            
+
             m_devices.add(device);
             Gdx.app.log("INFO", "Found network device " + device.Host + " " + device.Address + ":" + device.Port + " " + ((device.IsServer)?"Server":"Client"));
 
             getLongestDeviceName(m_devices);
         }
-
-        Gdx.app.log("TRACE", "shouldBeChanged = " + clear.value);
     }
 
     private boolean have(ArrayList<NetworkDevice> devices, NetworkDevice device, _Placeholder clear)
