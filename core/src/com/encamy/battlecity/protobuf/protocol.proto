@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 option java_outer_classname = "NetworkProtocol";
-package com.encamy.battlecity;
+package com.encamy.battlecity.protobuf;
 
 message TestMessage {
   string query = 1;

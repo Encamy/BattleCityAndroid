@@ -1,0 +1,1 @@
+protoc.exe --java_out=./core/src/ ./core/src/com/encamy/battlecity/protobuf/protocol.proto
