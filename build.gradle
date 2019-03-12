@@ -9,7 +9,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.1'
+        classpath 'com.android.tools.build:gradle:3.3.2'
         classpath "com.google.protobuf:protobuf-gradle-plugin:0.8.8"
     }
 }
@@ -89,7 +89,7 @@ project(":core") {
     apply plugin: "com.google.protobuf"
 
     dependencies {
-        compile 'com.google.protobuf:protobuf-java:3.6.1'
+        implementation 'com.google.protobuf:protobuf-java:3.6.1'
         implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"

@@ -17,7 +17,8 @@ sourceSets {
 }
 
 protobuf {
-    //generatedFilesBaseDir = "$projectDir/build/generated/source/proto"
+    generatedFilesBaseDir = "$projectDir/src/"
+
     protoc {
         artifact = "com.google.protobuf:protoc:3.3.0"
     }
@@ -29,7 +30,7 @@ protobuf {
     generateProtoTasks {
         all().each { task ->
             task.plugins {
-                grpc {}
+               // grpc {}
             }
         }
     }
