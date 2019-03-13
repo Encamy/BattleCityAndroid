@@ -2,6 +2,8 @@ package com.encamy.battlecity.network;
 
 import com.badlogic.gdx.Gdx;
 import com.encamy.battlecity.Settings;
+import com.encamy.battlecity.protobuf.NetworkProtocol;
+import com.encamy.battlecity.utils.utils;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -38,7 +40,7 @@ public class TCPserver extends Thread
 
             while (m_running)
             {
-                byte[] data = new byte[Settings.PACKET_MAX_LENGTH];
+                /*byte[] data = new byte[Settings.PACKET_MAX_LENGTH];
                 int length = m_inputStream.read(data);
 
                 if (m_onMessageReceivedCallback != null)
@@ -47,6 +49,18 @@ public class TCPserver extends Thread
                 }
 
                 if (new String(data, 0, length).equals("Ping"))
+                {
+                    sendPong();
+                }*/
+
+                NetworkProtocol.PacketWrapper wrapper = utils.parsePacket(m_inputStream);
+
+                if (wrapper == null)
+                {
+                    continue;
+                }
+
+                if (wrapper.hasPing())
                 {
                     sendPong();
                 }
@@ -60,7 +74,10 @@ public class TCPserver extends Thread
 
     private void sendPong() throws IOException
     {
-        m_outputStream.write("Pong".getBytes());
+        NetworkProtocol.PacketWrapper wrapper =
+                NetworkProtocol.PacketWrapper.newBuilder().setPong(NetworkProtocol.Pong.getDefaultInstance()).build();
+
+        wrapper.writeDelimitedTo(m_outputStream);
     }
 
     public void setOnMessageCallback(Settings.OnMessageReceivedCallback onMessageReceivedCallback)

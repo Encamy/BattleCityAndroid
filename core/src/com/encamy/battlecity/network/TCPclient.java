@@ -2,6 +2,8 @@ package com.encamy.battlecity.network;
 
 import com.badlogic.gdx.Gdx;
 import com.encamy.battlecity.Settings;
+import com.encamy.battlecity.protobuf.NetworkProtocol;
+import com.encamy.battlecity.utils.utils;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -40,7 +42,9 @@ public class TCPclient extends Thread
 
             while (m_running)
             {
-                byte[] data = new byte[Settings.PACKET_MAX_LENGTH];
+                NetworkProtocol.PacketWrapper wrapper = utils.parsePacket(m_inputStream);
+
+               /* byte[] data = new byte[Settings.PACKET_MAX_LENGTH];
                 int length = m_inputStream.read(data);
 
                 if (m_onMessageReceivedCallback != null)
@@ -51,7 +55,18 @@ public class TCPclient extends Thread
                 if (new String(data, 0, length).equals("Pong"))
                 {
                     Gdx.app.log("INFO", "Fully connected");
+                }*/
+
+                if (wrapper == null)
+                {
+                    continue;
                 }
+
+               if (wrapper.hasPong())
+               {
+                   Gdx.app.log("INFO", "Fully connected");
+                   m_onMessageReceivedCallback.OnMessageReceived("Fully connected".getBytes());
+               }
             }
         }
         catch (Exception e)
@@ -78,6 +93,9 @@ public class TCPclient extends Thread
 
     private void sendPing() throws IOException
     {
-        m_outputStream.write("Ping".getBytes());
+        NetworkProtocol.PacketWrapper wrapper =
+                NetworkProtocol.PacketWrapper.newBuilder().setPing(NetworkProtocol.Ping.getDefaultInstance()).build();
+
+        wrapper.writeDelimitedTo(m_outputStream);
     }
 }

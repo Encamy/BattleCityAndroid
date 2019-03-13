@@ -5,7 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.network.AndroidInterface;
+import com.encamy.battlecity.protobuf.NetworkProtocol;
 
+import java.io.DataInputStream;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
@@ -99,5 +102,19 @@ public class utils
     public static String formatString(String string)
     {
         return string.replaceAll("[^\\d^\\w.]", " ");
+    }
+
+    public static NetworkProtocol.PacketWrapper parsePacket(DataInputStream stream)
+    {
+        try
+        {
+            return NetworkProtocol.PacketWrapper.parseDelimitedFrom(stream);
+        }
+        catch (IOException e)
+        {
+            Gdx.app.log("PROTOBUF", "Failed to parse packet");
+        }
+
+        return null;
     }
 }

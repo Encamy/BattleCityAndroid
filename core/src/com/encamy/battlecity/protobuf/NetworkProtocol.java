@@ -5033,8 +5033,8 @@ public final class NetworkProtocol {
 
   }
 
-  public interface WrapperOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.encamy.battlecity.protobuf.Wrapper)
+  public interface PacketWrapperOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.encamy.battlecity.protobuf.PacketWrapper)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -5076,21 +5076,21 @@ public final class NetworkProtocol {
      */
     com.encamy.battlecity.protobuf.NetworkProtocol.PongOrBuilder getPongOrBuilder();
 
-    public com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper.WrapperCase getWrapperCase();
+    public com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper.WrapperCase getWrapperCase();
   }
   /**
-   * Protobuf type {@code com.encamy.battlecity.protobuf.Wrapper}
+   * Protobuf type {@code com.encamy.battlecity.protobuf.PacketWrapper}
    */
-  public  static final class Wrapper extends
+  public  static final class PacketWrapper extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.encamy.battlecity.protobuf.Wrapper)
-      WrapperOrBuilder {
+      // @@protoc_insertion_point(message_implements:com.encamy.battlecity.protobuf.PacketWrapper)
+      PacketWrapperOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use Wrapper.newBuilder() to construct.
-    private Wrapper(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use PacketWrapper.newBuilder() to construct.
+    private PacketWrapper(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private Wrapper() {
+    private PacketWrapper() {
     }
 
     @java.lang.Override
@@ -5098,7 +5098,7 @@ public final class NetworkProtocol {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private Wrapper(
+    private PacketWrapper(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -5180,15 +5180,15 @@ public final class NetworkProtocol {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Wrapper_descriptor;
+      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_PacketWrapper_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Wrapper_fieldAccessorTable
+      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_PacketWrapper_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper.class, com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper.Builder.class);
+              com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper.class, com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper.Builder.class);
     }
 
     private int wrapperCase_ = 0;
@@ -5363,10 +5363,10 @@ public final class NetworkProtocol {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper)) {
+      if (!(obj instanceof com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper)) {
         return super.equals(obj);
       }
-      com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper other = (com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper) obj;
+      com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper other = (com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper) obj;
 
       if (!getWrapperCase().equals(other.getWrapperCase())) return false;
       switch (wrapperCase_) {
@@ -5417,69 +5417,69 @@ public final class NetworkProtocol {
       return hash;
     }
 
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(byte[] data)
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(java.io.InputStream input)
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseDelimitedFrom(java.io.InputStream input)
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseDelimitedFrom(
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -5492,7 +5492,7 @@ public final class NetworkProtocol {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper prototype) {
+    public static Builder newBuilder(com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -5508,26 +5508,26 @@ public final class NetworkProtocol {
       return builder;
     }
     /**
-     * Protobuf type {@code com.encamy.battlecity.protobuf.Wrapper}
+     * Protobuf type {@code com.encamy.battlecity.protobuf.PacketWrapper}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.encamy.battlecity.protobuf.Wrapper)
-        com.encamy.battlecity.protobuf.NetworkProtocol.WrapperOrBuilder {
+        // @@protoc_insertion_point(builder_implements:com.encamy.battlecity.protobuf.PacketWrapper)
+        com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapperOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Wrapper_descriptor;
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_PacketWrapper_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Wrapper_fieldAccessorTable
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_PacketWrapper_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper.class, com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper.Builder.class);
+                com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper.class, com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper.Builder.class);
       }
 
-      // Construct using com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper.newBuilder()
+      // Construct using com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -5553,17 +5553,17 @@ public final class NetworkProtocol {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Wrapper_descriptor;
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_PacketWrapper_descriptor;
       }
 
       @java.lang.Override
-      public com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper getDefaultInstanceForType() {
-        return com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper.getDefaultInstance();
+      public com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper getDefaultInstanceForType() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper.getDefaultInstance();
       }
 
       @java.lang.Override
-      public com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper build() {
-        com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper result = buildPartial();
+      public com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper build() {
+        com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -5571,8 +5571,8 @@ public final class NetworkProtocol {
       }
 
       @java.lang.Override
-      public com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper buildPartial() {
-        com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper result = new com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper(this);
+      public com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper buildPartial() {
+        com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper result = new com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper(this);
         if (wrapperCase_ == 1) {
           if (eventBuilder_ == null) {
             result.wrapper_ = wrapper_;
@@ -5633,16 +5633,16 @@ public final class NetworkProtocol {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper) {
-          return mergeFrom((com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper)other);
+        if (other instanceof com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper) {
+          return mergeFrom((com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper other) {
-        if (other == com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper other) {
+        if (other == com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper.getDefaultInstance()) return this;
         switch (other.getWrapperCase()) {
           case EVENT: {
             mergeEvent(other.getEvent());
@@ -5675,11 +5675,11 @@ public final class NetworkProtocol {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parsedMessage = null;
+        com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper) e.getUnfinishedMessage();
+          parsedMessage = (com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -6124,41 +6124,41 @@ public final class NetworkProtocol {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.encamy.battlecity.protobuf.Wrapper)
+      // @@protoc_insertion_point(builder_scope:com.encamy.battlecity.protobuf.PacketWrapper)
     }
 
-    // @@protoc_insertion_point(class_scope:com.encamy.battlecity.protobuf.Wrapper)
-    private static final com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:com.encamy.battlecity.protobuf.PacketWrapper)
+    private static final com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper();
+      DEFAULT_INSTANCE = new com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper();
     }
 
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper getDefaultInstance() {
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<Wrapper>
-        PARSER = new com.google.protobuf.AbstractParser<Wrapper>() {
+    private static final com.google.protobuf.Parser<PacketWrapper>
+        PARSER = new com.google.protobuf.AbstractParser<PacketWrapper>() {
       @java.lang.Override
-      public Wrapper parsePartialFrom(
+      public PacketWrapper parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new Wrapper(input, extensionRegistry);
+        return new PacketWrapper(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<Wrapper> parser() {
+    public static com.google.protobuf.Parser<PacketWrapper> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<Wrapper> getParserForType() {
+    public com.google.protobuf.Parser<PacketWrapper> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper getDefaultInstanceForType() {
+    public com.encamy.battlecity.protobuf.NetworkProtocol.PacketWrapper getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -6200,10 +6200,10 @@ public final class NetworkProtocol {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_encamy_battlecity_protobuf_Event_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_encamy_battlecity_protobuf_Wrapper_descriptor;
+    internal_static_com_encamy_battlecity_protobuf_PacketWrapper_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_encamy_battlecity_protobuf_Wrapper_fieldAccessorTable;
+      internal_static_com_encamy_battlecity_protobuf_PacketWrapper_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -6234,14 +6234,14 @@ public final class NetworkProtocol {
       "eH\000\0224\n\004move\030\003 \001(\0132$.com.encamy.battlecit" +
       "y.protobuf.MoveH\000\022>\n\tdestroyed\030\004 \001(\0132).c" +
       "om.encamy.battlecity.protobuf.DestroyedH" +
-      "\000B\014\n\nevent_type\"\270\001\n\007Wrapper\0226\n\005event\030\001 \001" +
-      "(\0132%.com.encamy.battlecity.protobuf.Even" +
-      "tH\000\0224\n\004ping\030\002 \001(\0132$.com.encamy.battlecit" +
-      "y.protobuf.PingH\000\0224\n\004pong\030\003 \001(\0132$.com.en" +
-      "camy.battlecity.protobuf.PongH\000B\t\n\007wrapp" +
-      "er*8\n\005Owner\022\t\n\005ENEMY\020\000\022\021\n\rSERVER_PLAYER\020" +
-      "\001\022\021\n\rCLIENT_SERVER\020\002B\021B\017NetworkProtocolb" +
-      "\006proto3"
+      "\000B\014\n\nevent_type\"\276\001\n\rPacketWrapper\0226\n\005eve" +
+      "nt\030\001 \001(\0132%.com.encamy.battlecity.protobu" +
+      "f.EventH\000\0224\n\004ping\030\002 \001(\0132$.com.encamy.bat" +
+      "tlecity.protobuf.PingH\000\0224\n\004pong\030\003 \001(\0132$." +
+      "com.encamy.battlecity.protobuf.PongH\000B\t\n" +
+      "\007wrapper*8\n\005Owner\022\t\n\005ENEMY\020\000\022\021\n\rSERVER_P" +
+      "LAYER\020\001\022\021\n\rCLIENT_SERVER\020\002B\021B\017NetworkPro" +
+      "tocolb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -6297,11 +6297,11 @@ public final class NetworkProtocol {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_encamy_battlecity_protobuf_Event_descriptor,
         new java.lang.String[] { "Spawned", "Fire", "Move", "Destroyed", "EventType", });
-    internal_static_com_encamy_battlecity_protobuf_Wrapper_descriptor =
+    internal_static_com_encamy_battlecity_protobuf_PacketWrapper_descriptor =
       getDescriptor().getMessageTypes().get(7);
-    internal_static_com_encamy_battlecity_protobuf_Wrapper_fieldAccessorTable = new
+    internal_static_com_encamy_battlecity_protobuf_PacketWrapper_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_encamy_battlecity_protobuf_Wrapper_descriptor,
+        internal_static_com_encamy_battlecity_protobuf_PacketWrapper_descriptor,
         new java.lang.String[] { "Event", "Ping", "Pong", "Wrapper", });
   }
 

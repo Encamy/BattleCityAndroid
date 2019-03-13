@@ -58,7 +58,7 @@ message Event {
     }
 }
 
-message Wrapper {
+message PacketWrapper {
     oneof wrapper {
         Event event = 1;
         Ping ping = 2;
