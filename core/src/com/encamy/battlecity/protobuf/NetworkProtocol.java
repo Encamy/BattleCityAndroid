@@ -14,44 +14,130 @@ public final class NetworkProtocol {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  public interface TestMessageOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.encamy.battlecity.protobuf.TestMessage)
+  /**
+   * Protobuf enum {@code com.encamy.battlecity.protobuf.Owner}
+   */
+  public enum Owner
+      implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     * <code>ENEMY = 0;</code>
+     */
+    ENEMY(0),
+    /**
+     * <code>SERVER_PLAYER = 1;</code>
+     */
+    SERVER_PLAYER(1),
+    /**
+     * <code>CLIENT_SERVER = 2;</code>
+     */
+    CLIENT_SERVER(2),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     * <code>ENEMY = 0;</code>
+     */
+    public static final int ENEMY_VALUE = 0;
+    /**
+     * <code>SERVER_PLAYER = 1;</code>
+     */
+    public static final int SERVER_PLAYER_VALUE = 1;
+    /**
+     * <code>CLIENT_SERVER = 2;</code>
+     */
+    public static final int CLIENT_SERVER_VALUE = 2;
+
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static Owner valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static Owner forNumber(int value) {
+      switch (value) {
+        case 0: return ENEMY;
+        case 1: return SERVER_PLAYER;
+        case 2: return CLIENT_SERVER;
+        default: return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<Owner>
+        internalGetValueMap() {
+      return internalValueMap;
+    }
+    private static final com.google.protobuf.Internal.EnumLiteMap<
+        Owner> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<Owner>() {
+            public Owner findValueByNumber(int number) {
+              return Owner.forNumber(number);
+            }
+          };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+      return getDescriptor().getValues().get(ordinal());
+    }
+    public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+    public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+      return com.encamy.battlecity.protobuf.NetworkProtocol.getDescriptor().getEnumTypes().get(0);
+    }
+
+    private static final Owner[] VALUES = values();
+
+    public static Owner valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private Owner(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:com.encamy.battlecity.protobuf.Owner)
+  }
+
+  public interface PingOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.encamy.battlecity.protobuf.Ping)
       com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>string query = 1;</code>
-     */
-    java.lang.String getQuery();
-    /**
-     * <code>string query = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getQueryBytes();
-
-    /**
-     * <code>int32 page_number = 2;</code>
-     */
-    int getPageNumber();
-
-    /**
-     * <code>int32 result_per_page = 3;</code>
-     */
-    int getResultPerPage();
   }
   /**
-   * Protobuf type {@code com.encamy.battlecity.protobuf.TestMessage}
+   * Protobuf type {@code com.encamy.battlecity.protobuf.Ping}
    */
-  public  static final class TestMessage extends
+  public  static final class Ping extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.encamy.battlecity.protobuf.TestMessage)
-      TestMessageOrBuilder {
+      // @@protoc_insertion_point(message_implements:com.encamy.battlecity.protobuf.Ping)
+      PingOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use TestMessage.newBuilder() to construct.
-    private TestMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use Ping.newBuilder() to construct.
+    private Ping(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private TestMessage() {
-      query_ = "";
+    private Ping() {
     }
 
     @java.lang.Override
@@ -59,7 +145,7 @@ public final class NetworkProtocol {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private TestMessage(
+    private Ping(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -67,7 +153,6 @@ public final class NetworkProtocol {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
-      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -78,22 +163,6 @@ public final class NetworkProtocol {
             case 0:
               done = true;
               break;
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              query_ = s;
-              break;
-            }
-            case 16: {
-
-              pageNumber_ = input.readInt32();
-              break;
-            }
-            case 24: {
-
-              resultPerPage_ = input.readInt32();
-              break;
-            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -115,67 +184,15 @@ public final class NetworkProtocol {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_TestMessage_descriptor;
+      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Ping_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_TestMessage_fieldAccessorTable
+      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Ping_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage.class, com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage.Builder.class);
-    }
-
-    public static final int QUERY_FIELD_NUMBER = 1;
-    private volatile java.lang.Object query_;
-    /**
-     * <code>string query = 1;</code>
-     */
-    public java.lang.String getQuery() {
-      java.lang.Object ref = query_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        query_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string query = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getQueryBytes() {
-      java.lang.Object ref = query_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        query_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int PAGE_NUMBER_FIELD_NUMBER = 2;
-    private int pageNumber_;
-    /**
-     * <code>int32 page_number = 2;</code>
-     */
-    public int getPageNumber() {
-      return pageNumber_;
-    }
-
-    public static final int RESULT_PER_PAGE_FIELD_NUMBER = 3;
-    private int resultPerPage_;
-    /**
-     * <code>int32 result_per_page = 3;</code>
-     */
-    public int getResultPerPage() {
-      return resultPerPage_;
+              com.encamy.battlecity.protobuf.NetworkProtocol.Ping.class, com.encamy.battlecity.protobuf.NetworkProtocol.Ping.Builder.class);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -192,15 +209,6 @@ public final class NetworkProtocol {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getQueryBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, query_);
-      }
-      if (pageNumber_ != 0) {
-        output.writeInt32(2, pageNumber_);
-      }
-      if (resultPerPage_ != 0) {
-        output.writeInt32(3, resultPerPage_);
-      }
       unknownFields.writeTo(output);
     }
 
@@ -210,17 +218,6 @@ public final class NetworkProtocol {
       if (size != -1) return size;
 
       size = 0;
-      if (!getQueryBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, query_);
-      }
-      if (pageNumber_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, pageNumber_);
-      }
-      if (resultPerPage_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, resultPerPage_);
-      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -231,17 +228,11 @@ public final class NetworkProtocol {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage)) {
+      if (!(obj instanceof com.encamy.battlecity.protobuf.NetworkProtocol.Ping)) {
         return super.equals(obj);
       }
-      com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage other = (com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage) obj;
+      com.encamy.battlecity.protobuf.NetworkProtocol.Ping other = (com.encamy.battlecity.protobuf.NetworkProtocol.Ping) obj;
 
-      if (!getQuery()
-          .equals(other.getQuery())) return false;
-      if (getPageNumber()
-          != other.getPageNumber()) return false;
-      if (getResultPerPage()
-          != other.getResultPerPage()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -253,80 +244,74 @@ public final class NetworkProtocol {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + QUERY_FIELD_NUMBER;
-      hash = (53 * hash) + getQuery().hashCode();
-      hash = (37 * hash) + PAGE_NUMBER_FIELD_NUMBER;
-      hash = (53 * hash) + getPageNumber();
-      hash = (37 * hash) + RESULT_PER_PAGE_FIELD_NUMBER;
-      hash = (53 * hash) + getResultPerPage();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage parseFrom(
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Ping parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage parseFrom(
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Ping parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage parseFrom(
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Ping parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage parseFrom(
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Ping parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage parseFrom(byte[] data)
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Ping parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage parseFrom(
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Ping parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage parseFrom(java.io.InputStream input)
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Ping parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage parseFrom(
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Ping parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage parseDelimitedFrom(java.io.InputStream input)
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Ping parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage parseDelimitedFrom(
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Ping parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage parseFrom(
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Ping parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage parseFrom(
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Ping parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -339,7 +324,7 @@ public final class NetworkProtocol {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage prototype) {
+    public static Builder newBuilder(com.encamy.battlecity.protobuf.NetworkProtocol.Ping prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -355,26 +340,26 @@ public final class NetworkProtocol {
       return builder;
     }
     /**
-     * Protobuf type {@code com.encamy.battlecity.protobuf.TestMessage}
+     * Protobuf type {@code com.encamy.battlecity.protobuf.Ping}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.encamy.battlecity.protobuf.TestMessage)
-        com.encamy.battlecity.protobuf.NetworkProtocol.TestMessageOrBuilder {
+        // @@protoc_insertion_point(builder_implements:com.encamy.battlecity.protobuf.Ping)
+        com.encamy.battlecity.protobuf.NetworkProtocol.PingOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_TestMessage_descriptor;
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Ping_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_TestMessage_fieldAccessorTable
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Ping_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage.class, com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage.Builder.class);
+                com.encamy.battlecity.protobuf.NetworkProtocol.Ping.class, com.encamy.battlecity.protobuf.NetworkProtocol.Ping.Builder.class);
       }
 
-      // Construct using com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage.newBuilder()
+      // Construct using com.encamy.battlecity.protobuf.NetworkProtocol.Ping.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -392,29 +377,23 @@ public final class NetworkProtocol {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        query_ = "";
-
-        pageNumber_ = 0;
-
-        resultPerPage_ = 0;
-
         return this;
       }
 
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_TestMessage_descriptor;
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Ping_descriptor;
       }
 
       @java.lang.Override
-      public com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage getDefaultInstanceForType() {
-        return com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage.getDefaultInstance();
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Ping getDefaultInstanceForType() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.Ping.getDefaultInstance();
       }
 
       @java.lang.Override
-      public com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage build() {
-        com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage result = buildPartial();
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Ping build() {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Ping result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -422,11 +401,8 @@ public final class NetworkProtocol {
       }
 
       @java.lang.Override
-      public com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage buildPartial() {
-        com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage result = new com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage(this);
-        result.query_ = query_;
-        result.pageNumber_ = pageNumber_;
-        result.resultPerPage_ = resultPerPage_;
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Ping buildPartial() {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Ping result = new com.encamy.battlecity.protobuf.NetworkProtocol.Ping(this);
         onBuilt();
         return result;
       }
@@ -465,25 +441,963 @@ public final class NetworkProtocol {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage) {
-          return mergeFrom((com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage)other);
+        if (other instanceof com.encamy.battlecity.protobuf.NetworkProtocol.Ping) {
+          return mergeFrom((com.encamy.battlecity.protobuf.NetworkProtocol.Ping)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage other) {
-        if (other == com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage.getDefaultInstance()) return this;
-        if (!other.getQuery().isEmpty()) {
-          query_ = other.query_;
-          onChanged();
+      public Builder mergeFrom(com.encamy.battlecity.protobuf.NetworkProtocol.Ping other) {
+        if (other == com.encamy.battlecity.protobuf.NetworkProtocol.Ping.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Ping parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.encamy.battlecity.protobuf.NetworkProtocol.Ping) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
         }
-        if (other.getPageNumber() != 0) {
-          setPageNumber(other.getPageNumber());
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.encamy.battlecity.protobuf.Ping)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.encamy.battlecity.protobuf.Ping)
+    private static final com.encamy.battlecity.protobuf.NetworkProtocol.Ping DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.encamy.battlecity.protobuf.NetworkProtocol.Ping();
+    }
+
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Ping getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Ping>
+        PARSER = new com.google.protobuf.AbstractParser<Ping>() {
+      @java.lang.Override
+      public Ping parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Ping(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Ping> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Ping> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Ping getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface PongOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.encamy.battlecity.protobuf.Pong)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * Protobuf type {@code com.encamy.battlecity.protobuf.Pong}
+   */
+  public  static final class Pong extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.encamy.battlecity.protobuf.Pong)
+      PongOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Pong.newBuilder() to construct.
+    private Pong(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Pong() {
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Pong(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
         }
-        if (other.getResultPerPage() != 0) {
-          setResultPerPage(other.getResultPerPage());
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Pong_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Pong_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.encamy.battlecity.protobuf.NetworkProtocol.Pong.class, com.encamy.battlecity.protobuf.NetworkProtocol.Pong.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.encamy.battlecity.protobuf.NetworkProtocol.Pong)) {
+        return super.equals(obj);
+      }
+      com.encamy.battlecity.protobuf.NetworkProtocol.Pong other = (com.encamy.battlecity.protobuf.NetworkProtocol.Pong) obj;
+
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Pong parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Pong parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Pong parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Pong parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Pong parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Pong parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Pong parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Pong parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Pong parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Pong parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Pong parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Pong parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.encamy.battlecity.protobuf.NetworkProtocol.Pong prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.encamy.battlecity.protobuf.Pong}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.encamy.battlecity.protobuf.Pong)
+        com.encamy.battlecity.protobuf.NetworkProtocol.PongOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Pong_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Pong_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.encamy.battlecity.protobuf.NetworkProtocol.Pong.class, com.encamy.battlecity.protobuf.NetworkProtocol.Pong.Builder.class);
+      }
+
+      // Construct using com.encamy.battlecity.protobuf.NetworkProtocol.Pong.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Pong_descriptor;
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Pong getDefaultInstanceForType() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.Pong.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Pong build() {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Pong result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Pong buildPartial() {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Pong result = new com.encamy.battlecity.protobuf.NetworkProtocol.Pong(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.encamy.battlecity.protobuf.NetworkProtocol.Pong) {
+          return mergeFrom((com.encamy.battlecity.protobuf.NetworkProtocol.Pong)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.encamy.battlecity.protobuf.NetworkProtocol.Pong other) {
+        if (other == com.encamy.battlecity.protobuf.NetworkProtocol.Pong.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Pong parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.encamy.battlecity.protobuf.NetworkProtocol.Pong) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.encamy.battlecity.protobuf.Pong)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.encamy.battlecity.protobuf.Pong)
+    private static final com.encamy.battlecity.protobuf.NetworkProtocol.Pong DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.encamy.battlecity.protobuf.NetworkProtocol.Pong();
+    }
+
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Pong getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Pong>
+        PARSER = new com.google.protobuf.AbstractParser<Pong>() {
+      @java.lang.Override
+      public Pong parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Pong(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Pong> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Pong> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Pong getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface SpawnedOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.encamy.battlecity.protobuf.Spawned)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+     */
+    int getOwnerValue();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.Owner getOwner();
+
+    /**
+     * <code>float x = 2;</code>
+     */
+    float getX();
+
+    /**
+     * <code>float y = 3;</code>
+     */
+    float getY();
+  }
+  /**
+   * Protobuf type {@code com.encamy.battlecity.protobuf.Spawned}
+   */
+  public  static final class Spawned extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.encamy.battlecity.protobuf.Spawned)
+      SpawnedOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Spawned.newBuilder() to construct.
+    private Spawned(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Spawned() {
+      owner_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Spawned(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+              int rawValue = input.readEnum();
+
+              owner_ = rawValue;
+              break;
+            }
+            case 21: {
+
+              x_ = input.readFloat();
+              break;
+            }
+            case 29: {
+
+              y_ = input.readFloat();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Spawned_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Spawned_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.class, com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.Builder.class);
+    }
+
+    public static final int OWNER_FIELD_NUMBER = 1;
+    private int owner_;
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+     */
+    public int getOwnerValue() {
+      return owner_;
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Owner getOwner() {
+      @SuppressWarnings("deprecation")
+      com.encamy.battlecity.protobuf.NetworkProtocol.Owner result = com.encamy.battlecity.protobuf.NetworkProtocol.Owner.valueOf(owner_);
+      return result == null ? com.encamy.battlecity.protobuf.NetworkProtocol.Owner.UNRECOGNIZED : result;
+    }
+
+    public static final int X_FIELD_NUMBER = 2;
+    private float x_;
+    /**
+     * <code>float x = 2;</code>
+     */
+    public float getX() {
+      return x_;
+    }
+
+    public static final int Y_FIELD_NUMBER = 3;
+    private float y_;
+    /**
+     * <code>float y = 3;</code>
+     */
+    public float getY() {
+      return y_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (owner_ != com.encamy.battlecity.protobuf.NetworkProtocol.Owner.ENEMY.getNumber()) {
+        output.writeEnum(1, owner_);
+      }
+      if (x_ != 0F) {
+        output.writeFloat(2, x_);
+      }
+      if (y_ != 0F) {
+        output.writeFloat(3, y_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (owner_ != com.encamy.battlecity.protobuf.NetworkProtocol.Owner.ENEMY.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(1, owner_);
+      }
+      if (x_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(2, x_);
+      }
+      if (y_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(3, y_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.encamy.battlecity.protobuf.NetworkProtocol.Spawned)) {
+        return super.equals(obj);
+      }
+      com.encamy.battlecity.protobuf.NetworkProtocol.Spawned other = (com.encamy.battlecity.protobuf.NetworkProtocol.Spawned) obj;
+
+      if (owner_ != other.owner_) return false;
+      if (java.lang.Float.floatToIntBits(getX())
+          != java.lang.Float.floatToIntBits(
+              other.getX())) return false;
+      if (java.lang.Float.floatToIntBits(getY())
+          != java.lang.Float.floatToIntBits(
+              other.getY())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + OWNER_FIELD_NUMBER;
+      hash = (53 * hash) + owner_;
+      hash = (37 * hash) + X_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getX());
+      hash = (37 * hash) + Y_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getY());
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Spawned parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Spawned parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Spawned parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Spawned parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Spawned parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Spawned parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Spawned parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Spawned parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Spawned parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Spawned parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Spawned parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Spawned parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.encamy.battlecity.protobuf.NetworkProtocol.Spawned prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.encamy.battlecity.protobuf.Spawned}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.encamy.battlecity.protobuf.Spawned)
+        com.encamy.battlecity.protobuf.NetworkProtocol.SpawnedOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Spawned_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Spawned_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.class, com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.Builder.class);
+      }
+
+      // Construct using com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        owner_ = 0;
+
+        x_ = 0F;
+
+        y_ = 0F;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Spawned_descriptor;
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Spawned getDefaultInstanceForType() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Spawned build() {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Spawned result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Spawned buildPartial() {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Spawned result = new com.encamy.battlecity.protobuf.NetworkProtocol.Spawned(this);
+        result.owner_ = owner_;
+        result.x_ = x_;
+        result.y_ = y_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.encamy.battlecity.protobuf.NetworkProtocol.Spawned) {
+          return mergeFrom((com.encamy.battlecity.protobuf.NetworkProtocol.Spawned)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.encamy.battlecity.protobuf.NetworkProtocol.Spawned other) {
+        if (other == com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.getDefaultInstance()) return this;
+        if (other.owner_ != 0) {
+          setOwnerValue(other.getOwnerValue());
+        }
+        if (other.getX() != 0F) {
+          setX(other.getX());
+        }
+        if (other.getY() != 0F) {
+          setY(other.getY());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -500,11 +1414,11 @@ public final class NetworkProtocol {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage parsedMessage = null;
+        com.encamy.battlecity.protobuf.NetworkProtocol.Spawned parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage) e.getUnfinishedMessage();
+          parsedMessage = (com.encamy.battlecity.protobuf.NetworkProtocol.Spawned) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -514,123 +1428,99 @@ public final class NetworkProtocol {
         return this;
       }
 
-      private java.lang.Object query_ = "";
+      private int owner_ = 0;
       /**
-       * <code>string query = 1;</code>
+       * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
        */
-      public java.lang.String getQuery() {
-        java.lang.Object ref = query_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          query_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public int getOwnerValue() {
+        return owner_;
       }
       /**
-       * <code>string query = 1;</code>
+       * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
        */
-      public com.google.protobuf.ByteString
-          getQueryBytes() {
-        java.lang.Object ref = query_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          query_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string query = 1;</code>
-       */
-      public Builder setQuery(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        query_ = value;
+      public Builder setOwnerValue(int value) {
+        owner_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>string query = 1;</code>
+       * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
        */
-      public Builder clearQuery() {
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Owner getOwner() {
+        @SuppressWarnings("deprecation")
+        com.encamy.battlecity.protobuf.NetworkProtocol.Owner result = com.encamy.battlecity.protobuf.NetworkProtocol.Owner.valueOf(owner_);
+        return result == null ? com.encamy.battlecity.protobuf.NetworkProtocol.Owner.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+       */
+      public Builder setOwner(com.encamy.battlecity.protobuf.NetworkProtocol.Owner value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         
-        query_ = getDefaultInstance().getQuery();
+        owner_ = value.getNumber();
         onChanged();
         return this;
       }
       /**
-       * <code>string query = 1;</code>
+       * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
        */
-      public Builder setQueryBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
+      public Builder clearOwner() {
         
-        query_ = value;
+        owner_ = 0;
         onChanged();
         return this;
       }
 
-      private int pageNumber_ ;
+      private float x_ ;
       /**
-       * <code>int32 page_number = 2;</code>
+       * <code>float x = 2;</code>
        */
-      public int getPageNumber() {
-        return pageNumber_;
+      public float getX() {
+        return x_;
       }
       /**
-       * <code>int32 page_number = 2;</code>
+       * <code>float x = 2;</code>
        */
-      public Builder setPageNumber(int value) {
+      public Builder setX(float value) {
         
-        pageNumber_ = value;
+        x_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>int32 page_number = 2;</code>
+       * <code>float x = 2;</code>
        */
-      public Builder clearPageNumber() {
+      public Builder clearX() {
         
-        pageNumber_ = 0;
+        x_ = 0F;
         onChanged();
         return this;
       }
 
-      private int resultPerPage_ ;
+      private float y_ ;
       /**
-       * <code>int32 result_per_page = 3;</code>
+       * <code>float y = 3;</code>
        */
-      public int getResultPerPage() {
-        return resultPerPage_;
+      public float getY() {
+        return y_;
       }
       /**
-       * <code>int32 result_per_page = 3;</code>
+       * <code>float y = 3;</code>
        */
-      public Builder setResultPerPage(int value) {
+      public Builder setY(float value) {
         
-        resultPerPage_ = value;
+        y_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>int32 result_per_page = 3;</code>
+       * <code>float y = 3;</code>
        */
-      public Builder clearResultPerPage() {
+      public Builder clearY() {
         
-        resultPerPage_ = 0;
+        y_ = 0F;
         onChanged();
         return this;
       }
@@ -647,51 +1537,4673 @@ public final class NetworkProtocol {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.encamy.battlecity.protobuf.TestMessage)
+      // @@protoc_insertion_point(builder_scope:com.encamy.battlecity.protobuf.Spawned)
     }
 
-    // @@protoc_insertion_point(class_scope:com.encamy.battlecity.protobuf.TestMessage)
-    private static final com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:com.encamy.battlecity.protobuf.Spawned)
+    private static final com.encamy.battlecity.protobuf.NetworkProtocol.Spawned DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage();
+      DEFAULT_INSTANCE = new com.encamy.battlecity.protobuf.NetworkProtocol.Spawned();
     }
 
-    public static com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage getDefaultInstance() {
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Spawned getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<TestMessage>
-        PARSER = new com.google.protobuf.AbstractParser<TestMessage>() {
+    private static final com.google.protobuf.Parser<Spawned>
+        PARSER = new com.google.protobuf.AbstractParser<Spawned>() {
       @java.lang.Override
-      public TestMessage parsePartialFrom(
+      public Spawned parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new TestMessage(input, extensionRegistry);
+        return new Spawned(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<TestMessage> parser() {
+    public static com.google.protobuf.Parser<Spawned> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<TestMessage> getParserForType() {
+    public com.google.protobuf.Parser<Spawned> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.encamy.battlecity.protobuf.NetworkProtocol.TestMessage getDefaultInstanceForType() {
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Spawned getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface FireOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.encamy.battlecity.protobuf.Fire)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+     */
+    int getOwnerValue();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.Owner getOwner();
+
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Fire.Direction direction = 2;</code>
+     */
+    int getDirectionValue();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Fire.Direction direction = 2;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction getDirection();
+
+    /**
+     * <code>int32 id = 3;</code>
+     */
+    int getId();
+  }
+  /**
+   * Protobuf type {@code com.encamy.battlecity.protobuf.Fire}
+   */
+  public  static final class Fire extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.encamy.battlecity.protobuf.Fire)
+      FireOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Fire.newBuilder() to construct.
+    private Fire(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Fire() {
+      owner_ = 0;
+      direction_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Fire(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+              int rawValue = input.readEnum();
+
+              owner_ = rawValue;
+              break;
+            }
+            case 16: {
+              int rawValue = input.readEnum();
+
+              direction_ = rawValue;
+              break;
+            }
+            case 24: {
+
+              id_ = input.readInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Fire_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Fire_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.encamy.battlecity.protobuf.NetworkProtocol.Fire.class, com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Builder.class);
+    }
+
+    /**
+     * Protobuf enum {@code com.encamy.battlecity.protobuf.Fire.Direction}
+     */
+    public enum Direction
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>LEFT = 0;</code>
+       */
+      LEFT(0),
+      /**
+       * <code>TOP = 1;</code>
+       */
+      TOP(1),
+      /**
+       * <code>RIGHT = 2;</code>
+       */
+      RIGHT(2),
+      /**
+       * <code>BOTTOM = 3;</code>
+       */
+      BOTTOM(3),
+      UNRECOGNIZED(-1),
+      ;
+
+      /**
+       * <code>LEFT = 0;</code>
+       */
+      public static final int LEFT_VALUE = 0;
+      /**
+       * <code>TOP = 1;</code>
+       */
+      public static final int TOP_VALUE = 1;
+      /**
+       * <code>RIGHT = 2;</code>
+       */
+      public static final int RIGHT_VALUE = 2;
+      /**
+       * <code>BOTTOM = 3;</code>
+       */
+      public static final int BOTTOM_VALUE = 3;
+
+
+      public final int getNumber() {
+        if (this == UNRECOGNIZED) {
+          throw new java.lang.IllegalArgumentException(
+              "Can't get the number of an unknown enum value.");
+        }
+        return value;
+      }
+
+      /**
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static Direction valueOf(int value) {
+        return forNumber(value);
+      }
+
+      public static Direction forNumber(int value) {
+        switch (value) {
+          case 0: return LEFT;
+          case 1: return TOP;
+          case 2: return RIGHT;
+          case 3: return BOTTOM;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<Direction>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static final com.google.protobuf.Internal.EnumLiteMap<
+          Direction> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<Direction>() {
+              public Direction findValueByNumber(int number) {
+                return Direction.forNumber(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(ordinal());
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.Fire.getDescriptor().getEnumTypes().get(0);
+      }
+
+      private static final Direction[] VALUES = values();
+
+      public static Direction valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        if (desc.getIndex() == -1) {
+          return UNRECOGNIZED;
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int value;
+
+      private Direction(int value) {
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:com.encamy.battlecity.protobuf.Fire.Direction)
+    }
+
+    public static final int OWNER_FIELD_NUMBER = 1;
+    private int owner_;
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+     */
+    public int getOwnerValue() {
+      return owner_;
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Owner getOwner() {
+      @SuppressWarnings("deprecation")
+      com.encamy.battlecity.protobuf.NetworkProtocol.Owner result = com.encamy.battlecity.protobuf.NetworkProtocol.Owner.valueOf(owner_);
+      return result == null ? com.encamy.battlecity.protobuf.NetworkProtocol.Owner.UNRECOGNIZED : result;
+    }
+
+    public static final int DIRECTION_FIELD_NUMBER = 2;
+    private int direction_;
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Fire.Direction direction = 2;</code>
+     */
+    public int getDirectionValue() {
+      return direction_;
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Fire.Direction direction = 2;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction getDirection() {
+      @SuppressWarnings("deprecation")
+      com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction result = com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction.valueOf(direction_);
+      return result == null ? com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction.UNRECOGNIZED : result;
+    }
+
+    public static final int ID_FIELD_NUMBER = 3;
+    private int id_;
+    /**
+     * <code>int32 id = 3;</code>
+     */
+    public int getId() {
+      return id_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (owner_ != com.encamy.battlecity.protobuf.NetworkProtocol.Owner.ENEMY.getNumber()) {
+        output.writeEnum(1, owner_);
+      }
+      if (direction_ != com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction.LEFT.getNumber()) {
+        output.writeEnum(2, direction_);
+      }
+      if (id_ != 0) {
+        output.writeInt32(3, id_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (owner_ != com.encamy.battlecity.protobuf.NetworkProtocol.Owner.ENEMY.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(1, owner_);
+      }
+      if (direction_ != com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction.LEFT.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(2, direction_);
+      }
+      if (id_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, id_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.encamy.battlecity.protobuf.NetworkProtocol.Fire)) {
+        return super.equals(obj);
+      }
+      com.encamy.battlecity.protobuf.NetworkProtocol.Fire other = (com.encamy.battlecity.protobuf.NetworkProtocol.Fire) obj;
+
+      if (owner_ != other.owner_) return false;
+      if (direction_ != other.direction_) return false;
+      if (getId()
+          != other.getId()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + OWNER_FIELD_NUMBER;
+      hash = (53 * hash) + owner_;
+      hash = (37 * hash) + DIRECTION_FIELD_NUMBER;
+      hash = (53 * hash) + direction_;
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + getId();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Fire parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Fire parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Fire parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Fire parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Fire parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Fire parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Fire parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Fire parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Fire parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Fire parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Fire parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Fire parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.encamy.battlecity.protobuf.NetworkProtocol.Fire prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.encamy.battlecity.protobuf.Fire}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.encamy.battlecity.protobuf.Fire)
+        com.encamy.battlecity.protobuf.NetworkProtocol.FireOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Fire_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Fire_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.encamy.battlecity.protobuf.NetworkProtocol.Fire.class, com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Builder.class);
+      }
+
+      // Construct using com.encamy.battlecity.protobuf.NetworkProtocol.Fire.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        owner_ = 0;
+
+        direction_ = 0;
+
+        id_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Fire_descriptor;
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Fire getDefaultInstanceForType() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.Fire.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Fire build() {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Fire result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Fire buildPartial() {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Fire result = new com.encamy.battlecity.protobuf.NetworkProtocol.Fire(this);
+        result.owner_ = owner_;
+        result.direction_ = direction_;
+        result.id_ = id_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.encamy.battlecity.protobuf.NetworkProtocol.Fire) {
+          return mergeFrom((com.encamy.battlecity.protobuf.NetworkProtocol.Fire)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.encamy.battlecity.protobuf.NetworkProtocol.Fire other) {
+        if (other == com.encamy.battlecity.protobuf.NetworkProtocol.Fire.getDefaultInstance()) return this;
+        if (other.owner_ != 0) {
+          setOwnerValue(other.getOwnerValue());
+        }
+        if (other.direction_ != 0) {
+          setDirectionValue(other.getDirectionValue());
+        }
+        if (other.getId() != 0) {
+          setId(other.getId());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Fire parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.encamy.battlecity.protobuf.NetworkProtocol.Fire) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int owner_ = 0;
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+       */
+      public int getOwnerValue() {
+        return owner_;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+       */
+      public Builder setOwnerValue(int value) {
+        owner_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Owner getOwner() {
+        @SuppressWarnings("deprecation")
+        com.encamy.battlecity.protobuf.NetworkProtocol.Owner result = com.encamy.battlecity.protobuf.NetworkProtocol.Owner.valueOf(owner_);
+        return result == null ? com.encamy.battlecity.protobuf.NetworkProtocol.Owner.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+       */
+      public Builder setOwner(com.encamy.battlecity.protobuf.NetworkProtocol.Owner value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        owner_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+       */
+      public Builder clearOwner() {
+        
+        owner_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int direction_ = 0;
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Fire.Direction direction = 2;</code>
+       */
+      public int getDirectionValue() {
+        return direction_;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Fire.Direction direction = 2;</code>
+       */
+      public Builder setDirectionValue(int value) {
+        direction_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Fire.Direction direction = 2;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction getDirection() {
+        @SuppressWarnings("deprecation")
+        com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction result = com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction.valueOf(direction_);
+        return result == null ? com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Fire.Direction direction = 2;</code>
+       */
+      public Builder setDirection(com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        direction_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Fire.Direction direction = 2;</code>
+       */
+      public Builder clearDirection() {
+        
+        direction_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int id_ ;
+      /**
+       * <code>int32 id = 3;</code>
+       */
+      public int getId() {
+        return id_;
+      }
+      /**
+       * <code>int32 id = 3;</code>
+       */
+      public Builder setId(int value) {
+        
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 id = 3;</code>
+       */
+      public Builder clearId() {
+        
+        id_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.encamy.battlecity.protobuf.Fire)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.encamy.battlecity.protobuf.Fire)
+    private static final com.encamy.battlecity.protobuf.NetworkProtocol.Fire DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.encamy.battlecity.protobuf.NetworkProtocol.Fire();
+    }
+
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Fire getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Fire>
+        PARSER = new com.google.protobuf.AbstractParser<Fire>() {
+      @java.lang.Override
+      public Fire parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Fire(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Fire> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Fire> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Fire getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface MoveOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.encamy.battlecity.protobuf.Move)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+     */
+    int getOwnerValue();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.Owner getOwner();
+
+    /**
+     * <code>int32 id = 2;</code>
+     */
+    int getId();
+
+    /**
+     * <code>float x_prev = 3;</code>
+     */
+    float getXPrev();
+
+    /**
+     * <code>float y_prev = 4;</code>
+     */
+    float getYPrev();
+
+    /**
+     * <code>float x_current = 5;</code>
+     */
+    float getXCurrent();
+
+    /**
+     * <code>float y_current = 6;</code>
+     */
+    float getYCurrent();
+  }
+  /**
+   * Protobuf type {@code com.encamy.battlecity.protobuf.Move}
+   */
+  public  static final class Move extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.encamy.battlecity.protobuf.Move)
+      MoveOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Move.newBuilder() to construct.
+    private Move(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Move() {
+      owner_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Move(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+              int rawValue = input.readEnum();
+
+              owner_ = rawValue;
+              break;
+            }
+            case 16: {
+
+              id_ = input.readInt32();
+              break;
+            }
+            case 29: {
+
+              xPrev_ = input.readFloat();
+              break;
+            }
+            case 37: {
+
+              yPrev_ = input.readFloat();
+              break;
+            }
+            case 45: {
+
+              xCurrent_ = input.readFloat();
+              break;
+            }
+            case 53: {
+
+              yCurrent_ = input.readFloat();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Move_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Move_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.encamy.battlecity.protobuf.NetworkProtocol.Move.class, com.encamy.battlecity.protobuf.NetworkProtocol.Move.Builder.class);
+    }
+
+    public static final int OWNER_FIELD_NUMBER = 1;
+    private int owner_;
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+     */
+    public int getOwnerValue() {
+      return owner_;
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Owner getOwner() {
+      @SuppressWarnings("deprecation")
+      com.encamy.battlecity.protobuf.NetworkProtocol.Owner result = com.encamy.battlecity.protobuf.NetworkProtocol.Owner.valueOf(owner_);
+      return result == null ? com.encamy.battlecity.protobuf.NetworkProtocol.Owner.UNRECOGNIZED : result;
+    }
+
+    public static final int ID_FIELD_NUMBER = 2;
+    private int id_;
+    /**
+     * <code>int32 id = 2;</code>
+     */
+    public int getId() {
+      return id_;
+    }
+
+    public static final int X_PREV_FIELD_NUMBER = 3;
+    private float xPrev_;
+    /**
+     * <code>float x_prev = 3;</code>
+     */
+    public float getXPrev() {
+      return xPrev_;
+    }
+
+    public static final int Y_PREV_FIELD_NUMBER = 4;
+    private float yPrev_;
+    /**
+     * <code>float y_prev = 4;</code>
+     */
+    public float getYPrev() {
+      return yPrev_;
+    }
+
+    public static final int X_CURRENT_FIELD_NUMBER = 5;
+    private float xCurrent_;
+    /**
+     * <code>float x_current = 5;</code>
+     */
+    public float getXCurrent() {
+      return xCurrent_;
+    }
+
+    public static final int Y_CURRENT_FIELD_NUMBER = 6;
+    private float yCurrent_;
+    /**
+     * <code>float y_current = 6;</code>
+     */
+    public float getYCurrent() {
+      return yCurrent_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (owner_ != com.encamy.battlecity.protobuf.NetworkProtocol.Owner.ENEMY.getNumber()) {
+        output.writeEnum(1, owner_);
+      }
+      if (id_ != 0) {
+        output.writeInt32(2, id_);
+      }
+      if (xPrev_ != 0F) {
+        output.writeFloat(3, xPrev_);
+      }
+      if (yPrev_ != 0F) {
+        output.writeFloat(4, yPrev_);
+      }
+      if (xCurrent_ != 0F) {
+        output.writeFloat(5, xCurrent_);
+      }
+      if (yCurrent_ != 0F) {
+        output.writeFloat(6, yCurrent_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (owner_ != com.encamy.battlecity.protobuf.NetworkProtocol.Owner.ENEMY.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(1, owner_);
+      }
+      if (id_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, id_);
+      }
+      if (xPrev_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(3, xPrev_);
+      }
+      if (yPrev_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(4, yPrev_);
+      }
+      if (xCurrent_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(5, xCurrent_);
+      }
+      if (yCurrent_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(6, yCurrent_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.encamy.battlecity.protobuf.NetworkProtocol.Move)) {
+        return super.equals(obj);
+      }
+      com.encamy.battlecity.protobuf.NetworkProtocol.Move other = (com.encamy.battlecity.protobuf.NetworkProtocol.Move) obj;
+
+      if (owner_ != other.owner_) return false;
+      if (getId()
+          != other.getId()) return false;
+      if (java.lang.Float.floatToIntBits(getXPrev())
+          != java.lang.Float.floatToIntBits(
+              other.getXPrev())) return false;
+      if (java.lang.Float.floatToIntBits(getYPrev())
+          != java.lang.Float.floatToIntBits(
+              other.getYPrev())) return false;
+      if (java.lang.Float.floatToIntBits(getXCurrent())
+          != java.lang.Float.floatToIntBits(
+              other.getXCurrent())) return false;
+      if (java.lang.Float.floatToIntBits(getYCurrent())
+          != java.lang.Float.floatToIntBits(
+              other.getYCurrent())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + OWNER_FIELD_NUMBER;
+      hash = (53 * hash) + owner_;
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + getId();
+      hash = (37 * hash) + X_PREV_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getXPrev());
+      hash = (37 * hash) + Y_PREV_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getYPrev());
+      hash = (37 * hash) + X_CURRENT_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getXCurrent());
+      hash = (37 * hash) + Y_CURRENT_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getYCurrent());
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Move parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Move parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Move parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Move parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Move parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Move parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Move parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Move parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Move parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Move parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Move parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Move parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.encamy.battlecity.protobuf.NetworkProtocol.Move prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.encamy.battlecity.protobuf.Move}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.encamy.battlecity.protobuf.Move)
+        com.encamy.battlecity.protobuf.NetworkProtocol.MoveOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Move_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Move_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.encamy.battlecity.protobuf.NetworkProtocol.Move.class, com.encamy.battlecity.protobuf.NetworkProtocol.Move.Builder.class);
+      }
+
+      // Construct using com.encamy.battlecity.protobuf.NetworkProtocol.Move.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        owner_ = 0;
+
+        id_ = 0;
+
+        xPrev_ = 0F;
+
+        yPrev_ = 0F;
+
+        xCurrent_ = 0F;
+
+        yCurrent_ = 0F;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Move_descriptor;
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Move getDefaultInstanceForType() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.Move.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Move build() {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Move result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Move buildPartial() {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Move result = new com.encamy.battlecity.protobuf.NetworkProtocol.Move(this);
+        result.owner_ = owner_;
+        result.id_ = id_;
+        result.xPrev_ = xPrev_;
+        result.yPrev_ = yPrev_;
+        result.xCurrent_ = xCurrent_;
+        result.yCurrent_ = yCurrent_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.encamy.battlecity.protobuf.NetworkProtocol.Move) {
+          return mergeFrom((com.encamy.battlecity.protobuf.NetworkProtocol.Move)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.encamy.battlecity.protobuf.NetworkProtocol.Move other) {
+        if (other == com.encamy.battlecity.protobuf.NetworkProtocol.Move.getDefaultInstance()) return this;
+        if (other.owner_ != 0) {
+          setOwnerValue(other.getOwnerValue());
+        }
+        if (other.getId() != 0) {
+          setId(other.getId());
+        }
+        if (other.getXPrev() != 0F) {
+          setXPrev(other.getXPrev());
+        }
+        if (other.getYPrev() != 0F) {
+          setYPrev(other.getYPrev());
+        }
+        if (other.getXCurrent() != 0F) {
+          setXCurrent(other.getXCurrent());
+        }
+        if (other.getYCurrent() != 0F) {
+          setYCurrent(other.getYCurrent());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Move parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.encamy.battlecity.protobuf.NetworkProtocol.Move) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int owner_ = 0;
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+       */
+      public int getOwnerValue() {
+        return owner_;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+       */
+      public Builder setOwnerValue(int value) {
+        owner_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Owner getOwner() {
+        @SuppressWarnings("deprecation")
+        com.encamy.battlecity.protobuf.NetworkProtocol.Owner result = com.encamy.battlecity.protobuf.NetworkProtocol.Owner.valueOf(owner_);
+        return result == null ? com.encamy.battlecity.protobuf.NetworkProtocol.Owner.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+       */
+      public Builder setOwner(com.encamy.battlecity.protobuf.NetworkProtocol.Owner value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        owner_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Owner owner = 1;</code>
+       */
+      public Builder clearOwner() {
+        
+        owner_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int id_ ;
+      /**
+       * <code>int32 id = 2;</code>
+       */
+      public int getId() {
+        return id_;
+      }
+      /**
+       * <code>int32 id = 2;</code>
+       */
+      public Builder setId(int value) {
+        
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 id = 2;</code>
+       */
+      public Builder clearId() {
+        
+        id_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private float xPrev_ ;
+      /**
+       * <code>float x_prev = 3;</code>
+       */
+      public float getXPrev() {
+        return xPrev_;
+      }
+      /**
+       * <code>float x_prev = 3;</code>
+       */
+      public Builder setXPrev(float value) {
+        
+        xPrev_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float x_prev = 3;</code>
+       */
+      public Builder clearXPrev() {
+        
+        xPrev_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private float yPrev_ ;
+      /**
+       * <code>float y_prev = 4;</code>
+       */
+      public float getYPrev() {
+        return yPrev_;
+      }
+      /**
+       * <code>float y_prev = 4;</code>
+       */
+      public Builder setYPrev(float value) {
+        
+        yPrev_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float y_prev = 4;</code>
+       */
+      public Builder clearYPrev() {
+        
+        yPrev_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private float xCurrent_ ;
+      /**
+       * <code>float x_current = 5;</code>
+       */
+      public float getXCurrent() {
+        return xCurrent_;
+      }
+      /**
+       * <code>float x_current = 5;</code>
+       */
+      public Builder setXCurrent(float value) {
+        
+        xCurrent_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float x_current = 5;</code>
+       */
+      public Builder clearXCurrent() {
+        
+        xCurrent_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private float yCurrent_ ;
+      /**
+       * <code>float y_current = 6;</code>
+       */
+      public float getYCurrent() {
+        return yCurrent_;
+      }
+      /**
+       * <code>float y_current = 6;</code>
+       */
+      public Builder setYCurrent(float value) {
+        
+        yCurrent_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float y_current = 6;</code>
+       */
+      public Builder clearYCurrent() {
+        
+        yCurrent_ = 0F;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.encamy.battlecity.protobuf.Move)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.encamy.battlecity.protobuf.Move)
+    private static final com.encamy.battlecity.protobuf.NetworkProtocol.Move DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.encamy.battlecity.protobuf.NetworkProtocol.Move();
+    }
+
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Move getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Move>
+        PARSER = new com.google.protobuf.AbstractParser<Move>() {
+      @java.lang.Override
+      public Move parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Move(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Move> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Move> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Move getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface DestroyedOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.encamy.battlecity.protobuf.Destroyed)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Owner item = 1;</code>
+     */
+    int getItemValue();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Owner item = 1;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.Owner getItem();
+  }
+  /**
+   * Protobuf type {@code com.encamy.battlecity.protobuf.Destroyed}
+   */
+  public  static final class Destroyed extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.encamy.battlecity.protobuf.Destroyed)
+      DestroyedOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Destroyed.newBuilder() to construct.
+    private Destroyed(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Destroyed() {
+      item_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Destroyed(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+              int rawValue = input.readEnum();
+
+              item_ = rawValue;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Destroyed_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Destroyed_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.class, com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.Builder.class);
+    }
+
+    public static final int ITEM_FIELD_NUMBER = 1;
+    private int item_;
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Owner item = 1;</code>
+     */
+    public int getItemValue() {
+      return item_;
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Owner item = 1;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Owner getItem() {
+      @SuppressWarnings("deprecation")
+      com.encamy.battlecity.protobuf.NetworkProtocol.Owner result = com.encamy.battlecity.protobuf.NetworkProtocol.Owner.valueOf(item_);
+      return result == null ? com.encamy.battlecity.protobuf.NetworkProtocol.Owner.UNRECOGNIZED : result;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (item_ != com.encamy.battlecity.protobuf.NetworkProtocol.Owner.ENEMY.getNumber()) {
+        output.writeEnum(1, item_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (item_ != com.encamy.battlecity.protobuf.NetworkProtocol.Owner.ENEMY.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(1, item_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed)) {
+        return super.equals(obj);
+      }
+      com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed other = (com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed) obj;
+
+      if (item_ != other.item_) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ITEM_FIELD_NUMBER;
+      hash = (53 * hash) + item_;
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.encamy.battlecity.protobuf.Destroyed}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.encamy.battlecity.protobuf.Destroyed)
+        com.encamy.battlecity.protobuf.NetworkProtocol.DestroyedOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Destroyed_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Destroyed_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.class, com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.Builder.class);
+      }
+
+      // Construct using com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        item_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Destroyed_descriptor;
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed getDefaultInstanceForType() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed build() {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed buildPartial() {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed result = new com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed(this);
+        result.item_ = item_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed) {
+          return mergeFrom((com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed other) {
+        if (other == com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.getDefaultInstance()) return this;
+        if (other.item_ != 0) {
+          setItemValue(other.getItemValue());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int item_ = 0;
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Owner item = 1;</code>
+       */
+      public int getItemValue() {
+        return item_;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Owner item = 1;</code>
+       */
+      public Builder setItemValue(int value) {
+        item_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Owner item = 1;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Owner getItem() {
+        @SuppressWarnings("deprecation")
+        com.encamy.battlecity.protobuf.NetworkProtocol.Owner result = com.encamy.battlecity.protobuf.NetworkProtocol.Owner.valueOf(item_);
+        return result == null ? com.encamy.battlecity.protobuf.NetworkProtocol.Owner.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Owner item = 1;</code>
+       */
+      public Builder setItem(com.encamy.battlecity.protobuf.NetworkProtocol.Owner value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        item_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Owner item = 1;</code>
+       */
+      public Builder clearItem() {
+        
+        item_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.encamy.battlecity.protobuf.Destroyed)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.encamy.battlecity.protobuf.Destroyed)
+    private static final com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed();
+    }
+
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Destroyed>
+        PARSER = new com.google.protobuf.AbstractParser<Destroyed>() {
+      @java.lang.Override
+      public Destroyed parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Destroyed(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Destroyed> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Destroyed> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface EventOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.encamy.battlecity.protobuf.Event)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Spawned spawned = 1;</code>
+     */
+    boolean hasSpawned();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Spawned spawned = 1;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.Spawned getSpawned();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Spawned spawned = 1;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.SpawnedOrBuilder getSpawnedOrBuilder();
+
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Fire fire = 2;</code>
+     */
+    boolean hasFire();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Fire fire = 2;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.Fire getFire();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Fire fire = 2;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.FireOrBuilder getFireOrBuilder();
+
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Move move = 3;</code>
+     */
+    boolean hasMove();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Move move = 3;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.Move getMove();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Move move = 3;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.MoveOrBuilder getMoveOrBuilder();
+
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Destroyed destroyed = 4;</code>
+     */
+    boolean hasDestroyed();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Destroyed destroyed = 4;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed getDestroyed();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Destroyed destroyed = 4;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.DestroyedOrBuilder getDestroyedOrBuilder();
+
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Event.EventTypeCase getEventTypeCase();
+  }
+  /**
+   * Protobuf type {@code com.encamy.battlecity.protobuf.Event}
+   */
+  public  static final class Event extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.encamy.battlecity.protobuf.Event)
+      EventOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Event.newBuilder() to construct.
+    private Event(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Event() {
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Event(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.Builder subBuilder = null;
+              if (eventTypeCase_ == 1) {
+                subBuilder = ((com.encamy.battlecity.protobuf.NetworkProtocol.Spawned) eventType_).toBuilder();
+              }
+              eventType_ =
+                  input.readMessage(com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.encamy.battlecity.protobuf.NetworkProtocol.Spawned) eventType_);
+                eventType_ = subBuilder.buildPartial();
+              }
+              eventTypeCase_ = 1;
+              break;
+            }
+            case 18: {
+              com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Builder subBuilder = null;
+              if (eventTypeCase_ == 2) {
+                subBuilder = ((com.encamy.battlecity.protobuf.NetworkProtocol.Fire) eventType_).toBuilder();
+              }
+              eventType_ =
+                  input.readMessage(com.encamy.battlecity.protobuf.NetworkProtocol.Fire.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.encamy.battlecity.protobuf.NetworkProtocol.Fire) eventType_);
+                eventType_ = subBuilder.buildPartial();
+              }
+              eventTypeCase_ = 2;
+              break;
+            }
+            case 26: {
+              com.encamy.battlecity.protobuf.NetworkProtocol.Move.Builder subBuilder = null;
+              if (eventTypeCase_ == 3) {
+                subBuilder = ((com.encamy.battlecity.protobuf.NetworkProtocol.Move) eventType_).toBuilder();
+              }
+              eventType_ =
+                  input.readMessage(com.encamy.battlecity.protobuf.NetworkProtocol.Move.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.encamy.battlecity.protobuf.NetworkProtocol.Move) eventType_);
+                eventType_ = subBuilder.buildPartial();
+              }
+              eventTypeCase_ = 3;
+              break;
+            }
+            case 34: {
+              com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.Builder subBuilder = null;
+              if (eventTypeCase_ == 4) {
+                subBuilder = ((com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed) eventType_).toBuilder();
+              }
+              eventType_ =
+                  input.readMessage(com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed) eventType_);
+                eventType_ = subBuilder.buildPartial();
+              }
+              eventTypeCase_ = 4;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Event_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Event_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.encamy.battlecity.protobuf.NetworkProtocol.Event.class, com.encamy.battlecity.protobuf.NetworkProtocol.Event.Builder.class);
+    }
+
+    private int eventTypeCase_ = 0;
+    private java.lang.Object eventType_;
+    public enum EventTypeCase
+        implements com.google.protobuf.Internal.EnumLite {
+      SPAWNED(1),
+      FIRE(2),
+      MOVE(3),
+      DESTROYED(4),
+      EVENTTYPE_NOT_SET(0);
+      private final int value;
+      private EventTypeCase(int value) {
+        this.value = value;
+      }
+      /**
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static EventTypeCase valueOf(int value) {
+        return forNumber(value);
+      }
+
+      public static EventTypeCase forNumber(int value) {
+        switch (value) {
+          case 1: return SPAWNED;
+          case 2: return FIRE;
+          case 3: return MOVE;
+          case 4: return DESTROYED;
+          case 0: return EVENTTYPE_NOT_SET;
+          default: return null;
+        }
+      }
+      public int getNumber() {
+        return this.value;
+      }
+    };
+
+    public EventTypeCase
+    getEventTypeCase() {
+      return EventTypeCase.forNumber(
+          eventTypeCase_);
+    }
+
+    public static final int SPAWNED_FIELD_NUMBER = 1;
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Spawned spawned = 1;</code>
+     */
+    public boolean hasSpawned() {
+      return eventTypeCase_ == 1;
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Spawned spawned = 1;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Spawned getSpawned() {
+      if (eventTypeCase_ == 1) {
+         return (com.encamy.battlecity.protobuf.NetworkProtocol.Spawned) eventType_;
+      }
+      return com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.getDefaultInstance();
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Spawned spawned = 1;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.SpawnedOrBuilder getSpawnedOrBuilder() {
+      if (eventTypeCase_ == 1) {
+         return (com.encamy.battlecity.protobuf.NetworkProtocol.Spawned) eventType_;
+      }
+      return com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.getDefaultInstance();
+    }
+
+    public static final int FIRE_FIELD_NUMBER = 2;
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Fire fire = 2;</code>
+     */
+    public boolean hasFire() {
+      return eventTypeCase_ == 2;
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Fire fire = 2;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Fire getFire() {
+      if (eventTypeCase_ == 2) {
+         return (com.encamy.battlecity.protobuf.NetworkProtocol.Fire) eventType_;
+      }
+      return com.encamy.battlecity.protobuf.NetworkProtocol.Fire.getDefaultInstance();
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Fire fire = 2;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.FireOrBuilder getFireOrBuilder() {
+      if (eventTypeCase_ == 2) {
+         return (com.encamy.battlecity.protobuf.NetworkProtocol.Fire) eventType_;
+      }
+      return com.encamy.battlecity.protobuf.NetworkProtocol.Fire.getDefaultInstance();
+    }
+
+    public static final int MOVE_FIELD_NUMBER = 3;
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Move move = 3;</code>
+     */
+    public boolean hasMove() {
+      return eventTypeCase_ == 3;
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Move move = 3;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Move getMove() {
+      if (eventTypeCase_ == 3) {
+         return (com.encamy.battlecity.protobuf.NetworkProtocol.Move) eventType_;
+      }
+      return com.encamy.battlecity.protobuf.NetworkProtocol.Move.getDefaultInstance();
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Move move = 3;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.MoveOrBuilder getMoveOrBuilder() {
+      if (eventTypeCase_ == 3) {
+         return (com.encamy.battlecity.protobuf.NetworkProtocol.Move) eventType_;
+      }
+      return com.encamy.battlecity.protobuf.NetworkProtocol.Move.getDefaultInstance();
+    }
+
+    public static final int DESTROYED_FIELD_NUMBER = 4;
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Destroyed destroyed = 4;</code>
+     */
+    public boolean hasDestroyed() {
+      return eventTypeCase_ == 4;
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Destroyed destroyed = 4;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed getDestroyed() {
+      if (eventTypeCase_ == 4) {
+         return (com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed) eventType_;
+      }
+      return com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.getDefaultInstance();
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Destroyed destroyed = 4;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.DestroyedOrBuilder getDestroyedOrBuilder() {
+      if (eventTypeCase_ == 4) {
+         return (com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed) eventType_;
+      }
+      return com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.getDefaultInstance();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (eventTypeCase_ == 1) {
+        output.writeMessage(1, (com.encamy.battlecity.protobuf.NetworkProtocol.Spawned) eventType_);
+      }
+      if (eventTypeCase_ == 2) {
+        output.writeMessage(2, (com.encamy.battlecity.protobuf.NetworkProtocol.Fire) eventType_);
+      }
+      if (eventTypeCase_ == 3) {
+        output.writeMessage(3, (com.encamy.battlecity.protobuf.NetworkProtocol.Move) eventType_);
+      }
+      if (eventTypeCase_ == 4) {
+        output.writeMessage(4, (com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed) eventType_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (eventTypeCase_ == 1) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, (com.encamy.battlecity.protobuf.NetworkProtocol.Spawned) eventType_);
+      }
+      if (eventTypeCase_ == 2) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, (com.encamy.battlecity.protobuf.NetworkProtocol.Fire) eventType_);
+      }
+      if (eventTypeCase_ == 3) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, (com.encamy.battlecity.protobuf.NetworkProtocol.Move) eventType_);
+      }
+      if (eventTypeCase_ == 4) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, (com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed) eventType_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.encamy.battlecity.protobuf.NetworkProtocol.Event)) {
+        return super.equals(obj);
+      }
+      com.encamy.battlecity.protobuf.NetworkProtocol.Event other = (com.encamy.battlecity.protobuf.NetworkProtocol.Event) obj;
+
+      if (!getEventTypeCase().equals(other.getEventTypeCase())) return false;
+      switch (eventTypeCase_) {
+        case 1:
+          if (!getSpawned()
+              .equals(other.getSpawned())) return false;
+          break;
+        case 2:
+          if (!getFire()
+              .equals(other.getFire())) return false;
+          break;
+        case 3:
+          if (!getMove()
+              .equals(other.getMove())) return false;
+          break;
+        case 4:
+          if (!getDestroyed()
+              .equals(other.getDestroyed())) return false;
+          break;
+        case 0:
+        default:
+      }
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      switch (eventTypeCase_) {
+        case 1:
+          hash = (37 * hash) + SPAWNED_FIELD_NUMBER;
+          hash = (53 * hash) + getSpawned().hashCode();
+          break;
+        case 2:
+          hash = (37 * hash) + FIRE_FIELD_NUMBER;
+          hash = (53 * hash) + getFire().hashCode();
+          break;
+        case 3:
+          hash = (37 * hash) + MOVE_FIELD_NUMBER;
+          hash = (53 * hash) + getMove().hashCode();
+          break;
+        case 4:
+          hash = (37 * hash) + DESTROYED_FIELD_NUMBER;
+          hash = (53 * hash) + getDestroyed().hashCode();
+          break;
+        case 0:
+        default:
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Event parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Event parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Event parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Event parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Event parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Event parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Event parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Event parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Event parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Event parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Event parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Event parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.encamy.battlecity.protobuf.NetworkProtocol.Event prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.encamy.battlecity.protobuf.Event}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.encamy.battlecity.protobuf.Event)
+        com.encamy.battlecity.protobuf.NetworkProtocol.EventOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Event_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Event_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.encamy.battlecity.protobuf.NetworkProtocol.Event.class, com.encamy.battlecity.protobuf.NetworkProtocol.Event.Builder.class);
+      }
+
+      // Construct using com.encamy.battlecity.protobuf.NetworkProtocol.Event.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        eventTypeCase_ = 0;
+        eventType_ = null;
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Event_descriptor;
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Event getDefaultInstanceForType() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.Event.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Event build() {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Event result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Event buildPartial() {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Event result = new com.encamy.battlecity.protobuf.NetworkProtocol.Event(this);
+        if (eventTypeCase_ == 1) {
+          if (spawnedBuilder_ == null) {
+            result.eventType_ = eventType_;
+          } else {
+            result.eventType_ = spawnedBuilder_.build();
+          }
+        }
+        if (eventTypeCase_ == 2) {
+          if (fireBuilder_ == null) {
+            result.eventType_ = eventType_;
+          } else {
+            result.eventType_ = fireBuilder_.build();
+          }
+        }
+        if (eventTypeCase_ == 3) {
+          if (moveBuilder_ == null) {
+            result.eventType_ = eventType_;
+          } else {
+            result.eventType_ = moveBuilder_.build();
+          }
+        }
+        if (eventTypeCase_ == 4) {
+          if (destroyedBuilder_ == null) {
+            result.eventType_ = eventType_;
+          } else {
+            result.eventType_ = destroyedBuilder_.build();
+          }
+        }
+        result.eventTypeCase_ = eventTypeCase_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.encamy.battlecity.protobuf.NetworkProtocol.Event) {
+          return mergeFrom((com.encamy.battlecity.protobuf.NetworkProtocol.Event)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.encamy.battlecity.protobuf.NetworkProtocol.Event other) {
+        if (other == com.encamy.battlecity.protobuf.NetworkProtocol.Event.getDefaultInstance()) return this;
+        switch (other.getEventTypeCase()) {
+          case SPAWNED: {
+            mergeSpawned(other.getSpawned());
+            break;
+          }
+          case FIRE: {
+            mergeFire(other.getFire());
+            break;
+          }
+          case MOVE: {
+            mergeMove(other.getMove());
+            break;
+          }
+          case DESTROYED: {
+            mergeDestroyed(other.getDestroyed());
+            break;
+          }
+          case EVENTTYPE_NOT_SET: {
+            break;
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Event parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.encamy.battlecity.protobuf.NetworkProtocol.Event) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int eventTypeCase_ = 0;
+      private java.lang.Object eventType_;
+      public EventTypeCase
+          getEventTypeCase() {
+        return EventTypeCase.forNumber(
+            eventTypeCase_);
+      }
+
+      public Builder clearEventType() {
+        eventTypeCase_ = 0;
+        eventType_ = null;
+        onChanged();
+        return this;
+      }
+
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.encamy.battlecity.protobuf.NetworkProtocol.Spawned, com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.SpawnedOrBuilder> spawnedBuilder_;
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Spawned spawned = 1;</code>
+       */
+      public boolean hasSpawned() {
+        return eventTypeCase_ == 1;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Spawned spawned = 1;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Spawned getSpawned() {
+        if (spawnedBuilder_ == null) {
+          if (eventTypeCase_ == 1) {
+            return (com.encamy.battlecity.protobuf.NetworkProtocol.Spawned) eventType_;
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.getDefaultInstance();
+        } else {
+          if (eventTypeCase_ == 1) {
+            return spawnedBuilder_.getMessage();
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Spawned spawned = 1;</code>
+       */
+      public Builder setSpawned(com.encamy.battlecity.protobuf.NetworkProtocol.Spawned value) {
+        if (spawnedBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          eventType_ = value;
+          onChanged();
+        } else {
+          spawnedBuilder_.setMessage(value);
+        }
+        eventTypeCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Spawned spawned = 1;</code>
+       */
+      public Builder setSpawned(
+          com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.Builder builderForValue) {
+        if (spawnedBuilder_ == null) {
+          eventType_ = builderForValue.build();
+          onChanged();
+        } else {
+          spawnedBuilder_.setMessage(builderForValue.build());
+        }
+        eventTypeCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Spawned spawned = 1;</code>
+       */
+      public Builder mergeSpawned(com.encamy.battlecity.protobuf.NetworkProtocol.Spawned value) {
+        if (spawnedBuilder_ == null) {
+          if (eventTypeCase_ == 1 &&
+              eventType_ != com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.getDefaultInstance()) {
+            eventType_ = com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.newBuilder((com.encamy.battlecity.protobuf.NetworkProtocol.Spawned) eventType_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            eventType_ = value;
+          }
+          onChanged();
+        } else {
+          if (eventTypeCase_ == 1) {
+            spawnedBuilder_.mergeFrom(value);
+          }
+          spawnedBuilder_.setMessage(value);
+        }
+        eventTypeCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Spawned spawned = 1;</code>
+       */
+      public Builder clearSpawned() {
+        if (spawnedBuilder_ == null) {
+          if (eventTypeCase_ == 1) {
+            eventTypeCase_ = 0;
+            eventType_ = null;
+            onChanged();
+          }
+        } else {
+          if (eventTypeCase_ == 1) {
+            eventTypeCase_ = 0;
+            eventType_ = null;
+          }
+          spawnedBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Spawned spawned = 1;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.Builder getSpawnedBuilder() {
+        return getSpawnedFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Spawned spawned = 1;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.SpawnedOrBuilder getSpawnedOrBuilder() {
+        if ((eventTypeCase_ == 1) && (spawnedBuilder_ != null)) {
+          return spawnedBuilder_.getMessageOrBuilder();
+        } else {
+          if (eventTypeCase_ == 1) {
+            return (com.encamy.battlecity.protobuf.NetworkProtocol.Spawned) eventType_;
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Spawned spawned = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.encamy.battlecity.protobuf.NetworkProtocol.Spawned, com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.SpawnedOrBuilder> 
+          getSpawnedFieldBuilder() {
+        if (spawnedBuilder_ == null) {
+          if (!(eventTypeCase_ == 1)) {
+            eventType_ = com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.getDefaultInstance();
+          }
+          spawnedBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.encamy.battlecity.protobuf.NetworkProtocol.Spawned, com.encamy.battlecity.protobuf.NetworkProtocol.Spawned.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.SpawnedOrBuilder>(
+                  (com.encamy.battlecity.protobuf.NetworkProtocol.Spawned) eventType_,
+                  getParentForChildren(),
+                  isClean());
+          eventType_ = null;
+        }
+        eventTypeCase_ = 1;
+        onChanged();;
+        return spawnedBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.encamy.battlecity.protobuf.NetworkProtocol.Fire, com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.FireOrBuilder> fireBuilder_;
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Fire fire = 2;</code>
+       */
+      public boolean hasFire() {
+        return eventTypeCase_ == 2;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Fire fire = 2;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Fire getFire() {
+        if (fireBuilder_ == null) {
+          if (eventTypeCase_ == 2) {
+            return (com.encamy.battlecity.protobuf.NetworkProtocol.Fire) eventType_;
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Fire.getDefaultInstance();
+        } else {
+          if (eventTypeCase_ == 2) {
+            return fireBuilder_.getMessage();
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Fire.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Fire fire = 2;</code>
+       */
+      public Builder setFire(com.encamy.battlecity.protobuf.NetworkProtocol.Fire value) {
+        if (fireBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          eventType_ = value;
+          onChanged();
+        } else {
+          fireBuilder_.setMessage(value);
+        }
+        eventTypeCase_ = 2;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Fire fire = 2;</code>
+       */
+      public Builder setFire(
+          com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Builder builderForValue) {
+        if (fireBuilder_ == null) {
+          eventType_ = builderForValue.build();
+          onChanged();
+        } else {
+          fireBuilder_.setMessage(builderForValue.build());
+        }
+        eventTypeCase_ = 2;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Fire fire = 2;</code>
+       */
+      public Builder mergeFire(com.encamy.battlecity.protobuf.NetworkProtocol.Fire value) {
+        if (fireBuilder_ == null) {
+          if (eventTypeCase_ == 2 &&
+              eventType_ != com.encamy.battlecity.protobuf.NetworkProtocol.Fire.getDefaultInstance()) {
+            eventType_ = com.encamy.battlecity.protobuf.NetworkProtocol.Fire.newBuilder((com.encamy.battlecity.protobuf.NetworkProtocol.Fire) eventType_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            eventType_ = value;
+          }
+          onChanged();
+        } else {
+          if (eventTypeCase_ == 2) {
+            fireBuilder_.mergeFrom(value);
+          }
+          fireBuilder_.setMessage(value);
+        }
+        eventTypeCase_ = 2;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Fire fire = 2;</code>
+       */
+      public Builder clearFire() {
+        if (fireBuilder_ == null) {
+          if (eventTypeCase_ == 2) {
+            eventTypeCase_ = 0;
+            eventType_ = null;
+            onChanged();
+          }
+        } else {
+          if (eventTypeCase_ == 2) {
+            eventTypeCase_ = 0;
+            eventType_ = null;
+          }
+          fireBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Fire fire = 2;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Builder getFireBuilder() {
+        return getFireFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Fire fire = 2;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.FireOrBuilder getFireOrBuilder() {
+        if ((eventTypeCase_ == 2) && (fireBuilder_ != null)) {
+          return fireBuilder_.getMessageOrBuilder();
+        } else {
+          if (eventTypeCase_ == 2) {
+            return (com.encamy.battlecity.protobuf.NetworkProtocol.Fire) eventType_;
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Fire.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Fire fire = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.encamy.battlecity.protobuf.NetworkProtocol.Fire, com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.FireOrBuilder> 
+          getFireFieldBuilder() {
+        if (fireBuilder_ == null) {
+          if (!(eventTypeCase_ == 2)) {
+            eventType_ = com.encamy.battlecity.protobuf.NetworkProtocol.Fire.getDefaultInstance();
+          }
+          fireBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.encamy.battlecity.protobuf.NetworkProtocol.Fire, com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.FireOrBuilder>(
+                  (com.encamy.battlecity.protobuf.NetworkProtocol.Fire) eventType_,
+                  getParentForChildren(),
+                  isClean());
+          eventType_ = null;
+        }
+        eventTypeCase_ = 2;
+        onChanged();;
+        return fireBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.encamy.battlecity.protobuf.NetworkProtocol.Move, com.encamy.battlecity.protobuf.NetworkProtocol.Move.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.MoveOrBuilder> moveBuilder_;
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Move move = 3;</code>
+       */
+      public boolean hasMove() {
+        return eventTypeCase_ == 3;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Move move = 3;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Move getMove() {
+        if (moveBuilder_ == null) {
+          if (eventTypeCase_ == 3) {
+            return (com.encamy.battlecity.protobuf.NetworkProtocol.Move) eventType_;
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Move.getDefaultInstance();
+        } else {
+          if (eventTypeCase_ == 3) {
+            return moveBuilder_.getMessage();
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Move.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Move move = 3;</code>
+       */
+      public Builder setMove(com.encamy.battlecity.protobuf.NetworkProtocol.Move value) {
+        if (moveBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          eventType_ = value;
+          onChanged();
+        } else {
+          moveBuilder_.setMessage(value);
+        }
+        eventTypeCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Move move = 3;</code>
+       */
+      public Builder setMove(
+          com.encamy.battlecity.protobuf.NetworkProtocol.Move.Builder builderForValue) {
+        if (moveBuilder_ == null) {
+          eventType_ = builderForValue.build();
+          onChanged();
+        } else {
+          moveBuilder_.setMessage(builderForValue.build());
+        }
+        eventTypeCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Move move = 3;</code>
+       */
+      public Builder mergeMove(com.encamy.battlecity.protobuf.NetworkProtocol.Move value) {
+        if (moveBuilder_ == null) {
+          if (eventTypeCase_ == 3 &&
+              eventType_ != com.encamy.battlecity.protobuf.NetworkProtocol.Move.getDefaultInstance()) {
+            eventType_ = com.encamy.battlecity.protobuf.NetworkProtocol.Move.newBuilder((com.encamy.battlecity.protobuf.NetworkProtocol.Move) eventType_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            eventType_ = value;
+          }
+          onChanged();
+        } else {
+          if (eventTypeCase_ == 3) {
+            moveBuilder_.mergeFrom(value);
+          }
+          moveBuilder_.setMessage(value);
+        }
+        eventTypeCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Move move = 3;</code>
+       */
+      public Builder clearMove() {
+        if (moveBuilder_ == null) {
+          if (eventTypeCase_ == 3) {
+            eventTypeCase_ = 0;
+            eventType_ = null;
+            onChanged();
+          }
+        } else {
+          if (eventTypeCase_ == 3) {
+            eventTypeCase_ = 0;
+            eventType_ = null;
+          }
+          moveBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Move move = 3;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Move.Builder getMoveBuilder() {
+        return getMoveFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Move move = 3;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.MoveOrBuilder getMoveOrBuilder() {
+        if ((eventTypeCase_ == 3) && (moveBuilder_ != null)) {
+          return moveBuilder_.getMessageOrBuilder();
+        } else {
+          if (eventTypeCase_ == 3) {
+            return (com.encamy.battlecity.protobuf.NetworkProtocol.Move) eventType_;
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Move.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Move move = 3;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.encamy.battlecity.protobuf.NetworkProtocol.Move, com.encamy.battlecity.protobuf.NetworkProtocol.Move.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.MoveOrBuilder> 
+          getMoveFieldBuilder() {
+        if (moveBuilder_ == null) {
+          if (!(eventTypeCase_ == 3)) {
+            eventType_ = com.encamy.battlecity.protobuf.NetworkProtocol.Move.getDefaultInstance();
+          }
+          moveBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.encamy.battlecity.protobuf.NetworkProtocol.Move, com.encamy.battlecity.protobuf.NetworkProtocol.Move.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.MoveOrBuilder>(
+                  (com.encamy.battlecity.protobuf.NetworkProtocol.Move) eventType_,
+                  getParentForChildren(),
+                  isClean());
+          eventType_ = null;
+        }
+        eventTypeCase_ = 3;
+        onChanged();;
+        return moveBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed, com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.DestroyedOrBuilder> destroyedBuilder_;
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Destroyed destroyed = 4;</code>
+       */
+      public boolean hasDestroyed() {
+        return eventTypeCase_ == 4;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Destroyed destroyed = 4;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed getDestroyed() {
+        if (destroyedBuilder_ == null) {
+          if (eventTypeCase_ == 4) {
+            return (com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed) eventType_;
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.getDefaultInstance();
+        } else {
+          if (eventTypeCase_ == 4) {
+            return destroyedBuilder_.getMessage();
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Destroyed destroyed = 4;</code>
+       */
+      public Builder setDestroyed(com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed value) {
+        if (destroyedBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          eventType_ = value;
+          onChanged();
+        } else {
+          destroyedBuilder_.setMessage(value);
+        }
+        eventTypeCase_ = 4;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Destroyed destroyed = 4;</code>
+       */
+      public Builder setDestroyed(
+          com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.Builder builderForValue) {
+        if (destroyedBuilder_ == null) {
+          eventType_ = builderForValue.build();
+          onChanged();
+        } else {
+          destroyedBuilder_.setMessage(builderForValue.build());
+        }
+        eventTypeCase_ = 4;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Destroyed destroyed = 4;</code>
+       */
+      public Builder mergeDestroyed(com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed value) {
+        if (destroyedBuilder_ == null) {
+          if (eventTypeCase_ == 4 &&
+              eventType_ != com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.getDefaultInstance()) {
+            eventType_ = com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.newBuilder((com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed) eventType_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            eventType_ = value;
+          }
+          onChanged();
+        } else {
+          if (eventTypeCase_ == 4) {
+            destroyedBuilder_.mergeFrom(value);
+          }
+          destroyedBuilder_.setMessage(value);
+        }
+        eventTypeCase_ = 4;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Destroyed destroyed = 4;</code>
+       */
+      public Builder clearDestroyed() {
+        if (destroyedBuilder_ == null) {
+          if (eventTypeCase_ == 4) {
+            eventTypeCase_ = 0;
+            eventType_ = null;
+            onChanged();
+          }
+        } else {
+          if (eventTypeCase_ == 4) {
+            eventTypeCase_ = 0;
+            eventType_ = null;
+          }
+          destroyedBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Destroyed destroyed = 4;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.Builder getDestroyedBuilder() {
+        return getDestroyedFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Destroyed destroyed = 4;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.DestroyedOrBuilder getDestroyedOrBuilder() {
+        if ((eventTypeCase_ == 4) && (destroyedBuilder_ != null)) {
+          return destroyedBuilder_.getMessageOrBuilder();
+        } else {
+          if (eventTypeCase_ == 4) {
+            return (com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed) eventType_;
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Destroyed destroyed = 4;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed, com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.DestroyedOrBuilder> 
+          getDestroyedFieldBuilder() {
+        if (destroyedBuilder_ == null) {
+          if (!(eventTypeCase_ == 4)) {
+            eventType_ = com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.getDefaultInstance();
+          }
+          destroyedBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed, com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.DestroyedOrBuilder>(
+                  (com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed) eventType_,
+                  getParentForChildren(),
+                  isClean());
+          eventType_ = null;
+        }
+        eventTypeCase_ = 4;
+        onChanged();;
+        return destroyedBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.encamy.battlecity.protobuf.Event)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.encamy.battlecity.protobuf.Event)
+    private static final com.encamy.battlecity.protobuf.NetworkProtocol.Event DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.encamy.battlecity.protobuf.NetworkProtocol.Event();
+    }
+
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Event getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Event>
+        PARSER = new com.google.protobuf.AbstractParser<Event>() {
+      @java.lang.Override
+      public Event parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Event(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Event> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Event> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Event getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface WrapperOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.encamy.battlecity.protobuf.Wrapper)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Event event = 1;</code>
+     */
+    boolean hasEvent();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Event event = 1;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.Event getEvent();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Event event = 1;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.EventOrBuilder getEventOrBuilder();
+
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Ping ping = 2;</code>
+     */
+    boolean hasPing();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Ping ping = 2;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.Ping getPing();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Ping ping = 2;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.PingOrBuilder getPingOrBuilder();
+
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Pong pong = 3;</code>
+     */
+    boolean hasPong();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Pong pong = 3;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.Pong getPong();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Pong pong = 3;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.PongOrBuilder getPongOrBuilder();
+
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper.WrapperCase getWrapperCase();
+  }
+  /**
+   * Protobuf type {@code com.encamy.battlecity.protobuf.Wrapper}
+   */
+  public  static final class Wrapper extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.encamy.battlecity.protobuf.Wrapper)
+      WrapperOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Wrapper.newBuilder() to construct.
+    private Wrapper(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Wrapper() {
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Wrapper(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              com.encamy.battlecity.protobuf.NetworkProtocol.Event.Builder subBuilder = null;
+              if (wrapperCase_ == 1) {
+                subBuilder = ((com.encamy.battlecity.protobuf.NetworkProtocol.Event) wrapper_).toBuilder();
+              }
+              wrapper_ =
+                  input.readMessage(com.encamy.battlecity.protobuf.NetworkProtocol.Event.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.encamy.battlecity.protobuf.NetworkProtocol.Event) wrapper_);
+                wrapper_ = subBuilder.buildPartial();
+              }
+              wrapperCase_ = 1;
+              break;
+            }
+            case 18: {
+              com.encamy.battlecity.protobuf.NetworkProtocol.Ping.Builder subBuilder = null;
+              if (wrapperCase_ == 2) {
+                subBuilder = ((com.encamy.battlecity.protobuf.NetworkProtocol.Ping) wrapper_).toBuilder();
+              }
+              wrapper_ =
+                  input.readMessage(com.encamy.battlecity.protobuf.NetworkProtocol.Ping.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.encamy.battlecity.protobuf.NetworkProtocol.Ping) wrapper_);
+                wrapper_ = subBuilder.buildPartial();
+              }
+              wrapperCase_ = 2;
+              break;
+            }
+            case 26: {
+              com.encamy.battlecity.protobuf.NetworkProtocol.Pong.Builder subBuilder = null;
+              if (wrapperCase_ == 3) {
+                subBuilder = ((com.encamy.battlecity.protobuf.NetworkProtocol.Pong) wrapper_).toBuilder();
+              }
+              wrapper_ =
+                  input.readMessage(com.encamy.battlecity.protobuf.NetworkProtocol.Pong.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.encamy.battlecity.protobuf.NetworkProtocol.Pong) wrapper_);
+                wrapper_ = subBuilder.buildPartial();
+              }
+              wrapperCase_ = 3;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Wrapper_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Wrapper_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper.class, com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper.Builder.class);
+    }
+
+    private int wrapperCase_ = 0;
+    private java.lang.Object wrapper_;
+    public enum WrapperCase
+        implements com.google.protobuf.Internal.EnumLite {
+      EVENT(1),
+      PING(2),
+      PONG(3),
+      WRAPPER_NOT_SET(0);
+      private final int value;
+      private WrapperCase(int value) {
+        this.value = value;
+      }
+      /**
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static WrapperCase valueOf(int value) {
+        return forNumber(value);
+      }
+
+      public static WrapperCase forNumber(int value) {
+        switch (value) {
+          case 1: return EVENT;
+          case 2: return PING;
+          case 3: return PONG;
+          case 0: return WRAPPER_NOT_SET;
+          default: return null;
+        }
+      }
+      public int getNumber() {
+        return this.value;
+      }
+    };
+
+    public WrapperCase
+    getWrapperCase() {
+      return WrapperCase.forNumber(
+          wrapperCase_);
+    }
+
+    public static final int EVENT_FIELD_NUMBER = 1;
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Event event = 1;</code>
+     */
+    public boolean hasEvent() {
+      return wrapperCase_ == 1;
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Event event = 1;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Event getEvent() {
+      if (wrapperCase_ == 1) {
+         return (com.encamy.battlecity.protobuf.NetworkProtocol.Event) wrapper_;
+      }
+      return com.encamy.battlecity.protobuf.NetworkProtocol.Event.getDefaultInstance();
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Event event = 1;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.EventOrBuilder getEventOrBuilder() {
+      if (wrapperCase_ == 1) {
+         return (com.encamy.battlecity.protobuf.NetworkProtocol.Event) wrapper_;
+      }
+      return com.encamy.battlecity.protobuf.NetworkProtocol.Event.getDefaultInstance();
+    }
+
+    public static final int PING_FIELD_NUMBER = 2;
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Ping ping = 2;</code>
+     */
+    public boolean hasPing() {
+      return wrapperCase_ == 2;
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Ping ping = 2;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Ping getPing() {
+      if (wrapperCase_ == 2) {
+         return (com.encamy.battlecity.protobuf.NetworkProtocol.Ping) wrapper_;
+      }
+      return com.encamy.battlecity.protobuf.NetworkProtocol.Ping.getDefaultInstance();
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Ping ping = 2;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.PingOrBuilder getPingOrBuilder() {
+      if (wrapperCase_ == 2) {
+         return (com.encamy.battlecity.protobuf.NetworkProtocol.Ping) wrapper_;
+      }
+      return com.encamy.battlecity.protobuf.NetworkProtocol.Ping.getDefaultInstance();
+    }
+
+    public static final int PONG_FIELD_NUMBER = 3;
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Pong pong = 3;</code>
+     */
+    public boolean hasPong() {
+      return wrapperCase_ == 3;
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Pong pong = 3;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Pong getPong() {
+      if (wrapperCase_ == 3) {
+         return (com.encamy.battlecity.protobuf.NetworkProtocol.Pong) wrapper_;
+      }
+      return com.encamy.battlecity.protobuf.NetworkProtocol.Pong.getDefaultInstance();
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Pong pong = 3;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.PongOrBuilder getPongOrBuilder() {
+      if (wrapperCase_ == 3) {
+         return (com.encamy.battlecity.protobuf.NetworkProtocol.Pong) wrapper_;
+      }
+      return com.encamy.battlecity.protobuf.NetworkProtocol.Pong.getDefaultInstance();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (wrapperCase_ == 1) {
+        output.writeMessage(1, (com.encamy.battlecity.protobuf.NetworkProtocol.Event) wrapper_);
+      }
+      if (wrapperCase_ == 2) {
+        output.writeMessage(2, (com.encamy.battlecity.protobuf.NetworkProtocol.Ping) wrapper_);
+      }
+      if (wrapperCase_ == 3) {
+        output.writeMessage(3, (com.encamy.battlecity.protobuf.NetworkProtocol.Pong) wrapper_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (wrapperCase_ == 1) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, (com.encamy.battlecity.protobuf.NetworkProtocol.Event) wrapper_);
+      }
+      if (wrapperCase_ == 2) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, (com.encamy.battlecity.protobuf.NetworkProtocol.Ping) wrapper_);
+      }
+      if (wrapperCase_ == 3) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, (com.encamy.battlecity.protobuf.NetworkProtocol.Pong) wrapper_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper)) {
+        return super.equals(obj);
+      }
+      com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper other = (com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper) obj;
+
+      if (!getWrapperCase().equals(other.getWrapperCase())) return false;
+      switch (wrapperCase_) {
+        case 1:
+          if (!getEvent()
+              .equals(other.getEvent())) return false;
+          break;
+        case 2:
+          if (!getPing()
+              .equals(other.getPing())) return false;
+          break;
+        case 3:
+          if (!getPong()
+              .equals(other.getPong())) return false;
+          break;
+        case 0:
+        default:
+      }
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      switch (wrapperCase_) {
+        case 1:
+          hash = (37 * hash) + EVENT_FIELD_NUMBER;
+          hash = (53 * hash) + getEvent().hashCode();
+          break;
+        case 2:
+          hash = (37 * hash) + PING_FIELD_NUMBER;
+          hash = (53 * hash) + getPing().hashCode();
+          break;
+        case 3:
+          hash = (37 * hash) + PONG_FIELD_NUMBER;
+          hash = (53 * hash) + getPong().hashCode();
+          break;
+        case 0:
+        default:
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.encamy.battlecity.protobuf.Wrapper}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.encamy.battlecity.protobuf.Wrapper)
+        com.encamy.battlecity.protobuf.NetworkProtocol.WrapperOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Wrapper_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Wrapper_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper.class, com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper.Builder.class);
+      }
+
+      // Construct using com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        wrapperCase_ = 0;
+        wrapper_ = null;
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.internal_static_com_encamy_battlecity_protobuf_Wrapper_descriptor;
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper getDefaultInstanceForType() {
+        return com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper build() {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper buildPartial() {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper result = new com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper(this);
+        if (wrapperCase_ == 1) {
+          if (eventBuilder_ == null) {
+            result.wrapper_ = wrapper_;
+          } else {
+            result.wrapper_ = eventBuilder_.build();
+          }
+        }
+        if (wrapperCase_ == 2) {
+          if (pingBuilder_ == null) {
+            result.wrapper_ = wrapper_;
+          } else {
+            result.wrapper_ = pingBuilder_.build();
+          }
+        }
+        if (wrapperCase_ == 3) {
+          if (pongBuilder_ == null) {
+            result.wrapper_ = wrapper_;
+          } else {
+            result.wrapper_ = pongBuilder_.build();
+          }
+        }
+        result.wrapperCase_ = wrapperCase_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper) {
+          return mergeFrom((com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper other) {
+        if (other == com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper.getDefaultInstance()) return this;
+        switch (other.getWrapperCase()) {
+          case EVENT: {
+            mergeEvent(other.getEvent());
+            break;
+          }
+          case PING: {
+            mergePing(other.getPing());
+            break;
+          }
+          case PONG: {
+            mergePong(other.getPong());
+            break;
+          }
+          case WRAPPER_NOT_SET: {
+            break;
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int wrapperCase_ = 0;
+      private java.lang.Object wrapper_;
+      public WrapperCase
+          getWrapperCase() {
+        return WrapperCase.forNumber(
+            wrapperCase_);
+      }
+
+      public Builder clearWrapper() {
+        wrapperCase_ = 0;
+        wrapper_ = null;
+        onChanged();
+        return this;
+      }
+
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.encamy.battlecity.protobuf.NetworkProtocol.Event, com.encamy.battlecity.protobuf.NetworkProtocol.Event.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.EventOrBuilder> eventBuilder_;
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Event event = 1;</code>
+       */
+      public boolean hasEvent() {
+        return wrapperCase_ == 1;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Event event = 1;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Event getEvent() {
+        if (eventBuilder_ == null) {
+          if (wrapperCase_ == 1) {
+            return (com.encamy.battlecity.protobuf.NetworkProtocol.Event) wrapper_;
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Event.getDefaultInstance();
+        } else {
+          if (wrapperCase_ == 1) {
+            return eventBuilder_.getMessage();
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Event.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Event event = 1;</code>
+       */
+      public Builder setEvent(com.encamy.battlecity.protobuf.NetworkProtocol.Event value) {
+        if (eventBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          wrapper_ = value;
+          onChanged();
+        } else {
+          eventBuilder_.setMessage(value);
+        }
+        wrapperCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Event event = 1;</code>
+       */
+      public Builder setEvent(
+          com.encamy.battlecity.protobuf.NetworkProtocol.Event.Builder builderForValue) {
+        if (eventBuilder_ == null) {
+          wrapper_ = builderForValue.build();
+          onChanged();
+        } else {
+          eventBuilder_.setMessage(builderForValue.build());
+        }
+        wrapperCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Event event = 1;</code>
+       */
+      public Builder mergeEvent(com.encamy.battlecity.protobuf.NetworkProtocol.Event value) {
+        if (eventBuilder_ == null) {
+          if (wrapperCase_ == 1 &&
+              wrapper_ != com.encamy.battlecity.protobuf.NetworkProtocol.Event.getDefaultInstance()) {
+            wrapper_ = com.encamy.battlecity.protobuf.NetworkProtocol.Event.newBuilder((com.encamy.battlecity.protobuf.NetworkProtocol.Event) wrapper_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            wrapper_ = value;
+          }
+          onChanged();
+        } else {
+          if (wrapperCase_ == 1) {
+            eventBuilder_.mergeFrom(value);
+          }
+          eventBuilder_.setMessage(value);
+        }
+        wrapperCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Event event = 1;</code>
+       */
+      public Builder clearEvent() {
+        if (eventBuilder_ == null) {
+          if (wrapperCase_ == 1) {
+            wrapperCase_ = 0;
+            wrapper_ = null;
+            onChanged();
+          }
+        } else {
+          if (wrapperCase_ == 1) {
+            wrapperCase_ = 0;
+            wrapper_ = null;
+          }
+          eventBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Event event = 1;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Event.Builder getEventBuilder() {
+        return getEventFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Event event = 1;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.EventOrBuilder getEventOrBuilder() {
+        if ((wrapperCase_ == 1) && (eventBuilder_ != null)) {
+          return eventBuilder_.getMessageOrBuilder();
+        } else {
+          if (wrapperCase_ == 1) {
+            return (com.encamy.battlecity.protobuf.NetworkProtocol.Event) wrapper_;
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Event.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Event event = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.encamy.battlecity.protobuf.NetworkProtocol.Event, com.encamy.battlecity.protobuf.NetworkProtocol.Event.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.EventOrBuilder> 
+          getEventFieldBuilder() {
+        if (eventBuilder_ == null) {
+          if (!(wrapperCase_ == 1)) {
+            wrapper_ = com.encamy.battlecity.protobuf.NetworkProtocol.Event.getDefaultInstance();
+          }
+          eventBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.encamy.battlecity.protobuf.NetworkProtocol.Event, com.encamy.battlecity.protobuf.NetworkProtocol.Event.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.EventOrBuilder>(
+                  (com.encamy.battlecity.protobuf.NetworkProtocol.Event) wrapper_,
+                  getParentForChildren(),
+                  isClean());
+          wrapper_ = null;
+        }
+        wrapperCase_ = 1;
+        onChanged();;
+        return eventBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.encamy.battlecity.protobuf.NetworkProtocol.Ping, com.encamy.battlecity.protobuf.NetworkProtocol.Ping.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.PingOrBuilder> pingBuilder_;
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Ping ping = 2;</code>
+       */
+      public boolean hasPing() {
+        return wrapperCase_ == 2;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Ping ping = 2;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Ping getPing() {
+        if (pingBuilder_ == null) {
+          if (wrapperCase_ == 2) {
+            return (com.encamy.battlecity.protobuf.NetworkProtocol.Ping) wrapper_;
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Ping.getDefaultInstance();
+        } else {
+          if (wrapperCase_ == 2) {
+            return pingBuilder_.getMessage();
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Ping.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Ping ping = 2;</code>
+       */
+      public Builder setPing(com.encamy.battlecity.protobuf.NetworkProtocol.Ping value) {
+        if (pingBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          wrapper_ = value;
+          onChanged();
+        } else {
+          pingBuilder_.setMessage(value);
+        }
+        wrapperCase_ = 2;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Ping ping = 2;</code>
+       */
+      public Builder setPing(
+          com.encamy.battlecity.protobuf.NetworkProtocol.Ping.Builder builderForValue) {
+        if (pingBuilder_ == null) {
+          wrapper_ = builderForValue.build();
+          onChanged();
+        } else {
+          pingBuilder_.setMessage(builderForValue.build());
+        }
+        wrapperCase_ = 2;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Ping ping = 2;</code>
+       */
+      public Builder mergePing(com.encamy.battlecity.protobuf.NetworkProtocol.Ping value) {
+        if (pingBuilder_ == null) {
+          if (wrapperCase_ == 2 &&
+              wrapper_ != com.encamy.battlecity.protobuf.NetworkProtocol.Ping.getDefaultInstance()) {
+            wrapper_ = com.encamy.battlecity.protobuf.NetworkProtocol.Ping.newBuilder((com.encamy.battlecity.protobuf.NetworkProtocol.Ping) wrapper_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            wrapper_ = value;
+          }
+          onChanged();
+        } else {
+          if (wrapperCase_ == 2) {
+            pingBuilder_.mergeFrom(value);
+          }
+          pingBuilder_.setMessage(value);
+        }
+        wrapperCase_ = 2;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Ping ping = 2;</code>
+       */
+      public Builder clearPing() {
+        if (pingBuilder_ == null) {
+          if (wrapperCase_ == 2) {
+            wrapperCase_ = 0;
+            wrapper_ = null;
+            onChanged();
+          }
+        } else {
+          if (wrapperCase_ == 2) {
+            wrapperCase_ = 0;
+            wrapper_ = null;
+          }
+          pingBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Ping ping = 2;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Ping.Builder getPingBuilder() {
+        return getPingFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Ping ping = 2;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.PingOrBuilder getPingOrBuilder() {
+        if ((wrapperCase_ == 2) && (pingBuilder_ != null)) {
+          return pingBuilder_.getMessageOrBuilder();
+        } else {
+          if (wrapperCase_ == 2) {
+            return (com.encamy.battlecity.protobuf.NetworkProtocol.Ping) wrapper_;
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Ping.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Ping ping = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.encamy.battlecity.protobuf.NetworkProtocol.Ping, com.encamy.battlecity.protobuf.NetworkProtocol.Ping.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.PingOrBuilder> 
+          getPingFieldBuilder() {
+        if (pingBuilder_ == null) {
+          if (!(wrapperCase_ == 2)) {
+            wrapper_ = com.encamy.battlecity.protobuf.NetworkProtocol.Ping.getDefaultInstance();
+          }
+          pingBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.encamy.battlecity.protobuf.NetworkProtocol.Ping, com.encamy.battlecity.protobuf.NetworkProtocol.Ping.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.PingOrBuilder>(
+                  (com.encamy.battlecity.protobuf.NetworkProtocol.Ping) wrapper_,
+                  getParentForChildren(),
+                  isClean());
+          wrapper_ = null;
+        }
+        wrapperCase_ = 2;
+        onChanged();;
+        return pingBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.encamy.battlecity.protobuf.NetworkProtocol.Pong, com.encamy.battlecity.protobuf.NetworkProtocol.Pong.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.PongOrBuilder> pongBuilder_;
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Pong pong = 3;</code>
+       */
+      public boolean hasPong() {
+        return wrapperCase_ == 3;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Pong pong = 3;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Pong getPong() {
+        if (pongBuilder_ == null) {
+          if (wrapperCase_ == 3) {
+            return (com.encamy.battlecity.protobuf.NetworkProtocol.Pong) wrapper_;
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Pong.getDefaultInstance();
+        } else {
+          if (wrapperCase_ == 3) {
+            return pongBuilder_.getMessage();
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Pong.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Pong pong = 3;</code>
+       */
+      public Builder setPong(com.encamy.battlecity.protobuf.NetworkProtocol.Pong value) {
+        if (pongBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          wrapper_ = value;
+          onChanged();
+        } else {
+          pongBuilder_.setMessage(value);
+        }
+        wrapperCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Pong pong = 3;</code>
+       */
+      public Builder setPong(
+          com.encamy.battlecity.protobuf.NetworkProtocol.Pong.Builder builderForValue) {
+        if (pongBuilder_ == null) {
+          wrapper_ = builderForValue.build();
+          onChanged();
+        } else {
+          pongBuilder_.setMessage(builderForValue.build());
+        }
+        wrapperCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Pong pong = 3;</code>
+       */
+      public Builder mergePong(com.encamy.battlecity.protobuf.NetworkProtocol.Pong value) {
+        if (pongBuilder_ == null) {
+          if (wrapperCase_ == 3 &&
+              wrapper_ != com.encamy.battlecity.protobuf.NetworkProtocol.Pong.getDefaultInstance()) {
+            wrapper_ = com.encamy.battlecity.protobuf.NetworkProtocol.Pong.newBuilder((com.encamy.battlecity.protobuf.NetworkProtocol.Pong) wrapper_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            wrapper_ = value;
+          }
+          onChanged();
+        } else {
+          if (wrapperCase_ == 3) {
+            pongBuilder_.mergeFrom(value);
+          }
+          pongBuilder_.setMessage(value);
+        }
+        wrapperCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Pong pong = 3;</code>
+       */
+      public Builder clearPong() {
+        if (pongBuilder_ == null) {
+          if (wrapperCase_ == 3) {
+            wrapperCase_ = 0;
+            wrapper_ = null;
+            onChanged();
+          }
+        } else {
+          if (wrapperCase_ == 3) {
+            wrapperCase_ = 0;
+            wrapper_ = null;
+          }
+          pongBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Pong pong = 3;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Pong.Builder getPongBuilder() {
+        return getPongFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Pong pong = 3;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.PongOrBuilder getPongOrBuilder() {
+        if ((wrapperCase_ == 3) && (pongBuilder_ != null)) {
+          return pongBuilder_.getMessageOrBuilder();
+        } else {
+          if (wrapperCase_ == 3) {
+            return (com.encamy.battlecity.protobuf.NetworkProtocol.Pong) wrapper_;
+          }
+          return com.encamy.battlecity.protobuf.NetworkProtocol.Pong.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Pong pong = 3;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.encamy.battlecity.protobuf.NetworkProtocol.Pong, com.encamy.battlecity.protobuf.NetworkProtocol.Pong.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.PongOrBuilder> 
+          getPongFieldBuilder() {
+        if (pongBuilder_ == null) {
+          if (!(wrapperCase_ == 3)) {
+            wrapper_ = com.encamy.battlecity.protobuf.NetworkProtocol.Pong.getDefaultInstance();
+          }
+          pongBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.encamy.battlecity.protobuf.NetworkProtocol.Pong, com.encamy.battlecity.protobuf.NetworkProtocol.Pong.Builder, com.encamy.battlecity.protobuf.NetworkProtocol.PongOrBuilder>(
+                  (com.encamy.battlecity.protobuf.NetworkProtocol.Pong) wrapper_,
+                  getParentForChildren(),
+                  isClean());
+          wrapper_ = null;
+        }
+        wrapperCase_ = 3;
+        onChanged();;
+        return pongBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.encamy.battlecity.protobuf.Wrapper)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.encamy.battlecity.protobuf.Wrapper)
+    private static final com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper();
+    }
+
+    public static com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Wrapper>
+        PARSER = new com.google.protobuf.AbstractParser<Wrapper>() {
+      @java.lang.Override
+      public Wrapper parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Wrapper(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Wrapper> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Wrapper> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Wrapper getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_encamy_battlecity_protobuf_TestMessage_descriptor;
+    internal_static_com_encamy_battlecity_protobuf_Ping_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_encamy_battlecity_protobuf_TestMessage_fieldAccessorTable;
+      internal_static_com_encamy_battlecity_protobuf_Ping_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_encamy_battlecity_protobuf_Pong_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_encamy_battlecity_protobuf_Pong_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_encamy_battlecity_protobuf_Spawned_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_encamy_battlecity_protobuf_Spawned_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_encamy_battlecity_protobuf_Fire_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_encamy_battlecity_protobuf_Fire_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_encamy_battlecity_protobuf_Move_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_encamy_battlecity_protobuf_Move_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_encamy_battlecity_protobuf_Destroyed_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_encamy_battlecity_protobuf_Destroyed_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_encamy_battlecity_protobuf_Event_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_encamy_battlecity_protobuf_Event_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_encamy_battlecity_protobuf_Wrapper_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_encamy_battlecity_protobuf_Wrapper_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -703,9 +6215,33 @@ public final class NetworkProtocol {
     java.lang.String[] descriptorData = {
       "\n6core/src/com/encamy/battlecity/protobu" +
       "f/protocol.proto\022\036com.encamy.battlecity." +
-      "protobuf\"J\n\013TestMessage\022\r\n\005query\030\001 \001(\t\022\023" +
-      "\n\013page_number\030\002 \001(\005\022\027\n\017result_per_page\030\003" +
-      " \001(\005B\021B\017NetworkProtocolb\006proto3"
+      "protobuf\"\006\n\004Ping\"\006\n\004Pong\"U\n\007Spawned\0224\n\005o" +
+      "wner\030\001 \001(\0162%.com.encamy.battlecity.proto" +
+      "buf.Owner\022\t\n\001x\030\002 \001(\002\022\t\n\001y\030\003 \001(\002\"\302\001\n\004Fire" +
+      "\0224\n\005owner\030\001 \001(\0162%.com.encamy.battlecity." +
+      "protobuf.Owner\022A\n\tdirection\030\002 \001(\0162..com." +
+      "encamy.battlecity.protobuf.Fire.Directio" +
+      "n\022\n\n\002id\030\003 \001(\005\"5\n\tDirection\022\010\n\004LEFT\020\000\022\007\n\003" +
+      "TOP\020\001\022\t\n\005RIGHT\020\002\022\n\n\006BOTTOM\020\003\"\216\001\n\004Move\0224\n" +
+      "\005owner\030\001 \001(\0162%.com.encamy.battlecity.pro" +
+      "tobuf.Owner\022\n\n\002id\030\002 \001(\005\022\016\n\006x_prev\030\003 \001(\002\022" +
+      "\016\n\006y_prev\030\004 \001(\002\022\021\n\tx_current\030\005 \001(\002\022\021\n\ty_" +
+      "current\030\006 \001(\002\"@\n\tDestroyed\0223\n\004item\030\001 \001(\016" +
+      "2%.com.encamy.battlecity.protobuf.Owner\"" +
+      "\375\001\n\005Event\022:\n\007spawned\030\001 \001(\0132\'.com.encamy." +
+      "battlecity.protobuf.SpawnedH\000\0224\n\004fire\030\002 " +
+      "\001(\0132$.com.encamy.battlecity.protobuf.Fir" +
+      "eH\000\0224\n\004move\030\003 \001(\0132$.com.encamy.battlecit" +
+      "y.protobuf.MoveH\000\022>\n\tdestroyed\030\004 \001(\0132).c" +
+      "om.encamy.battlecity.protobuf.DestroyedH" +
+      "\000B\014\n\nevent_type\"\270\001\n\007Wrapper\0226\n\005event\030\001 \001" +
+      "(\0132%.com.encamy.battlecity.protobuf.Even" +
+      "tH\000\0224\n\004ping\030\002 \001(\0132$.com.encamy.battlecit" +
+      "y.protobuf.PingH\000\0224\n\004pong\030\003 \001(\0132$.com.en" +
+      "camy.battlecity.protobuf.PongH\000B\t\n\007wrapp" +
+      "er*8\n\005Owner\022\t\n\005ENEMY\020\000\022\021\n\rSERVER_PLAYER\020" +
+      "\001\022\021\n\rCLIENT_SERVER\020\002B\021B\017NetworkProtocolb" +
+      "\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -719,12 +6255,54 @@ public final class NetworkProtocol {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_com_encamy_battlecity_protobuf_TestMessage_descriptor =
+    internal_static_com_encamy_battlecity_protobuf_Ping_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_com_encamy_battlecity_protobuf_TestMessage_fieldAccessorTable = new
+    internal_static_com_encamy_battlecity_protobuf_Ping_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_encamy_battlecity_protobuf_TestMessage_descriptor,
-        new java.lang.String[] { "Query", "PageNumber", "ResultPerPage", });
+        internal_static_com_encamy_battlecity_protobuf_Ping_descriptor,
+        new java.lang.String[] { });
+    internal_static_com_encamy_battlecity_protobuf_Pong_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_com_encamy_battlecity_protobuf_Pong_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_encamy_battlecity_protobuf_Pong_descriptor,
+        new java.lang.String[] { });
+    internal_static_com_encamy_battlecity_protobuf_Spawned_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_com_encamy_battlecity_protobuf_Spawned_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_encamy_battlecity_protobuf_Spawned_descriptor,
+        new java.lang.String[] { "Owner", "X", "Y", });
+    internal_static_com_encamy_battlecity_protobuf_Fire_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_com_encamy_battlecity_protobuf_Fire_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_encamy_battlecity_protobuf_Fire_descriptor,
+        new java.lang.String[] { "Owner", "Direction", "Id", });
+    internal_static_com_encamy_battlecity_protobuf_Move_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_com_encamy_battlecity_protobuf_Move_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_encamy_battlecity_protobuf_Move_descriptor,
+        new java.lang.String[] { "Owner", "Id", "XPrev", "YPrev", "XCurrent", "YCurrent", });
+    internal_static_com_encamy_battlecity_protobuf_Destroyed_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_com_encamy_battlecity_protobuf_Destroyed_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_encamy_battlecity_protobuf_Destroyed_descriptor,
+        new java.lang.String[] { "Item", });
+    internal_static_com_encamy_battlecity_protobuf_Event_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_com_encamy_battlecity_protobuf_Event_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_encamy_battlecity_protobuf_Event_descriptor,
+        new java.lang.String[] { "Spawned", "Fire", "Move", "Destroyed", "EventType", });
+    internal_static_com_encamy_battlecity_protobuf_Wrapper_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_com_encamy_battlecity_protobuf_Wrapper_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_encamy_battlecity_protobuf_Wrapper_descriptor,
+        new java.lang.String[] { "Event", "Ping", "Pong", "Wrapper", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

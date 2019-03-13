@@ -3,8 +3,65 @@ syntax = "proto3";
 option java_outer_classname = "NetworkProtocol";
 package com.encamy.battlecity.protobuf;
 
-message TestMessage {
-  string query = 1;
-  int32 page_number = 2;
-  int32 result_per_page = 3;
+message Ping {
+
+}
+
+message Pong {
+
+}
+
+enum Owner {
+    ENEMY = 0;
+    SERVER_PLAYER = 1;
+    CLIENT_SERVER = 2;
+}
+
+message Spawned {
+    Owner owner = 1;
+    float x = 2;
+    float y = 3;
+}
+
+message Fire {
+    enum Direction {
+        LEFT = 0;
+        TOP = 1;
+        RIGHT = 2;
+        BOTTOM = 3;
+    }
+
+    Owner owner = 1;
+    Direction direction = 2;
+    int32 id = 3;
+}
+
+message Move {
+    Owner owner = 1;
+    int32 id = 2;
+    float x_prev = 3;
+    float y_prev = 4;
+    float x_current = 5;
+    float y_current = 6;
+}
+
+message Destroyed {
+    Owner item = 1;
+}
+
+message Event {
+    oneof event_type {
+        Spawned spawned = 1;
+        Fire fire = 2;
+        Move move = 3;
+        Destroyed destroyed = 4;
+    }
+}
+
+message Wrapper {
+    oneof wrapper {
+        Event event = 1;
+        Ping ping = 2;
+        Pong pong = 3;
+    }
 }
