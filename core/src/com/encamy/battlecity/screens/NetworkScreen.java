@@ -332,6 +332,7 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
     {
         Gdx.app.log("INFO", "Fully connected");
         m_networkManager.stopAnnouncement();
+        //m_game.setScreen(new GameScreen(m_networkManager));
     }
 
     private class _Placeholder

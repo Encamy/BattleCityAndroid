@@ -17,6 +17,7 @@ import com.encamy.battlecity.LayerManager;
 import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.entities.Enemy;
 import com.encamy.battlecity.entities.EnemyFactory;
+import com.encamy.battlecity.network.NetworkManager;
 import com.encamy.battlecity.utils.Dictionary;
 
 import java.util.EnumSet;
@@ -39,8 +40,15 @@ public class GameScreen implements Screen {
     private final int CURRENT_PLAYER = 1;
     private boolean m_freezeWorld = false;
 
-	@Override
-	public void show()
+    private NetworkManager m_networkManager;
+
+    public GameScreen(NetworkManager networkManager)
+    {
+        m_networkManager = networkManager;
+    }
+
+    @Override
+    public void show()
     {
 		Gdx.app.log("Info", this.getClass().getName() + " started");
 		Gdx.app.log("Info", "platform = " + Gdx.app.getType().name());

@@ -113,7 +113,7 @@ public class MainMenuScreen implements Screen, InputProcessor
             {
                 // 1 Player
                 Gdx.app.log("INFO", "1 PLAYER");
-                m_game.setScreen(new GameScreen());
+                m_game.setScreen(new GameScreen(null));
             }
             else if (screenY > 0.76f * Gdx.graphics.getHeight() && screenY < 0.86f * Gdx.graphics.getHeight())
             {
