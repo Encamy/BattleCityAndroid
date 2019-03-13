@@ -16,6 +16,7 @@ public class TCPserver extends Thread
     private volatile boolean m_running;
     private ServerSocket m_socket;
     private Settings.OnMessageReceivedCallback m_onMessageReceivedCallback;
+    private Settings.OnConnectedCallback m_onConnectedCallback;
     private DataOutputStream m_outputStream;
     private DataInputStream m_inputStream;
 
@@ -52,6 +53,7 @@ public class TCPserver extends Thread
                 if (wrapper.hasPing())
                 {
                     sendPong();
+                    m_onConnectedCallback.OnConnected();
                 }
             }
         }
@@ -72,5 +74,10 @@ public class TCPserver extends Thread
     public void setOnMessageCallback(Settings.OnMessageReceivedCallback onMessageReceivedCallback)
     {
         m_onMessageReceivedCallback = onMessageReceivedCallback;
+    }
+
+    public void setOnConnectedCallback(Settings.OnConnectedCallback m_onConnected)
+    {
+        m_onConnectedCallback = m_onConnected;
     }
 }

@@ -20,13 +20,12 @@ import com.encamy.battlecity.network.NetworkManager;
 import com.encamy.battlecity.utils.utils;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import static com.encamy.battlecity.Settings.SCREEN_HEIGHT;
 import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
 
-public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceFoundCallback
+public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceFoundCallback, Settings.OnConnectedCallback
 {
     private NetworkManager m_networkManager;
     private OrthographicCamera m_camera;
@@ -47,7 +46,9 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
     public NetworkScreen(Game game, AndroidInterface androidInterface)
     {
         m_game = game;
-        m_networkManager = new NetworkManager(androidInterface, this);
+        m_networkManager = new NetworkManager(androidInterface);
+        m_networkManager.setOnDeviceFoundCallback(this);
+        m_networkManager.setOnConnectedCallback(this);
         m_devices = new ArrayList<>();
         m_font = new BitmapFont(Gdx.files.internal("bcFont.fnt"), Gdx.files.internal("bcFont.png"), false);
         m_font.getData().setScale(0.75f);
@@ -250,7 +251,6 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
             }
         }
 
-        m_networkManager.stopAnnouncement();
         try
         {
             m_networkManager.connect(m_devices.get(index));
@@ -325,6 +325,13 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
         }
 
         return false;
+    }
+
+    @Override
+    public void OnConnected()
+    {
+        Gdx.app.log("INFO", "Fully connected");
+        m_networkManager.stopAnnouncement();
     }
 
     private class _Placeholder

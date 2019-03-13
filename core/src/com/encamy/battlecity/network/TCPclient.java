@@ -16,6 +16,7 @@ public class TCPclient extends Thread
     private volatile boolean m_running;
     private Socket m_socket;
     private Settings.OnMessageReceivedCallback m_onMessageReceivedCallback;
+    private Settings.OnConnectedCallback m_onConnectedCallback;
     private DataOutputStream m_outputStream;
     private DataInputStream m_inputStream;
 
@@ -53,7 +54,7 @@ public class TCPclient extends Thread
 
                 if (wrapper.hasPong())
                 {
-                    Gdx.app.log("INFO", "Fully connected");
+                    m_onConnectedCallback.OnConnected();
                 }
             }
         }
@@ -85,5 +86,10 @@ public class TCPclient extends Thread
                 NetworkProtocol.PacketWrapper.newBuilder().setPing(NetworkProtocol.Ping.getDefaultInstance()).build();
 
         wrapper.writeDelimitedTo(m_outputStream);
+    }
+
+    public void setOnConnectedCallback(Settings.OnConnectedCallback m_onConnected)
+    {
+        m_onConnectedCallback = m_onConnected;
     }
 }

@@ -20,12 +20,16 @@ public class BroadcastAnnouncer extends Thread
     private Settings.OnDeviceFoundCallback m_onDeviceFound;
     private boolean m_isServer;
 
-    public BroadcastAnnouncer(AndroidInterface androidInterface, Settings.OnDeviceFoundCallback callback)
+    public BroadcastAnnouncer(AndroidInterface androidInterface)
     {
         m_androidAPI = androidInterface;
         m_stopThread = false;
-        m_onDeviceFound = callback;
         m_isServer = false;
+    }
+
+    public void setOnDeviceFoundCallback(Settings.OnDeviceFoundCallback callback)
+    {
+        m_onDeviceFound = callback;
     }
 
     @Override

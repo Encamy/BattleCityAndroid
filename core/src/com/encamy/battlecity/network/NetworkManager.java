@@ -10,12 +10,23 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
 {
     private BroadcastAnnouncer m_broadcastAnnouncer;
     private Settings.OnMessageReceivedCallback m_OnMessageReceivedCallback;
+    private Settings.OnConnectedCallback m_OnConnected;
 
-    public NetworkManager(AndroidInterface androidInterface, Settings.OnDeviceFoundCallback callback)
+    public NetworkManager(AndroidInterface androidInterface)
     {
-        m_broadcastAnnouncer = new BroadcastAnnouncer(androidInterface, callback);
+        m_broadcastAnnouncer = new BroadcastAnnouncer(androidInterface);
         m_broadcastAnnouncer.start();
         m_OnMessageReceivedCallback = this;
+    }
+
+    public void setOnDeviceFoundCallback(Settings.OnDeviceFoundCallback callback)
+    {
+        m_broadcastAnnouncer.setOnDeviceFoundCallback(callback);
+    }
+
+    public void setOnConnectedCallback(Settings.OnConnectedCallback callback)
+    {
+        m_OnConnected = callback;
     }
 
     public void stopAnnouncement()
@@ -28,6 +39,7 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
     {
         TCPclient client = new TCPclient(networkDevice);
         client.setOnMessageCallback(this);
+        client.setOnConnectedCallback(m_OnConnected);
 
         client.start();
     }
@@ -43,6 +55,7 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
         m_broadcastAnnouncer.setServer(true);
         TCPserver server = new TCPserver();
         server.setOnMessageCallback(this);
+        server.setOnConnectedCallback(m_OnConnected);
 
         server.start();
     }

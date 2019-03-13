@@ -59,4 +59,9 @@ public class Settings {
     {
         void OnMessageReceived(NetworkProtocol.PacketWrapper packet);
     }
+
+    public interface OnConnectedCallback
+    {
+        void OnConnected();
+    }
 }
