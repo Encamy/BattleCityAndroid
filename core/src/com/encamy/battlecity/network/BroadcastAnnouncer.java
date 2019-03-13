@@ -75,7 +75,7 @@ public class BroadcastAnnouncer extends Thread
             m_socket.close();
 
             String sentence = new String(packet.getData(), 0, packet.getLength());
-            Gdx.app.log("TRACE", "GOT MESSAGE: \r\n" + sentence);
+            Gdx.app.log("TRACE", "Received broadcast message: \r\n" + sentence);
 
             NetworkDevice device = ParseDevice(sentence);
             m_onDeviceFound.OnDeviceFound(device);

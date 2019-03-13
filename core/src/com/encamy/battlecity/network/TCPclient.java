@@ -49,11 +49,12 @@ public class TCPclient extends Thread
                     continue;
                 }
 
-               if (wrapper.hasPong())
-               {
-                   Gdx.app.log("INFO", "Fully connected");
-                   m_onMessageReceivedCallback.OnMessageReceived(wrapper);
-               }
+                m_onMessageReceivedCallback.OnMessageReceived(wrapper);
+
+                if (wrapper.hasPong())
+                {
+                    Gdx.app.log("INFO", "Fully connected");
+                }
             }
         }
         catch (Exception e)

@@ -40,25 +40,14 @@ public class TCPserver extends Thread
 
             while (m_running)
             {
-                /*byte[] data = new byte[Settings.PACKET_MAX_LENGTH];
-                int length = m_inputStream.read(data);
-
-                if (m_onMessageReceivedCallback != null)
-                {
-                    m_onMessageReceivedCallback.OnMessageReceived(data);
-                }
-
-                if (new String(data, 0, length).equals("Ping"))
-                {
-                    sendPong();
-                }*/
-
                 NetworkProtocol.PacketWrapper wrapper = utils.parsePacket(m_inputStream);
 
                 if (wrapper == null)
                 {
                     continue;
                 }
+
+                m_onMessageReceivedCallback.OnMessageReceived(wrapper);
 
                 if (wrapper.hasPing())
                 {
