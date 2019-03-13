@@ -44,19 +44,6 @@ public class TCPclient extends Thread
             {
                 NetworkProtocol.PacketWrapper wrapper = utils.parsePacket(m_inputStream);
 
-               /* byte[] data = new byte[Settings.PACKET_MAX_LENGTH];
-                int length = m_inputStream.read(data);
-
-                if (m_onMessageReceivedCallback != null)
-                {
-                    m_onMessageReceivedCallback.OnMessageReceived(data);
-                }
-
-                if (new String(data, 0, length).equals("Pong"))
-                {
-                    Gdx.app.log("INFO", "Fully connected");
-                }*/
-
                 if (wrapper == null)
                 {
                     continue;
@@ -65,7 +52,7 @@ public class TCPclient extends Thread
                if (wrapper.hasPong())
                {
                    Gdx.app.log("INFO", "Fully connected");
-                   m_onMessageReceivedCallback.OnMessageReceived("Fully connected".getBytes());
+                   m_onMessageReceivedCallback.OnMessageReceived(wrapper);
                }
             }
         }

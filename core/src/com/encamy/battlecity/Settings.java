@@ -3,6 +3,7 @@ package com.encamy.battlecity;
 import com.encamy.battlecity.entities.BaseWall;
 import com.encamy.battlecity.entities.Enemy;
 import com.encamy.battlecity.network.NetworkDevice;
+import com.encamy.battlecity.protobuf.NetworkProtocol;
 
 import java.util.EnumSet;
 
@@ -56,6 +57,6 @@ public class Settings {
 
     public interface OnMessageReceivedCallback
     {
-        void OnMessageReceived(byte[] data);
+        void OnMessageReceived(NetworkProtocol.PacketWrapper packet);
     }
 }

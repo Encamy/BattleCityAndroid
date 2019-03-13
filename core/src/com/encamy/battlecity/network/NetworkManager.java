@@ -2,6 +2,7 @@ package com.encamy.battlecity.network;
 
 import com.badlogic.gdx.Gdx;
 import com.encamy.battlecity.Settings;
+import com.encamy.battlecity.protobuf.NetworkProtocol;
 
 import java.io.IOException;
 
@@ -32,9 +33,9 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
     }
 
     @Override
-    public void OnMessageReceived(byte[] data)
+    public void OnMessageReceived(NetworkProtocol.PacketWrapper packet)
     {
-        Gdx.app.log("TCP Socket", "Message received: " + new String(data, 0, data.length));
+        Gdx.app.log("TCP Socket", "Received packet: " + packet.getWrapperCase());
     }
 
     public void createServer() throws IOException
