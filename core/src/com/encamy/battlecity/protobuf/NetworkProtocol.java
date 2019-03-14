@@ -2374,24 +2374,14 @@ public final class NetworkProtocol {
     int getId();
 
     /**
-     * <code>float x_prev = 3;</code>
+     * <code>float x_velocity = 3;</code>
      */
-    float getXPrev();
+    float getXVelocity();
 
     /**
-     * <code>float y_prev = 4;</code>
+     * <code>float y_velocity = 4;</code>
      */
-    float getYPrev();
-
-    /**
-     * <code>float x_current = 5;</code>
-     */
-    float getXCurrent();
-
-    /**
-     * <code>float y_current = 6;</code>
-     */
-    float getYCurrent();
+    float getYVelocity();
   }
   /**
    * Protobuf type {@code com.encamy.battlecity.protobuf.Move}
@@ -2446,22 +2436,12 @@ public final class NetworkProtocol {
             }
             case 29: {
 
-              xPrev_ = input.readFloat();
+              xVelocity_ = input.readFloat();
               break;
             }
             case 37: {
 
-              yPrev_ = input.readFloat();
-              break;
-            }
-            case 45: {
-
-              xCurrent_ = input.readFloat();
-              break;
-            }
-            case 53: {
-
-              yCurrent_ = input.readFloat();
+              yVelocity_ = input.readFloat();
               break;
             }
             default: {
@@ -2522,40 +2502,22 @@ public final class NetworkProtocol {
       return id_;
     }
 
-    public static final int X_PREV_FIELD_NUMBER = 3;
-    private float xPrev_;
+    public static final int X_VELOCITY_FIELD_NUMBER = 3;
+    private float xVelocity_;
     /**
-     * <code>float x_prev = 3;</code>
+     * <code>float x_velocity = 3;</code>
      */
-    public float getXPrev() {
-      return xPrev_;
+    public float getXVelocity() {
+      return xVelocity_;
     }
 
-    public static final int Y_PREV_FIELD_NUMBER = 4;
-    private float yPrev_;
+    public static final int Y_VELOCITY_FIELD_NUMBER = 4;
+    private float yVelocity_;
     /**
-     * <code>float y_prev = 4;</code>
+     * <code>float y_velocity = 4;</code>
      */
-    public float getYPrev() {
-      return yPrev_;
-    }
-
-    public static final int X_CURRENT_FIELD_NUMBER = 5;
-    private float xCurrent_;
-    /**
-     * <code>float x_current = 5;</code>
-     */
-    public float getXCurrent() {
-      return xCurrent_;
-    }
-
-    public static final int Y_CURRENT_FIELD_NUMBER = 6;
-    private float yCurrent_;
-    /**
-     * <code>float y_current = 6;</code>
-     */
-    public float getYCurrent() {
-      return yCurrent_;
+    public float getYVelocity() {
+      return yVelocity_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -2578,17 +2540,11 @@ public final class NetworkProtocol {
       if (id_ != 0) {
         output.writeInt32(2, id_);
       }
-      if (xPrev_ != 0F) {
-        output.writeFloat(3, xPrev_);
+      if (xVelocity_ != 0F) {
+        output.writeFloat(3, xVelocity_);
       }
-      if (yPrev_ != 0F) {
-        output.writeFloat(4, yPrev_);
-      }
-      if (xCurrent_ != 0F) {
-        output.writeFloat(5, xCurrent_);
-      }
-      if (yCurrent_ != 0F) {
-        output.writeFloat(6, yCurrent_);
+      if (yVelocity_ != 0F) {
+        output.writeFloat(4, yVelocity_);
       }
       unknownFields.writeTo(output);
     }
@@ -2607,21 +2563,13 @@ public final class NetworkProtocol {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, id_);
       }
-      if (xPrev_ != 0F) {
+      if (xVelocity_ != 0F) {
         size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(3, xPrev_);
+          .computeFloatSize(3, xVelocity_);
       }
-      if (yPrev_ != 0F) {
+      if (yVelocity_ != 0F) {
         size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(4, yPrev_);
-      }
-      if (xCurrent_ != 0F) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(5, xCurrent_);
-      }
-      if (yCurrent_ != 0F) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(6, yCurrent_);
+          .computeFloatSize(4, yVelocity_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -2641,18 +2589,12 @@ public final class NetworkProtocol {
       if (owner_ != other.owner_) return false;
       if (getId()
           != other.getId()) return false;
-      if (java.lang.Float.floatToIntBits(getXPrev())
+      if (java.lang.Float.floatToIntBits(getXVelocity())
           != java.lang.Float.floatToIntBits(
-              other.getXPrev())) return false;
-      if (java.lang.Float.floatToIntBits(getYPrev())
+              other.getXVelocity())) return false;
+      if (java.lang.Float.floatToIntBits(getYVelocity())
           != java.lang.Float.floatToIntBits(
-              other.getYPrev())) return false;
-      if (java.lang.Float.floatToIntBits(getXCurrent())
-          != java.lang.Float.floatToIntBits(
-              other.getXCurrent())) return false;
-      if (java.lang.Float.floatToIntBits(getYCurrent())
-          != java.lang.Float.floatToIntBits(
-              other.getYCurrent())) return false;
+              other.getYVelocity())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -2668,18 +2610,12 @@ public final class NetworkProtocol {
       hash = (53 * hash) + owner_;
       hash = (37 * hash) + ID_FIELD_NUMBER;
       hash = (53 * hash) + getId();
-      hash = (37 * hash) + X_PREV_FIELD_NUMBER;
+      hash = (37 * hash) + X_VELOCITY_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
-          getXPrev());
-      hash = (37 * hash) + Y_PREV_FIELD_NUMBER;
+          getXVelocity());
+      hash = (37 * hash) + Y_VELOCITY_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
-          getYPrev());
-      hash = (37 * hash) + X_CURRENT_FIELD_NUMBER;
-      hash = (53 * hash) + java.lang.Float.floatToIntBits(
-          getXCurrent());
-      hash = (37 * hash) + Y_CURRENT_FIELD_NUMBER;
-      hash = (53 * hash) + java.lang.Float.floatToIntBits(
-          getYCurrent());
+          getYVelocity());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -2817,13 +2753,9 @@ public final class NetworkProtocol {
 
         id_ = 0;
 
-        xPrev_ = 0F;
+        xVelocity_ = 0F;
 
-        yPrev_ = 0F;
-
-        xCurrent_ = 0F;
-
-        yCurrent_ = 0F;
+        yVelocity_ = 0F;
 
         return this;
       }
@@ -2853,10 +2785,8 @@ public final class NetworkProtocol {
         com.encamy.battlecity.protobuf.NetworkProtocol.Move result = new com.encamy.battlecity.protobuf.NetworkProtocol.Move(this);
         result.owner_ = owner_;
         result.id_ = id_;
-        result.xPrev_ = xPrev_;
-        result.yPrev_ = yPrev_;
-        result.xCurrent_ = xCurrent_;
-        result.yCurrent_ = yCurrent_;
+        result.xVelocity_ = xVelocity_;
+        result.yVelocity_ = yVelocity_;
         onBuilt();
         return result;
       }
@@ -2911,17 +2841,11 @@ public final class NetworkProtocol {
         if (other.getId() != 0) {
           setId(other.getId());
         }
-        if (other.getXPrev() != 0F) {
-          setXPrev(other.getXPrev());
+        if (other.getXVelocity() != 0F) {
+          setXVelocity(other.getXVelocity());
         }
-        if (other.getYPrev() != 0F) {
-          setYPrev(other.getYPrev());
-        }
-        if (other.getXCurrent() != 0F) {
-          setXCurrent(other.getXCurrent());
-        }
-        if (other.getYCurrent() != 0F) {
-          setYCurrent(other.getYCurrent());
+        if (other.getYVelocity() != 0F) {
+          setYVelocity(other.getYVelocity());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -3023,106 +2947,54 @@ public final class NetworkProtocol {
         return this;
       }
 
-      private float xPrev_ ;
+      private float xVelocity_ ;
       /**
-       * <code>float x_prev = 3;</code>
+       * <code>float x_velocity = 3;</code>
        */
-      public float getXPrev() {
-        return xPrev_;
+      public float getXVelocity() {
+        return xVelocity_;
       }
       /**
-       * <code>float x_prev = 3;</code>
+       * <code>float x_velocity = 3;</code>
        */
-      public Builder setXPrev(float value) {
+      public Builder setXVelocity(float value) {
         
-        xPrev_ = value;
+        xVelocity_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>float x_prev = 3;</code>
+       * <code>float x_velocity = 3;</code>
        */
-      public Builder clearXPrev() {
+      public Builder clearXVelocity() {
         
-        xPrev_ = 0F;
-        onChanged();
-        return this;
-      }
-
-      private float yPrev_ ;
-      /**
-       * <code>float y_prev = 4;</code>
-       */
-      public float getYPrev() {
-        return yPrev_;
-      }
-      /**
-       * <code>float y_prev = 4;</code>
-       */
-      public Builder setYPrev(float value) {
-        
-        yPrev_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>float y_prev = 4;</code>
-       */
-      public Builder clearYPrev() {
-        
-        yPrev_ = 0F;
+        xVelocity_ = 0F;
         onChanged();
         return this;
       }
 
-      private float xCurrent_ ;
+      private float yVelocity_ ;
       /**
-       * <code>float x_current = 5;</code>
+       * <code>float y_velocity = 4;</code>
        */
-      public float getXCurrent() {
-        return xCurrent_;
+      public float getYVelocity() {
+        return yVelocity_;
       }
       /**
-       * <code>float x_current = 5;</code>
+       * <code>float y_velocity = 4;</code>
        */
-      public Builder setXCurrent(float value) {
+      public Builder setYVelocity(float value) {
         
-        xCurrent_ = value;
+        yVelocity_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>float x_current = 5;</code>
+       * <code>float y_velocity = 4;</code>
        */
-      public Builder clearXCurrent() {
+      public Builder clearYVelocity() {
         
-        xCurrent_ = 0F;
-        onChanged();
-        return this;
-      }
-
-      private float yCurrent_ ;
-      /**
-       * <code>float y_current = 6;</code>
-       */
-      public float getYCurrent() {
-        return yCurrent_;
-      }
-      /**
-       * <code>float y_current = 6;</code>
-       */
-      public Builder setYCurrent(float value) {
-        
-        yCurrent_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>float y_current = 6;</code>
-       */
-      public Builder clearYCurrent() {
-        
-        yCurrent_ = 0F;
+        yVelocity_ = 0F;
         onChanged();
         return this;
       }
@@ -6222,26 +6094,25 @@ public final class NetworkProtocol {
       "protobuf.Owner\022A\n\tdirection\030\002 \001(\0162..com." +
       "encamy.battlecity.protobuf.Fire.Directio" +
       "n\022\n\n\002id\030\003 \001(\005\"5\n\tDirection\022\010\n\004LEFT\020\000\022\007\n\003" +
-      "TOP\020\001\022\t\n\005RIGHT\020\002\022\n\n\006BOTTOM\020\003\"\216\001\n\004Move\0224\n" +
-      "\005owner\030\001 \001(\0162%.com.encamy.battlecity.pro" +
-      "tobuf.Owner\022\n\n\002id\030\002 \001(\005\022\016\n\006x_prev\030\003 \001(\002\022" +
-      "\016\n\006y_prev\030\004 \001(\002\022\021\n\tx_current\030\005 \001(\002\022\021\n\ty_" +
-      "current\030\006 \001(\002\"@\n\tDestroyed\0223\n\004item\030\001 \001(\016" +
-      "2%.com.encamy.battlecity.protobuf.Owner\"" +
-      "\375\001\n\005Event\022:\n\007spawned\030\001 \001(\0132\'.com.encamy." +
-      "battlecity.protobuf.SpawnedH\000\0224\n\004fire\030\002 " +
-      "\001(\0132$.com.encamy.battlecity.protobuf.Fir" +
-      "eH\000\0224\n\004move\030\003 \001(\0132$.com.encamy.battlecit" +
-      "y.protobuf.MoveH\000\022>\n\tdestroyed\030\004 \001(\0132).c" +
-      "om.encamy.battlecity.protobuf.DestroyedH" +
-      "\000B\014\n\nevent_type\"\276\001\n\rPacketWrapper\0226\n\005eve" +
-      "nt\030\001 \001(\0132%.com.encamy.battlecity.protobu" +
-      "f.EventH\000\0224\n\004ping\030\002 \001(\0132$.com.encamy.bat" +
-      "tlecity.protobuf.PingH\000\0224\n\004pong\030\003 \001(\0132$." +
-      "com.encamy.battlecity.protobuf.PongH\000B\t\n" +
-      "\007wrapper*8\n\005Owner\022\t\n\005ENEMY\020\000\022\021\n\rSERVER_P" +
-      "LAYER\020\001\022\021\n\rCLIENT_SERVER\020\002B\021B\017NetworkPro" +
-      "tocolb\006proto3"
+      "TOP\020\001\022\t\n\005RIGHT\020\002\022\n\n\006BOTTOM\020\003\"p\n\004Move\0224\n\005" +
+      "owner\030\001 \001(\0162%.com.encamy.battlecity.prot" +
+      "obuf.Owner\022\n\n\002id\030\002 \001(\005\022\022\n\nx_velocity\030\003 \001" +
+      "(\002\022\022\n\ny_velocity\030\004 \001(\002\"@\n\tDestroyed\0223\n\004i" +
+      "tem\030\001 \001(\0162%.com.encamy.battlecity.protob" +
+      "uf.Owner\"\375\001\n\005Event\022:\n\007spawned\030\001 \001(\0132\'.co" +
+      "m.encamy.battlecity.protobuf.SpawnedH\000\0224" +
+      "\n\004fire\030\002 \001(\0132$.com.encamy.battlecity.pro" +
+      "tobuf.FireH\000\0224\n\004move\030\003 \001(\0132$.com.encamy." +
+      "battlecity.protobuf.MoveH\000\022>\n\tdestroyed\030" +
+      "\004 \001(\0132).com.encamy.battlecity.protobuf.D" +
+      "estroyedH\000B\014\n\nevent_type\"\276\001\n\rPacketWrapp" +
+      "er\0226\n\005event\030\001 \001(\0132%.com.encamy.battlecit" +
+      "y.protobuf.EventH\000\0224\n\004ping\030\002 \001(\0132$.com.e" +
+      "ncamy.battlecity.protobuf.PingH\000\0224\n\004pong" +
+      "\030\003 \001(\0132$.com.encamy.battlecity.protobuf." +
+      "PongH\000B\t\n\007wrapper*8\n\005Owner\022\t\n\005ENEMY\020\000\022\021\n" +
+      "\rSERVER_PLAYER\020\001\022\021\n\rCLIENT_SERVER\020\002B\021B\017N" +
+      "etworkProtocolb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -6284,7 +6155,7 @@ public final class NetworkProtocol {
     internal_static_com_encamy_battlecity_protobuf_Move_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_encamy_battlecity_protobuf_Move_descriptor,
-        new java.lang.String[] { "Owner", "Id", "XPrev", "YPrev", "XCurrent", "YCurrent", });
+        new java.lang.String[] { "Owner", "Id", "XVelocity", "YVelocity", });
     internal_static_com_encamy_battlecity_protobuf_Destroyed_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_com_encamy_battlecity_protobuf_Destroyed_fieldAccessorTable = new
