@@ -43,6 +43,14 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
     private Sprite m_waiting;
     private float m_animationDuration = 0.0f;
 
+    private enum State {
+        SEARCHING,
+        CONNECTING,
+        CONNECTED
+    }
+
+    private volatile State m_state;
+
     public NetworkScreen(Game game, AndroidInterface androidInterface)
     {
         m_game = game;
@@ -66,6 +74,7 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
         m_waitingAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
         m_waiting = new Sprite((TextureAtlas.AtlasRegion)m_waitingAnimation.getKeyFrame(m_animationDuration));
+        m_state = State.SEARCHING;
     }
 
     @Override
@@ -103,6 +112,12 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
             m_waiting.draw(m_spriteBatch);
             m_waiting.setX(0.76f * Settings.SCREEN_WIDTH);
             m_waiting.setY(0.48f * Settings.SCREEN_HEIGHT);
+        }
+
+        if (m_state == State.CONNECTED)
+        {
+            Gdx.app.log("LOCK", "CONNECTED");
+            m_game.setScreen(new GameScreen(m_networkManager));
         }
 
         m_spriteBatch.end();
@@ -146,12 +161,16 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
 
         try
         {
+            m_state = State.CONNECTING;
             m_networkManager.createServer();
         }
         catch (IOException e)
         {
             Gdx.app.log("ERROR", "Failed to create server");
-            m_androidInterface.showToast("Failed to create server");
+            if (m_androidInterface != null)
+            {
+                m_androidInterface.showToast("Failed to create server");
+            }
         }
     }
 
@@ -253,6 +272,7 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
 
         try
         {
+            m_state = State.CONNECTING;
             m_networkManager.connect(m_devices.get(index));
         }
         catch (IOException e)
@@ -332,7 +352,7 @@ public class NetworkScreen implements Screen, InputProcessor, Settings.OnDeviceF
     {
         Gdx.app.log("INFO", "Fully connected");
         m_networkManager.stopAnnouncement();
-        //m_game.setScreen(new GameScreen(m_networkManager));
+        m_state = State.CONNECTED;
     }
 
     private class _Placeholder
