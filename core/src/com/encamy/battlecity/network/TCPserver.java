@@ -80,4 +80,32 @@ public class TCPserver extends Thread
     {
         m_onConnectedCallback = m_onConnected;
     }
+
+    public void sendSpawnEvent(NetworkProtocol.Owner owner, int id, float x, float y) throws IOException
+    {
+        NetworkProtocol.PacketWrapper wrapper =
+                NetworkProtocol.PacketWrapper.newBuilder().setEvent(
+                        NetworkProtocol.Event.newBuilder().setSpawned(
+                                NetworkProtocol.Spawned.newBuilder()
+                                        .setId(id)
+                                        .setX(x)
+                                        .setY(y)
+                        )).build();
+
+        wrapper.writeDelimitedTo(m_outputStream);
+    }
+
+    public void sendUpdateEvent(NetworkProtocol.Owner owner, int id, float x, float y) throws IOException
+    {
+        NetworkProtocol.PacketWrapper wrapper =
+                NetworkProtocol.PacketWrapper.newBuilder().setEvent(
+                        NetworkProtocol.Event.newBuilder().setMove(
+                                NetworkProtocol.Move.newBuilder()
+                                        .setId(id)
+                                        .setXVelocity(x)
+                                        .setYVelocity(y)
+                        )).build();
+
+        wrapper.writeDelimitedTo(m_outputStream);
+    }
 }

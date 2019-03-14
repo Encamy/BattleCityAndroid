@@ -18,6 +18,7 @@ import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.entities.Enemy;
 import com.encamy.battlecity.entities.EnemyFactory;
 import com.encamy.battlecity.network.NetworkManager;
+import com.encamy.battlecity.protobuf.NetworkProtocol;
 import com.encamy.battlecity.utils.Dictionary;
 
 import java.util.EnumSet;
@@ -334,11 +335,13 @@ public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Setti
     public void OnEnemySpawned(int id, float x, float y)
     {
         Gdx.app.log("NETWORK", "Enemy (" + id + ") has spawned at " + x + ":" + y);
+        m_networkManager.notifySpawn(NetworkProtocol.Owner.ENEMY, id, x, y);
     }
 
     @Override
     public void OnEnemyUpdate(int id, float x, float y)
     {
         Gdx.app.log("NETWORK", "Enemy (" + id + ") moved with velocity " + x + ":" + y);
+        m_networkManager.notifyUpdate(NetworkProtocol.Owner.ENEMY, id, x, y);
     }
 }

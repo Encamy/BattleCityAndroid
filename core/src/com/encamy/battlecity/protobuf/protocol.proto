@@ -14,7 +14,7 @@ message Pong {
 enum Owner {
     ENEMY = 0;
     SERVER_PLAYER = 1;
-    CLIENT_SERVER = 2;
+    CLIENT_PLAYER = 2;
 }
 
 message Spawned {
