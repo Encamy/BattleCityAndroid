@@ -25,7 +25,7 @@ import java.util.EnumSet;
 import static com.encamy.battlecity.Settings.SCREEN_HEIGHT;
 import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
 
-public class GameScreen implements Screen {
+public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Settings.OnEnemySpawnedCallback {
 
 	private OrthographicCamera m_camera;
 	private OrthographicCamera m_debugCamera;
@@ -84,6 +84,12 @@ public class GameScreen implements Screen {
                 m_layerManager.getPlayer(CURRENT_PLAYER).getSteeringEntity(),
                 m_bulletManager
         );
+
+        if (m_networkManager != null)
+        {
+            m_enemyFactory.setOnSpawnedCallback(this);
+            m_enemyFactory.setOnUpdateCallback(this);
+        }
 	}
 
     @Override
@@ -322,5 +328,17 @@ public class GameScreen implements Screen {
     @Override
     public void hide() {
 
+    }
+
+    @Override
+    public void OnEnemySpawned(int id, float x, float y)
+    {
+        Gdx.app.log("NETWORK", "Enemy (" + id + ") has spawned at " + x + ":" + y);
+    }
+
+    @Override
+    public void OnEnemyUpdate(int id, float x, float y)
+    {
+        Gdx.app.log("NETWORK", "Enemy (" + id + ") moved with velocity " + x + ":" + y);
     }
 }

@@ -64,4 +64,14 @@ public class Settings {
     {
         void OnConnected();
     }
+
+    public interface OnEnemySpawnedCallback
+    {
+        void OnEnemySpawned(int id, float x, float y);
+    }
+
+    public interface OnEnemyUpdateCallback
+    {
+        void OnEnemyUpdate(int id, float x, float y);
+    }
 }

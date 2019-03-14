@@ -33,6 +33,7 @@ public class Enemy extends Sprite {
     private World m_world;
     private Settings.Direction m_direction;
     private BulletManager m_bulletManager;
+    private int m_id;
 
     private Settings.EnemyDestroyedCallback m_OnEnemyDestroyed;
 
@@ -44,7 +45,7 @@ public class Enemy extends Sprite {
 
     private State m_state;
 
-    public Enemy(Vector2 spawnpoint, EnemyProperties property, World world, Box2dSteeringEntity playerSteeringEntity, BulletManager bulletManager)
+    public Enemy(Vector2 spawnpoint, EnemyProperties property, World world, Box2dSteeringEntity playerSteeringEntity, BulletManager bulletManager, int id)
     {
         super((TextureAtlas.AtlasRegion)property.animation.getBottomAnimation().getKeyFrame(0));
 
@@ -68,6 +69,7 @@ public class Enemy extends Sprite {
         RandomBehavior<Vector2> arriveSB = new RandomBehavior<Vector2>(m_steeringEntity, playerSteeringEntity);
         m_steeringEntity.setBehavior(arriveSB);
         m_state = State.SPAWNING;
+        m_id = id;
     }
 
     public void setOnDestroyedCallback(Settings.EnemyDestroyedCallback callback)
@@ -75,11 +77,11 @@ public class Enemy extends Sprite {
         m_OnEnemyDestroyed = callback;
     }
 
-    public void draw(Batch batch, boolean freeze)
+    public void draw(Batch batch, boolean freeze, Vector2 linearVelocity)
     {
         if (!freeze)
         {
-            update(Gdx.graphics.getDeltaTime(), batch);
+            update(Gdx.graphics.getDeltaTime(), batch, linearVelocity);
         }
         super.draw(batch);
     }
@@ -97,6 +99,11 @@ public class Enemy extends Sprite {
     public int getLevel()
     {
         return m_level;
+    }
+
+    public int getId()
+    {
+        return m_id;
     }
 
     private void updateAliveAnimation(float animationTime)
@@ -129,7 +136,7 @@ public class Enemy extends Sprite {
     }
 
 
-    private void update(float deltaTime, Batch batch)
+    private void update(float deltaTime, Batch batch, Vector2 linearVector)
     {
         m_animationTime += deltaTime;
 
@@ -159,6 +166,8 @@ public class Enemy extends Sprite {
 
         setX(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32));
         setY(Box2dHelpers.Box2d2y(m_body.getPosition().y, 32));
+        linearVector.x = m_body.getLinearVelocity().x;
+        linearVector.y = m_body.getLinearVelocity().y;
     }
 
     private void fire()

@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.encamy.battlecity.BulletManager;
 import com.encamy.battlecity.Settings;
+import com.encamy.battlecity.screens.GameScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,10 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
     private World m_world;
     private Box2dSteeringEntity m_playerSteeringEntity;
     private BulletManager m_bulletManager;
+    private int m_last_id;
+
+    private Settings.OnEnemySpawnedCallback m_onEnemySpawnedCallback;
+    private Settings.OnEnemyUpdateCallback m_onEnemyUpdateCallback;
 
     public EnemyFactory(MapObjects spawnPoints, TextureAtlas atlas, World world, Box2dSteeringEntity playerSteeringEntity, BulletManager bulletManager)
     {
@@ -51,6 +56,7 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
         m_world = world;
         m_playerSteeringEntity = playerSteeringEntity;
         m_bulletManager = bulletManager;
+        m_last_id = 0;
     }
 
     public void update(float deltaTime, boolean freeze)
@@ -74,6 +80,7 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
 
     private Enemy CreateRandomEnemy(Vector2 spawnpoint)
     {
+        m_last_id++;
         int level = 0;
         if (m_currentRandomCounter < m_baseRandomSequence.length)
         {
@@ -84,7 +91,8 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
             level = m_random.nextInt(4);
         }
 
-        return new Enemy(spawnpoint, m_properties.Get(level), m_world, m_playerSteeringEntity, m_bulletManager);
+        m_onEnemySpawnedCallback.OnEnemySpawned(m_last_id, spawnpoint.x, spawnpoint.y);
+        return new Enemy(spawnpoint, m_properties.Get(level), m_world, m_playerSteeringEntity, m_bulletManager, m_last_id++);
     }
 
     private void spawn()
@@ -155,7 +163,9 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
     {
         for (Enemy enemy : m_enemies)
         {
-            enemy.draw(batch, freeze);
+            Vector2 linearVelocity = new Vector2();
+            enemy.draw(batch, freeze, linearVelocity);
+            m_onEnemyUpdateCallback.OnEnemyUpdate(enemy.getId(), linearVelocity.x, linearVelocity.y);
         }
     }
 
@@ -189,5 +199,15 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
     public void OnEnemyDestroyed(Enemy enemy)
     {
         m_enemies.remove(enemy);
+    }
+
+    public void setOnSpawnedCallback(Settings.OnEnemySpawnedCallback callback)
+    {
+        m_onEnemySpawnedCallback = callback;
+    }
+
+    public void setOnUpdateCallback(Settings.OnEnemyUpdateCallback callback)
+    {
+        m_onEnemyUpdateCallback = callback;
     }
 }
