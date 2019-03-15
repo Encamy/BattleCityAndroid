@@ -61,6 +61,11 @@ public class TCPserver extends Thread
         {
             e.printStackTrace();
         }
+        catch (Exception e)
+        {
+            Gdx.app.log("FATAL", "Some error happend on socket. Future operations are impossible. Stopping thread");
+            e.printStackTrace();
+        }
     }
 
     private void sendPong() throws IOException

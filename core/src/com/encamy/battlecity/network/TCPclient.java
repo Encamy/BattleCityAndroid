@@ -61,6 +61,7 @@ public class TCPclient extends Thread
         catch (Exception e)
         {
             Gdx.app.log("TCP Client", "Error: " + e);
+            Gdx.app.log("FATAL", "Some error happend on socket. Future operations are impossible. Stopping thread");
         }
         finally
         {

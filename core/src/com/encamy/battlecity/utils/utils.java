@@ -104,7 +104,7 @@ public class utils
         return string.replaceAll("[^\\d^\\w.]", " ");
     }
 
-    public static NetworkProtocol.PacketWrapper parsePacket(DataInputStream stream)
+    public static NetworkProtocol.PacketWrapper parsePacket(DataInputStream stream) throws Exception
     {
         try
         {
@@ -113,8 +113,7 @@ public class utils
         catch (IOException e)
         {
             Gdx.app.log("PROTOBUF", "Failed to parse packet");
+            throw new Exception("Failed to parse packet");
         }
-
-        return null;
     }
 }
