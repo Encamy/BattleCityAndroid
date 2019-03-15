@@ -19,7 +19,11 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
     {
         m_broadcastAnnouncer = new BroadcastAnnouncer(androidInterface);
         m_broadcastAnnouncer.start();
-        m_OnMessageReceivedCallback = this;
+    }
+
+    public void setOnMessageReceivedCallback(Settings.OnMessageReceivedCallback callback)
+    {
+        m_OnMessageReceivedCallback = callback;
     }
 
     public void setOnDeviceFoundCallback(Settings.OnDeviceFoundCallback callback)
@@ -52,7 +56,15 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
     @Override
     public void OnMessageReceived(NetworkProtocol.PacketWrapper packet)
     {
-        Gdx.app.log("TCP Socket", "Received packet: " + packet.getWrapperCase());
+        if (m_OnMessageReceivedCallback == null)
+        {
+            Gdx.app.log("TCP Socket", "OnMessageReceived callback is not set. Just outputting events to log.\n" +
+                    "Received packet: " + packet.getWrapperCase());
+        }
+        else
+        {
+            m_OnMessageReceivedCallback.OnMessageReceived(packet);
+        }
     }
 
     public void createServer() throws IOException

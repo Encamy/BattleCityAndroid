@@ -26,7 +26,7 @@ import java.util.EnumSet;
 import static com.encamy.battlecity.Settings.SCREEN_HEIGHT;
 import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
 
-public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Settings.OnEnemySpawnedCallback {
+public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Settings.OnEnemySpawnedCallback, Settings.OnMessageReceivedCallback {
 
 	private OrthographicCamera m_camera;
 	private OrthographicCamera m_debugCamera;
@@ -78,19 +78,27 @@ public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Setti
 
         m_bulletManager.setAtlas(m_layerManager.getAtlas());
 
+        boolean isServer = false;
+
+        if (m_networkManager != null)
+        {
+            isServer = m_networkManager.isServer();
+        }
+
         m_enemyFactory = new EnemyFactory(
                 m_layerManager.getTileMap().getLayers().get("EnemySpawns").getObjects(),
                 m_layerManager.getAtlas(),
                 m_world,
                 m_layerManager.getPlayer(CURRENT_PLAYER).getSteeringEntity(),
                 m_bulletManager,
-                m_networkManager.isServer()
+                isServer
         );
 
         if (m_networkManager != null)
         {
             m_enemyFactory.setOnSpawnedCallback(this);
             m_enemyFactory.setOnUpdateCallback(this);
+            m_networkManager.setOnMessageReceivedCallback(this);
         }
 	}
 
@@ -344,5 +352,49 @@ public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Setti
     {
         Gdx.app.log("NETWORK", "Enemy (" + id + ") moved with velocity " + x + ":" + y);
         m_networkManager.notifyUpdate(NetworkProtocol.Owner.ENEMY, id, x, y);
+    }
+
+    @Override
+    public void OnMessageReceived(NetworkProtocol.PacketWrapper packet)
+    {
+        switch (packet.getWrapperCase())
+        {
+            case PING:
+            case PONG:
+                // do nothing
+                break;
+            case EVENT:
+                eventDispatcher(packet.getEvent());
+                break;
+            case WRAPPER_NOT_SET:
+                Gdx.app.log("NETWORK ERROR", "Wrapper type is not set. Probably wrong packet structure");
+                break;
+        }
+    }
+
+    private void eventDispatcher(NetworkProtocol.Event event)
+    {
+        switch (event.getEventTypeCase())
+        {
+            case FIRE:
+                break;
+            case MOVE:
+                break;
+            case SPAWNED:
+            {
+                NetworkProtocol.Spawned spawned = event.getSpawned();
+
+                if (spawned.getOwner() == NetworkProtocol.Owner.ENEMY)
+                {
+                    m_enemyFactory.onNetworkSpawn(spawned.getId(), spawned.getX(), spawned.getY(), spawned.getLevel());
+                }
+            }
+                break;
+            case DESTROYED:
+                break;
+            case EVENTTYPE_NOT_SET:
+                Gdx.app.log("NETWORK ERROR", "Wrapper type is not set. Probably wrong packet structure");
+                break;
+        }
     }
 }
