@@ -83,7 +83,8 @@ public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Setti
                 m_layerManager.getAtlas(),
                 m_world,
                 m_layerManager.getPlayer(CURRENT_PLAYER).getSteeringEntity(),
-                m_bulletManager
+                m_bulletManager,
+                m_networkManager.isServer()
         );
 
         if (m_networkManager != null)
@@ -332,10 +333,10 @@ public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Setti
     }
 
     @Override
-    public void OnEnemySpawned(int id, float x, float y)
+    public void OnEnemySpawned(int id, float x, float y, int level)
     {
         Gdx.app.log("NETWORK", "Enemy (" + id + ") has spawned at " + x + ":" + y);
-        m_networkManager.notifySpawn(NetworkProtocol.Owner.ENEMY, id, x, y);
+        m_networkManager.notifySpawn(NetworkProtocol.Owner.ENEMY, id, x, y, level);
     }
 
     @Override

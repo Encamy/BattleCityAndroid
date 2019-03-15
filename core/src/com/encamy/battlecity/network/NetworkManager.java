@@ -68,7 +68,7 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
         m_server.start();
     }
 
-    public void notifySpawn(NetworkProtocol.Owner owner, int id, float x, float y)
+    public void notifySpawn(NetworkProtocol.Owner owner, int id, float x, float y, int level)
     {
         if (owner == NetworkProtocol.Owner.ENEMY && !m_isServer)
         {
@@ -78,7 +78,7 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
 
         try
         {
-            m_server.sendSpawnEvent(owner, id, x, y);
+            m_server.sendSpawnEvent(owner, id, x, y, level);
         }
         catch (IOException e)
         {
@@ -102,5 +102,10 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
         {
             //
         }
+    }
+
+    public boolean isServer()
+    {
+        return m_isServer;
     }
 }

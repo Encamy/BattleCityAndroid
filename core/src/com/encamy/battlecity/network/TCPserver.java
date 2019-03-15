@@ -81,7 +81,7 @@ public class TCPserver extends Thread
         m_onConnectedCallback = m_onConnected;
     }
 
-    public void sendSpawnEvent(NetworkProtocol.Owner owner, int id, float x, float y) throws IOException
+    public void sendSpawnEvent(NetworkProtocol.Owner owner, int id, float x, float y, int level) throws IOException
     {
         NetworkProtocol.PacketWrapper wrapper =
                 NetworkProtocol.PacketWrapper.newBuilder().setEvent(
@@ -90,6 +90,7 @@ public class TCPserver extends Thread
                                         .setId(id)
                                         .setX(x)
                                         .setY(y)
+                                        .setLevel(level)
                         )).build();
 
         wrapper.writeDelimitedTo(m_outputStream);

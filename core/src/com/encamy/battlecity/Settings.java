@@ -67,7 +67,7 @@ public class Settings {
 
     public interface OnEnemySpawnedCallback
     {
-        void OnEnemySpawned(int id, float x, float y);
+        void OnEnemySpawned(int id, float x, float y, int level);
     }
 
     public interface OnEnemyUpdateCallback

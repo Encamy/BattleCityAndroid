@@ -45,7 +45,14 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
     private Settings.OnEnemySpawnedCallback m_onEnemySpawnedCallback;
     private Settings.OnEnemyUpdateCallback m_onEnemyUpdateCallback;
 
-    public EnemyFactory(MapObjects spawnPoints, TextureAtlas atlas, World world, Box2dSteeringEntity playerSteeringEntity, BulletManager bulletManager)
+    private boolean m_master;
+
+    public EnemyFactory(MapObjects spawnPoints,
+                        TextureAtlas atlas,
+                        World world,
+                        Box2dSteeringEntity playerSteeringEntity,
+                        BulletManager bulletManager,
+                        boolean master)
     {
         Gdx.app.log("Trace", "Creating enemy factory");
         m_spawnPoints = spawnPoints;
@@ -57,6 +64,8 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
         m_playerSteeringEntity = playerSteeringEntity;
         m_bulletManager = bulletManager;
         m_last_id = 0;
+
+        m_master = master;
     }
 
     public void update(float deltaTime, boolean freeze)
@@ -68,14 +77,32 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
 
         m_elapsedTime += deltaTime * 1000;
 
-        if (m_elapsedTime > m_spawnIntervalMs)
+        if (m_master)
         {
-            if (m_enemies.size() < m_maxEnemies)
+            if (m_elapsedTime > m_spawnIntervalMs)
             {
-                spawn();
+                if (m_enemies.size() < m_maxEnemies)
+                {
+                    spawn();
+                }
+                m_elapsedTime %= m_spawnIntervalMs;
             }
-            m_elapsedTime %= m_spawnIntervalMs;
         }
+    }
+
+    public void onNetworkSpawn(int id, float x, float y, int level)
+    {
+        Enemy enemy = new Enemy(
+                new Vector2(x,y),
+                m_properties.Get(level),
+                m_world,
+                m_playerSteeringEntity,
+                m_bulletManager,
+                id
+        );
+        // do we need it here or it's better to implement via OnDestroyed event?
+        enemy.setOnDestroyedCallback(this);
+        m_enemies.add(enemy);
     }
 
     private Enemy CreateRandomEnemy(Vector2 spawnpoint)
@@ -91,7 +118,7 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
             level = m_random.nextInt(4);
         }
 
-        m_onEnemySpawnedCallback.OnEnemySpawned(m_last_id, spawnpoint.x, spawnpoint.y);
+        m_onEnemySpawnedCallback.OnEnemySpawned(m_last_id, spawnpoint.x, spawnpoint.y, level);
         return new Enemy(spawnpoint, m_properties.Get(level), m_world, m_playerSteeringEntity, m_bulletManager, m_last_id++);
     }
 

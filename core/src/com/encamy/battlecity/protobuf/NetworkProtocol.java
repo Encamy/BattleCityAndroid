@@ -970,6 +970,11 @@ public final class NetworkProtocol {
      * <code>float y = 4;</code>
      */
     float getY();
+
+    /**
+     * <code>int32 level = 5;</code>
+     */
+    int getLevel();
   }
   /**
    * Protobuf type {@code com.encamy.battlecity.protobuf.Spawned}
@@ -1030,6 +1035,11 @@ public final class NetworkProtocol {
             case 37: {
 
               y_ = input.readFloat();
+              break;
+            }
+            case 40: {
+
+              level_ = input.readInt32();
               break;
             }
             default: {
@@ -1108,6 +1118,15 @@ public final class NetworkProtocol {
       return y_;
     }
 
+    public static final int LEVEL_FIELD_NUMBER = 5;
+    private int level_;
+    /**
+     * <code>int32 level = 5;</code>
+     */
+    public int getLevel() {
+      return level_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -1134,6 +1153,9 @@ public final class NetworkProtocol {
       if (y_ != 0F) {
         output.writeFloat(4, y_);
       }
+      if (level_ != 0) {
+        output.writeInt32(5, level_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -1159,6 +1181,10 @@ public final class NetworkProtocol {
         size += com.google.protobuf.CodedOutputStream
           .computeFloatSize(4, y_);
       }
+      if (level_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, level_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -1183,6 +1209,8 @@ public final class NetworkProtocol {
       if (java.lang.Float.floatToIntBits(getY())
           != java.lang.Float.floatToIntBits(
               other.getY())) return false;
+      if (getLevel()
+          != other.getLevel()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -1204,6 +1232,8 @@ public final class NetworkProtocol {
       hash = (37 * hash) + Y_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
           getY());
+      hash = (37 * hash) + LEVEL_FIELD_NUMBER;
+      hash = (53 * hash) + getLevel();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1345,6 +1375,8 @@ public final class NetworkProtocol {
 
         y_ = 0F;
 
+        level_ = 0;
+
         return this;
       }
 
@@ -1375,6 +1407,7 @@ public final class NetworkProtocol {
         result.id_ = id_;
         result.x_ = x_;
         result.y_ = y_;
+        result.level_ = level_;
         onBuilt();
         return result;
       }
@@ -1434,6 +1467,9 @@ public final class NetworkProtocol {
         }
         if (other.getY() != 0F) {
           setY(other.getY());
+        }
+        if (other.getLevel() != 0) {
+          setLevel(other.getLevel());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -1583,6 +1619,32 @@ public final class NetworkProtocol {
       public Builder clearY() {
         
         y_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private int level_ ;
+      /**
+       * <code>int32 level = 5;</code>
+       */
+      public int getLevel() {
+        return level_;
+      }
+      /**
+       * <code>int32 level = 5;</code>
+       */
+      public Builder setLevel(int value) {
+        
+        level_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 level = 5;</code>
+       */
+      public Builder clearLevel() {
+        
+        level_ = 0;
         onChanged();
         return this;
       }
@@ -6149,32 +6211,33 @@ public final class NetworkProtocol {
     java.lang.String[] descriptorData = {
       "\n6core/src/com/encamy/battlecity/protobu" +
       "f/protocol.proto\022\036com.encamy.battlecity." +
-      "protobuf\"\006\n\004Ping\"\006\n\004Pong\"a\n\007Spawned\0224\n\005o" +
+      "protobuf\"\006\n\004Ping\"\006\n\004Pong\"p\n\007Spawned\0224\n\005o" +
       "wner\030\001 \001(\0162%.com.encamy.battlecity.proto" +
       "buf.Owner\022\n\n\002id\030\002 \001(\005\022\t\n\001x\030\003 \001(\002\022\t\n\001y\030\004 " +
-      "\001(\002\"\302\001\n\004Fire\0224\n\005owner\030\001 \001(\0162%.com.encamy" +
-      ".battlecity.protobuf.Owner\022\n\n\002id\030\002 \001(\005\022A" +
-      "\n\tdirection\030\003 \001(\0162..com.encamy.battlecit" +
-      "y.protobuf.Fire.Direction\"5\n\tDirection\022\010" +
-      "\n\004LEFT\020\000\022\007\n\003TOP\020\001\022\t\n\005RIGHT\020\002\022\n\n\006BOTTOM\020\003" +
-      "\"p\n\004Move\0224\n\005owner\030\001 \001(\0162%.com.encamy.bat" +
-      "tlecity.protobuf.Owner\022\n\n\002id\030\002 \001(\005\022\022\n\nx_" +
-      "velocity\030\003 \001(\002\022\022\n\ny_velocity\030\004 \001(\002\"@\n\tDe" +
-      "stroyed\0223\n\004item\030\001 \001(\0162%.com.encamy.battl" +
-      "ecity.protobuf.Owner\"\375\001\n\005Event\022:\n\007spawne" +
-      "d\030\001 \001(\0132\'.com.encamy.battlecity.protobuf" +
-      ".SpawnedH\000\0224\n\004fire\030\002 \001(\0132$.com.encamy.ba" +
-      "ttlecity.protobuf.FireH\000\0224\n\004move\030\003 \001(\0132$" +
-      ".com.encamy.battlecity.protobuf.MoveH\000\022>" +
-      "\n\tdestroyed\030\004 \001(\0132).com.encamy.battlecit" +
-      "y.protobuf.DestroyedH\000B\014\n\nevent_type\"\276\001\n" +
-      "\rPacketWrapper\0226\n\005event\030\001 \001(\0132%.com.enca" +
-      "my.battlecity.protobuf.EventH\000\0224\n\004ping\030\002" +
-      " \001(\0132$.com.encamy.battlecity.protobuf.Pi" +
-      "ngH\000\0224\n\004pong\030\003 \001(\0132$.com.encamy.battleci" +
-      "ty.protobuf.PongH\000B\t\n\007wrapper*8\n\005Owner\022\t" +
-      "\n\005ENEMY\020\000\022\021\n\rSERVER_PLAYER\020\001\022\021\n\rCLIENT_P" +
-      "LAYER\020\002B\021B\017NetworkProtocolb\006proto3"
+      "\001(\002\022\r\n\005level\030\005 \001(\005\"\302\001\n\004Fire\0224\n\005owner\030\001 \001" +
+      "(\0162%.com.encamy.battlecity.protobuf.Owne" +
+      "r\022\n\n\002id\030\002 \001(\005\022A\n\tdirection\030\003 \001(\0162..com.e" +
+      "ncamy.battlecity.protobuf.Fire.Direction" +
+      "\"5\n\tDirection\022\010\n\004LEFT\020\000\022\007\n\003TOP\020\001\022\t\n\005RIGH" +
+      "T\020\002\022\n\n\006BOTTOM\020\003\"p\n\004Move\0224\n\005owner\030\001 \001(\0162%" +
+      ".com.encamy.battlecity.protobuf.Owner\022\n\n" +
+      "\002id\030\002 \001(\005\022\022\n\nx_velocity\030\003 \001(\002\022\022\n\ny_veloc" +
+      "ity\030\004 \001(\002\"@\n\tDestroyed\0223\n\004item\030\001 \001(\0162%.c" +
+      "om.encamy.battlecity.protobuf.Owner\"\375\001\n\005" +
+      "Event\022:\n\007spawned\030\001 \001(\0132\'.com.encamy.batt" +
+      "lecity.protobuf.SpawnedH\000\0224\n\004fire\030\002 \001(\0132" +
+      "$.com.encamy.battlecity.protobuf.FireH\000\022" +
+      "4\n\004move\030\003 \001(\0132$.com.encamy.battlecity.pr" +
+      "otobuf.MoveH\000\022>\n\tdestroyed\030\004 \001(\0132).com.e" +
+      "ncamy.battlecity.protobuf.DestroyedH\000B\014\n" +
+      "\nevent_type\"\276\001\n\rPacketWrapper\0226\n\005event\030\001" +
+      " \001(\0132%.com.encamy.battlecity.protobuf.Ev" +
+      "entH\000\0224\n\004ping\030\002 \001(\0132$.com.encamy.battlec" +
+      "ity.protobuf.PingH\000\0224\n\004pong\030\003 \001(\0132$.com." +
+      "encamy.battlecity.protobuf.PongH\000B\t\n\007wra" +
+      "pper*8\n\005Owner\022\t\n\005ENEMY\020\000\022\021\n\rSERVER_PLAYE" +
+      "R\020\001\022\021\n\rCLIENT_PLAYER\020\002B\021B\017NetworkProtoco" +
+      "lb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -6205,7 +6268,7 @@ public final class NetworkProtocol {
     internal_static_com_encamy_battlecity_protobuf_Spawned_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_encamy_battlecity_protobuf_Spawned_descriptor,
-        new java.lang.String[] { "Owner", "Id", "X", "Y", });
+        new java.lang.String[] { "Owner", "Id", "X", "Y", "Level", });
     internal_static_com_encamy_battlecity_protobuf_Fire_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_com_encamy_battlecity_protobuf_Fire_fieldAccessorTable = new
