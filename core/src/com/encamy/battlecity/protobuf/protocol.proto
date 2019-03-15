@@ -41,8 +41,8 @@ message Fire {
 message Move {
     Owner owner = 1;
     int32 id = 2;
-    float x_velocity = 3;
-    float y_velocity = 4;
+    float x = 3;
+    float y = 4;
 }
 
 message Destroyed {

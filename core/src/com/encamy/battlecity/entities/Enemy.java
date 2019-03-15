@@ -63,13 +63,19 @@ public class Enemy extends Sprite {
         m_world = world;
         m_bulletManager = bulletManager;
 
-        m_steeringEntity = new Box2dSteeringEntity(m_body, 10.0f);
-        m_steeringEntity.setMaxLinearSpeed(speed);
-        //Arrive<Vector2> arriveSB = new Arrive<Vector2>(m_steeringEntity, playerSteeringEntity);
-        RandomBehavior<Vector2> arriveSB = new RandomBehavior<Vector2>(m_steeringEntity, playerSteeringEntity);
-        m_steeringEntity.setBehavior(arriveSB);
+        // Means that this enemy is 'zombie' (Server will control it)
+        if (playerSteeringEntity != null)
+        {
+            m_steeringEntity = new Box2dSteeringEntity(m_body, 10.0f);
+            m_steeringEntity.setMaxLinearSpeed(speed);
+            //Arrive<Vector2> arriveSB = new Arrive<Vector2>(m_steeringEntity, playerSteeringEntity);
+            RandomBehavior<Vector2> arriveSB = new RandomBehavior<Vector2>(m_steeringEntity, playerSteeringEntity);
+            m_steeringEntity.setBehavior(arriveSB);
+        }
+
         m_state = State.SPAWNING;
         m_id = id;
+        m_direction = Settings.Direction.BOTTOM;
     }
 
     public void setOnDestroyedCallback(Settings.EnemyDestroyedCallback callback)
@@ -135,8 +141,12 @@ public class Enemy extends Sprite {
         }
     }
 
+    public void setPosition(Vector2 vector2)
+    {
+        m_body.setTransform(vector2, 0);
+    }
 
-    private void update(float deltaTime, Batch batch, Vector2 linearVector)
+    private void update(float deltaTime, Batch batch, Vector2 position)
     {
         m_animationTime += deltaTime;
 
@@ -148,7 +158,11 @@ public class Enemy extends Sprite {
             case ALIVE:
             {
                 // update behavior
-                m_direction = m_steeringEntity.update(deltaTime);
+                // Check for master/slave
+                if (m_steeringEntity != null)
+                {
+                    m_direction = m_steeringEntity.update(deltaTime);
+                }
                 updateAliveAnimation(m_animationTime);
 
                 if (m_animationTime * 1000 > Settings.FIRE_RATE)
@@ -166,8 +180,9 @@ public class Enemy extends Sprite {
 
         setX(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32));
         setY(Box2dHelpers.Box2d2y(m_body.getPosition().y, 32));
-        linearVector.x = m_body.getLinearVelocity().x;
-        linearVector.y = m_body.getLinearVelocity().y;
+
+        position.x = m_body.getPosition().x;
+        position.y = m_body.getPosition().y;
     }
 
     private void fire()

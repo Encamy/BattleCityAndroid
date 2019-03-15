@@ -96,13 +96,25 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
                 new Vector2(x,y),
                 m_properties.Get(level),
                 m_world,
-                m_playerSteeringEntity,
+                null,
                 m_bulletManager,
                 id
         );
         // do we need it here or it's better to implement via OnDestroyed event?
         enemy.setOnDestroyedCallback(this);
         m_enemies.add(enemy);
+    }
+
+    public void onNetworkMove(int id, float x, float y)
+    {
+        for (Enemy enemy : m_enemies)
+        {
+            if (enemy.getId() == id)
+            {
+                enemy.setPosition(new Vector2(x, y));
+                break;
+            }
+        }
     }
 
     private Enemy CreateRandomEnemy(Vector2 spawnpoint)
@@ -194,12 +206,12 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
     {
         for (Enemy enemy : m_enemies)
         {
-            Vector2 linearVelocity = new Vector2();
-            enemy.draw(batch, freeze, linearVelocity);
+            Vector2 position = new Vector2();
+            enemy.draw(batch, freeze, position);
 
             if (m_onEnemyUpdateCallback != null)
             {
-                m_onEnemyUpdateCallback.OnEnemyUpdate(enemy.getId(), linearVelocity.x, linearVelocity.y);
+                m_onEnemyUpdateCallback.OnEnemyUpdate(enemy.getId(), position.x, position.y);
             }
         }
     }

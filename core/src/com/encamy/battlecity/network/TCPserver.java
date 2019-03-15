@@ -108,8 +108,8 @@ public class TCPserver extends Thread
                         NetworkProtocol.Event.newBuilder().setMove(
                                 NetworkProtocol.Move.newBuilder()
                                         .setId(id)
-                                        .setXVelocity(x)
-                                        .setYVelocity(y)
+                                        .setX(x)
+                                        .setY(y)
                         )).build();
 
         wrapper.writeDelimitedTo(m_outputStream);

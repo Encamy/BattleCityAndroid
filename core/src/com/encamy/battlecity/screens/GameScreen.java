@@ -99,9 +99,13 @@ public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Setti
 
         if (m_networkManager != null)
         {
+            m_networkManager.setOnMessageReceivedCallback(this);
+        }
+
+        if (isMaster && m_networkManager != null)
+        {
             m_enemyFactory.setOnSpawnedCallback(this);
             m_enemyFactory.setOnUpdateCallback(this);
-            m_networkManager.setOnMessageReceivedCallback(this);
         }
 
         m_eventQueue = new EventQueue();
@@ -357,7 +361,7 @@ public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Setti
     @Override
     public void OnEnemyUpdate(int id, float x, float y)
     {
-        Gdx.app.log("NETWORK", "Enemy (" + id + ") moved with velocity " + x + ":" + y);
+        Gdx.app.log("NETWORK", "Enemy (" + id + ") moved with position " + x + ":" + y);
         m_networkManager.notifyUpdate(NetworkProtocol.Owner.ENEMY, id, x, y);
     }
 
@@ -386,6 +390,14 @@ public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Setti
             case FIRE:
                 break;
             case MOVE:
+            {
+                NetworkProtocol.Move move = event.getMove();
+
+                if (move.getOwner() == NetworkProtocol.Owner.ENEMY)
+                {
+                    m_enemyFactory.onNetworkMove(move.getId(), move.getX(), move.getY());
+                }
+            }
                 break;
             case SPAWNED:
             {
