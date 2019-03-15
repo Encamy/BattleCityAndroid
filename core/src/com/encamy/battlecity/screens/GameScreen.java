@@ -81,11 +81,11 @@ public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Setti
 
         m_bulletManager.setAtlas(m_layerManager.getAtlas());
 
-        boolean isServer = false;
+        boolean isMaster = true;
 
         if (m_networkManager != null)
         {
-            isServer = m_networkManager.isServer();
+            isMaster = m_networkManager.isServer();
         }
 
         m_enemyFactory = new EnemyFactory(
@@ -94,7 +94,7 @@ public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Setti
                 m_world,
                 m_layerManager.getPlayer(CURRENT_PLAYER).getSteeringEntity(),
                 m_bulletManager,
-                isServer
+                isMaster
         );
 
         if (m_networkManager != null)

@@ -118,7 +118,11 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
             level = m_random.nextInt(4);
         }
 
-        m_onEnemySpawnedCallback.OnEnemySpawned(m_last_id, spawnpoint.x, spawnpoint.y, level);
+        if (m_onEnemySpawnedCallback != null)
+        {
+            m_onEnemySpawnedCallback.OnEnemySpawned(m_last_id, spawnpoint.x, spawnpoint.y, level);
+        }
+
         return new Enemy(spawnpoint, m_properties.Get(level), m_world, m_playerSteeringEntity, m_bulletManager, m_last_id++);
     }
 
@@ -192,7 +196,11 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
         {
             Vector2 linearVelocity = new Vector2();
             enemy.draw(batch, freeze, linearVelocity);
-            m_onEnemyUpdateCallback.OnEnemyUpdate(enemy.getId(), linearVelocity.x, linearVelocity.y);
+
+            if (m_onEnemyUpdateCallback != null)
+            {
+                m_onEnemyUpdateCallback.OnEnemyUpdate(enemy.getId(), linearVelocity.x, linearVelocity.y);
+            }
         }
     }
 
