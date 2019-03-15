@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.encamy.battlecity.BulletManager;
 import com.encamy.battlecity.CollisionListener;
+import com.encamy.battlecity.EventQueue;
 import com.encamy.battlecity.LayerManager;
 import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.entities.Enemy;
@@ -26,7 +27,7 @@ import java.util.EnumSet;
 import static com.encamy.battlecity.Settings.SCREEN_HEIGHT;
 import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
 
-public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Settings.OnEnemySpawnedCallback, Settings.OnMessageReceivedCallback {
+public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Settings.OnEnemySpawnedCallback, Settings.OnMessageReceivedCallback, EventQueue.EventQueueCallback {
 
 	private OrthographicCamera m_camera;
 	private OrthographicCamera m_debugCamera;
@@ -42,6 +43,8 @@ public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Setti
     private boolean m_freezeWorld = false;
 
     private NetworkManager m_networkManager;
+
+    private EventQueue m_eventQueue;
 
     public GameScreen(NetworkManager networkManager)
     {
@@ -100,6 +103,8 @@ public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Setti
             m_enemyFactory.setOnUpdateCallback(this);
             m_networkManager.setOnMessageReceivedCallback(this);
         }
+
+        m_eventQueue = new EventQueue();
 	}
 
     @Override
@@ -127,6 +132,8 @@ public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Setti
         m_b2drenderer.render(m_world, m_debugCamera.projection);
 
         processHitted();
+
+        m_eventQueue.poll(this);
     }
 
     @Override
@@ -364,7 +371,7 @@ public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Setti
                 // do nothing
                 break;
             case EVENT:
-                eventDispatcher(packet.getEvent());
+                m_eventQueue.addEvent(packet.getEvent());
                 break;
             case WRAPPER_NOT_SET:
                 Gdx.app.log("NETWORK ERROR", "Wrapper type is not set. Probably wrong packet structure");
@@ -396,5 +403,12 @@ public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Setti
                 Gdx.app.log("NETWORK ERROR", "Wrapper type is not set. Probably wrong packet structure");
                 break;
         }
+    }
+
+    @Override
+    public void OnEventPoll(NetworkProtocol.Event event)
+    {
+        Gdx.app.log("EVENT_QUEUE", "Polled " + event.toString());
+        eventDispatcher(event);
     }
 }
