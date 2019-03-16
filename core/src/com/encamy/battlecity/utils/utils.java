@@ -116,4 +116,51 @@ public class utils
             throw new Exception("Failed to parse packet");
         }
     }
+
+    public static NetworkProtocol.Fire.Direction toNetworkDirection(Settings.Direction direction)
+    {
+        NetworkProtocol.Fire.Direction networkDirection = null;
+        switch (direction)
+        {
+            case LEFT:
+                networkDirection = NetworkProtocol.Fire.Direction.LEFT;
+                break;
+            case RIGHT:
+                networkDirection = NetworkProtocol.Fire.Direction.RIGHT;
+                break;
+            case TOP:
+                networkDirection = NetworkProtocol.Fire.Direction.TOP;
+                break;
+            case BOTTOM:
+                networkDirection = NetworkProtocol.Fire.Direction.BOTTOM;
+                break;
+            default:
+                Gdx.app.log("FATAL", "Can't cast enemy fired direction to network direction");
+                break;
+        }
+
+        return networkDirection;
+    }
+
+    public static Settings.Direction fromNetworkDirection(NetworkProtocol.Fire.Direction direction)
+    {
+        Settings.Direction normalDirection = null;
+        switch (direction)
+        {
+            case LEFT:
+                normalDirection = Settings.Direction.LEFT;
+                break;
+            case RIGHT:
+                normalDirection = Settings.Direction.RIGHT;
+                break;
+            case TOP:
+                normalDirection = Settings.Direction.TOP;
+                break;
+            case BOTTOM:
+                normalDirection = Settings.Direction.BOTTOM;
+                break;
+        }
+
+        return normalDirection;
+    }
 }

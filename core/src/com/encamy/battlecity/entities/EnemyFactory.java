@@ -15,6 +15,7 @@ import com.encamy.battlecity.BulletManager;
 import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.protobuf.NetworkProtocol;
 import com.encamy.battlecity.screens.GameScreen;
+import com.encamy.battlecity.utils.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,22 +139,7 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.O
             return;
         }
 
-        Settings.Direction bulletDirection = null;
-        switch (direction)
-        {
-            case LEFT:
-                bulletDirection = Settings.Direction.LEFT;
-                break;
-            case RIGHT:
-                bulletDirection = Settings.Direction.RIGHT;
-                break;
-            case TOP:
-                bulletDirection = Settings.Direction.TOP;
-                break;
-            case BOTTOM:
-                bulletDirection = Settings.Direction.BOTTOM;
-                break;
-        }
+        Settings.Direction bulletDirection = utils.fromNetworkDirection(direction);
 
         enemy.fire(bulletDirection);
     }

@@ -3,6 +3,7 @@ package com.encamy.battlecity.network;
 import com.badlogic.gdx.Gdx;
 import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.protobuf.NetworkProtocol;
+import com.encamy.battlecity.utils.utils;
 
 import java.io.IOException;
 
@@ -124,26 +125,7 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
             return;
         }
 
-        NetworkProtocol.Fire.Direction networkDirection = null;
-        switch (direction)
-        {
-            case LEFT:
-                networkDirection = NetworkProtocol.Fire.Direction.LEFT;
-                break;
-            case RIGHT:
-                networkDirection = NetworkProtocol.Fire.Direction.RIGHT;
-                break;
-            case TOP:
-                networkDirection = NetworkProtocol.Fire.Direction.TOP;
-                break;
-            case BOTTOM:
-                networkDirection = NetworkProtocol.Fire.Direction.BOTTOM;
-                break;
-            default:
-                Gdx.app.log("FATAL", "Can't cast enemy fired direction to network direction");
-                break;
-        }
-
+        NetworkProtocol.Fire.Direction networkDirection = utils.toNetworkDirection(direction);
         try
         {
             m_server.sendFireEvent(owner, id, networkDirection);
