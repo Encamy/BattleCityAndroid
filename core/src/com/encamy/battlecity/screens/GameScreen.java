@@ -46,7 +46,7 @@ public class GameScreen implements
     private World m_world;
     private LayerManager m_layerManager;
     private BulletManager m_bulletManager;
-    private final int CURRENT_PLAYER = 1;
+    private int m_currentPlayer = 1;
     private boolean m_freezeWorld = false;
 
     private NetworkManager m_networkManager;
@@ -83,11 +83,6 @@ public class GameScreen implements
 
         m_layerManager = new LayerManager(m_world, m_bulletManager);
 
-        m_layerManager.loadLevel("general_map.tmx");
-        m_layerManager.loadPlayer(CURRENT_PLAYER);
-
-        m_bulletManager.setAtlas(m_layerManager.getAtlas());
-
         boolean isMaster = true;
 
         if (m_networkManager != null)
@@ -95,11 +90,21 @@ public class GameScreen implements
             isMaster = m_networkManager.isServer();
         }
 
+        if (!isMaster)
+        {
+            m_currentPlayer = 2;
+        }
+
+        m_layerManager.loadLevel("general_map.tmx");
+        m_layerManager.loadPlayer(m_currentPlayer);
+
+        m_bulletManager.setAtlas(m_layerManager.getAtlas());
+
         m_enemyFactory = new EnemyFactory(
                 m_layerManager.getTileMap().getLayers().get("EnemySpawns").getObjects(),
                 m_layerManager.getAtlas(),
                 m_world,
-                m_layerManager.getPlayer(CURRENT_PLAYER).getSteeringEntity(),
+                m_layerManager.getPlayer(m_currentPlayer).getSteeringEntity(),
                 m_bulletManager,
                 isMaster
         );
@@ -131,7 +136,7 @@ public class GameScreen implements
 
         m_spriteBatch.setProjectionMatrix(m_camera.combined);
         m_spriteBatch.begin();
-        m_layerManager.getPlayer(CURRENT_PLAYER).draw(m_spriteBatch, m_freezeWorld);
+        m_layerManager.getPlayer(m_currentPlayer).draw(m_spriteBatch, m_freezeWorld);
         m_enemyFactory.draw(m_spriteBatch, m_freezeWorld);
         m_layerManager.drawWalls(m_spriteBatch);
         m_bulletManager.update(m_spriteBatch);
