@@ -116,6 +116,44 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
         }
     }
 
+    public void notifyFire(NetworkProtocol.Owner owner, int id, Settings.Direction direction)
+    {
+        if (owner == NetworkProtocol.Owner.ENEMY && !m_isServer)
+        {
+            Gdx.app.log("FATAL", "Trying to update enemy FIRED on client side. It is prohibited");
+            return;
+        }
+
+        NetworkProtocol.Fire.Direction networkDirection = null;
+        switch (direction)
+        {
+            case LEFT:
+                networkDirection = NetworkProtocol.Fire.Direction.LEFT;
+                break;
+            case RIGHT:
+                networkDirection = NetworkProtocol.Fire.Direction.RIGHT;
+                break;
+            case TOP:
+                networkDirection = NetworkProtocol.Fire.Direction.TOP;
+                break;
+            case BOTTOM:
+                networkDirection = NetworkProtocol.Fire.Direction.BOTTOM;
+                break;
+            default:
+                Gdx.app.log("FATAL", "Can't cast enemy fired direction to network direction");
+                break;
+        }
+
+        try
+        {
+            m_server.sendFireEvent(owner, id, networkDirection);
+        }
+        catch (IOException e)
+        {
+            //
+        }
+    }
+
     public boolean isServer()
     {
         return m_isServer;

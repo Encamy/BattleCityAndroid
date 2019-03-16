@@ -27,7 +27,14 @@ import java.util.EnumSet;
 import static com.encamy.battlecity.Settings.SCREEN_HEIGHT;
 import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
 
-public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Settings.OnEnemySpawnedCallback, Settings.OnMessageReceivedCallback, EventQueue.EventQueueCallback {
+public class GameScreen implements
+        Screen,
+        Settings.OnEnemyUpdateCallback,
+        Settings.OnEnemySpawnedCallback,
+        Settings.OnMessageReceivedCallback,
+        Settings.OnEnemyFiredCallback,
+        EventQueue.EventQueueCallback
+{
 
 	private OrthographicCamera m_camera;
 	private OrthographicCamera m_debugCamera;
@@ -106,6 +113,7 @@ public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Setti
         {
             m_enemyFactory.setOnSpawnedCallback(this);
             m_enemyFactory.setOnUpdateCallback(this);
+            m_enemyFactory.setOnEnemyFiredCallback(this);
         }
 
         m_eventQueue = new EventQueue();
@@ -366,6 +374,13 @@ public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Setti
     }
 
     @Override
+    public void OnEnemyFired(int id, Settings.Direction direction)
+    {
+        Gdx.app.log("NETWORK", "Enemy (" + id + ") fired at direction " + direction.toString());
+        m_networkManager.notifyFire(NetworkProtocol.Owner.ENEMY, id, direction);
+    }
+
+    @Override
     public void OnMessageReceived(NetworkProtocol.PacketWrapper packet)
     {
         switch (packet.getWrapperCase())
@@ -388,6 +403,14 @@ public class GameScreen implements Screen, Settings.OnEnemyUpdateCallback, Setti
         switch (event.getEventTypeCase())
         {
             case FIRE:
+            {
+                NetworkProtocol.Fire fire = event.getFire();
+
+                if (fire.getOwner() == NetworkProtocol.Owner.ENEMY)
+                {
+                    m_enemyFactory.onNetworkFire(fire.getId(), fire.getDirection());
+                }
+            }
                 break;
             case MOVE:
             {

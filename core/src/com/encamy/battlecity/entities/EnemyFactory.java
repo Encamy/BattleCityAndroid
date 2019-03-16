@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.encamy.battlecity.BulletManager;
 import com.encamy.battlecity.Settings;
+import com.encamy.battlecity.protobuf.NetworkProtocol;
 import com.encamy.battlecity.screens.GameScreen;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
-public class EnemyFactory implements Settings.EnemyDestroyedCallback
+public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.OnEnemyFiredCallback
 {
     private static Random m_random = new Random();
 
@@ -44,6 +45,7 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
 
     private Settings.OnEnemySpawnedCallback m_onEnemySpawnedCallback;
     private Settings.OnEnemyUpdateCallback m_onEnemyUpdateCallback;
+    private Settings.OnEnemyFiredCallback m_onEnemyFiredCallback;
 
     private boolean m_master;
 
@@ -117,6 +119,45 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
         }
     }
 
+    public void onNetworkFire(int id, NetworkProtocol.Fire.Direction direction)
+    {
+        Enemy enemy = null;
+
+        for (Enemy currentEnemy : m_enemies)
+        {
+            if (currentEnemy.getId() == id)
+            {
+                enemy = currentEnemy;
+                break;
+            }
+        }
+
+        if (enemy == null)
+        {
+            Gdx.app.log("ERROR", "Enemy not found");
+            return;
+        }
+
+        Settings.Direction bulletDirection = null;
+        switch (direction)
+        {
+            case LEFT:
+                bulletDirection = Settings.Direction.LEFT;
+                break;
+            case RIGHT:
+                bulletDirection = Settings.Direction.RIGHT;
+                break;
+            case TOP:
+                bulletDirection = Settings.Direction.TOP;
+                break;
+            case BOTTOM:
+                bulletDirection = Settings.Direction.BOTTOM;
+                break;
+        }
+
+        enemy.fire(bulletDirection);
+    }
+
     private Enemy CreateRandomEnemy(Vector2 spawnpoint)
     {
         m_last_id++;
@@ -150,6 +191,12 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
 
         Enemy enemy = CreateRandomEnemy(spawnpoint);
         enemy.setOnDestroyedCallback(this);
+
+        if (m_master)
+        {
+            enemy.setOnFiredCallback(this);
+        }
+
         m_enemies.add(enemy);
     }
 
@@ -256,5 +303,19 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback
     public void setOnUpdateCallback(Settings.OnEnemyUpdateCallback callback)
     {
         m_onEnemyUpdateCallback = callback;
+    }
+
+    public void setOnEnemyFiredCallback(Settings.OnEnemyFiredCallback callback)
+    {
+        m_onEnemyFiredCallback = callback;
+    }
+
+    @Override
+    public void OnEnemyFired(int id, Settings.Direction direction)
+    {
+        if (m_onEnemyFiredCallback != null)
+        {
+            m_onEnemyFiredCallback.OnEnemyFired(id, direction);
+        }
     }
 }

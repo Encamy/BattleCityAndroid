@@ -1,6 +1,7 @@
 package com.encamy.battlecity.network;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Net;
 import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.protobuf.NetworkProtocol;
 import com.encamy.battlecity.utils.utils;
@@ -110,7 +111,23 @@ public class TCPserver extends Thread
                                         .setId(id)
                                         .setX(x)
                                         .setY(y)
-                        )).build();
+                        )
+                ).build();
+
+        wrapper.writeDelimitedTo(m_outputStream);
+    }
+
+    public void sendFireEvent(NetworkProtocol.Owner owner, int id, NetworkProtocol.Fire.Direction direction) throws IOException
+    {
+        NetworkProtocol.PacketWrapper wrapper =
+                NetworkProtocol.PacketWrapper.newBuilder().setEvent(
+                        NetworkProtocol.Event.newBuilder().setFire(
+                                NetworkProtocol.Fire.newBuilder()
+                                    .setId(id)
+                                    .setOwner(owner)
+                                    .setDirection(direction)
+                        )
+                ).build();
 
         wrapper.writeDelimitedTo(m_outputStream);
     }

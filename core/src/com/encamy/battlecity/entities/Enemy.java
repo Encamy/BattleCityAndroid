@@ -36,6 +36,7 @@ public class Enemy extends Sprite {
     private int m_id;
 
     private Settings.EnemyDestroyedCallback m_OnEnemyDestroyed;
+    private Settings.OnEnemyFiredCallback m_OnEnemyFired;
 
     private enum State
     {
@@ -81,6 +82,11 @@ public class Enemy extends Sprite {
     public void setOnDestroyedCallback(Settings.EnemyDestroyedCallback callback)
     {
         m_OnEnemyDestroyed = callback;
+    }
+
+    public void setOnFiredCallback(Settings.OnEnemyFiredCallback callback)
+    {
+        m_OnEnemyFired = callback;
     }
 
     public void draw(Batch batch, boolean freeze, Vector2 linearVelocity)
@@ -168,7 +174,7 @@ public class Enemy extends Sprite {
                 if (m_animationTime * 1000 > Settings.FIRE_RATE)
                 {
                     Gdx.app.log("TRACE", "FIRE");
-                    fire();
+                    fire(false);
                     m_animationTime = 0;
                 }
             }
@@ -185,26 +191,40 @@ public class Enemy extends Sprite {
         position.y = m_body.getPosition().y;
     }
 
-    private void fire()
+    public void fire(Settings.Direction direction)
     {
-        Vector2 bulletSpawnPos = new Vector2();
-        switch (m_direction)
+        m_direction = direction;
+        fire(true);
+    }
+
+    private void fire(boolean force)
+    {
+        if (m_OnEnemyFired != null || force)
         {
-            case TOP:
-                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y, 32) + 90);
-                break;
-            case LEFT:
-                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32) + 20, Box2dHelpers.Box2d2y(m_body.getPosition().y, 32) + 58);
-                break;
-            case RIGHT:
-                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32) + 85, Box2dHelpers.Box2d2y(m_body.getPosition().y, 32) + 58);
-                break;
-            case BOTTOM:
-                bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y, 32) + 20);
-                break;
+            Vector2 bulletSpawnPos = new Vector2();
+            switch (m_direction)
+            {
+                case TOP:
+                    bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y, 32) + 90);
+                    break;
+                case LEFT:
+                    bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32) + 20, Box2dHelpers.Box2d2y(m_body.getPosition().y, 32) + 58);
+                    break;
+                case RIGHT:
+                    bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32) + 85, Box2dHelpers.Box2d2y(m_body.getPosition().y, 32) + 58);
+                    break;
+                case BOTTOM:
+                    bulletSpawnPos.set(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32) + 51, Box2dHelpers.Box2d2y(m_body.getPosition().y, 32) + 20);
+                    break;
+            }
+
+            m_bulletManager.addBullet(bulletSpawnPos, m_direction, Settings.ObjectType.ENEMY_OWNER);
         }
 
-        m_bulletManager.addBullet(bulletSpawnPos, m_direction, Settings.ObjectType.ENEMY_OWNER);
+        if (m_OnEnemyFired != null)
+        {
+            m_OnEnemyFired.OnEnemyFired(m_id, m_direction);
+        }
     }
 
     private void SetPosition(Vector2 spawnpoint)

@@ -74,4 +74,9 @@ public class Settings {
     {
         void OnEnemyUpdate(int id, float x, float y);
     }
+
+    public interface OnEnemyFiredCallback
+    {
+        void OnEnemyFired(int id, Settings.Direction direction);
+    }
 }
