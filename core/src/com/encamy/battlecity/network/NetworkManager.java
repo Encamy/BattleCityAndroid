@@ -64,6 +64,7 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
         }
         else
         {
+            //Gdx.app.log("NETWORK DEBUG", packet.toString());
             m_OnMessageReceivedCallback.OnMessageReceived(packet);
         }
     }
@@ -89,6 +90,7 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
             return;
         }
 
+        // Enemy handling
         if (owner == NetworkProtocol.Owner.ENEMY)
         {
             try
@@ -101,6 +103,7 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
             }
         }
 
+        // Player handling
         if (owner == NetworkProtocol.Owner.CLIENT_PLAYER ||
             owner == NetworkProtocol.Owner.SERVER_PLAYER)
         {
@@ -130,13 +133,38 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
             return;
         }
 
-        try
+        // Handling enemy
+        if (owner == NetworkProtocol.Owner.ENEMY)
         {
-            m_server.sendMoveEvent(owner, id, x, y);
+            try
+            {
+                m_server.sendMoveEvent(owner, id, x, y);
+            }
+            catch (IOException e)
+            {
+                //
+            }
         }
-        catch (IOException e)
+
+        // Handling player
+        if (owner == NetworkProtocol.Owner.CLIENT_PLAYER ||
+            owner == NetworkProtocol.Owner.SERVER_PLAYER)
         {
-            //
+            try
+            {
+                if (m_isServer)
+                {
+                    m_server.sendMoveEvent(owner, id, x, y);
+                }
+                else
+                {
+                    m_client.sendMoveEvent(owner, id, x, y);
+                }
+            }
+            catch (Exception e)
+            {
+                // Do nothing
+            }
         }
     }
 

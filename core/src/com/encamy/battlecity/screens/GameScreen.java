@@ -50,7 +50,6 @@ public class GameScreen implements
     private boolean m_freezeWorld = false;
 
     private NetworkManager m_networkManager;
-
     private EventQueue m_eventQueue;
 
     public GameScreen(NetworkManager networkManager)
@@ -87,7 +86,7 @@ public class GameScreen implements
 
         if (m_networkManager != null)
         {
-            isMaster = m_networkManager.isServer();
+            isMaster  = m_networkManager.isServer();
             m_networkManager.setOnMessageReceivedCallback(this);
         }
 
@@ -112,7 +111,7 @@ public class GameScreen implements
                 isMaster
         );
 
-        if (isMaster && m_networkManager != null)
+        if (isMaster  && m_networkManager != null)
         {
             m_enemyFactory.setOnSpawnedCallback(this);
             m_enemyFactory.setOnUpdateCallback(this);
@@ -159,7 +158,7 @@ public class GameScreen implements
     @Override
     public void pause()
     {
-        m_freezeWorld = true;
+        //m_freezeWorld = true;
     }
 
     @Override
@@ -421,6 +420,24 @@ public class GameScreen implements
                 if (move.getOwner() == NetworkProtocol.Owner.ENEMY)
                 {
                     m_enemyFactory.onNetworkMove(move.getId(), move.getX(), move.getY());
+                }
+
+                if (move.getOwner() == NetworkProtocol.Owner.SERVER_PLAYER && m_networkManager.isServer())
+                {
+                    Gdx.app.log("NETWORK", "Got information about server player on server side. Should not happen");
+                    break;
+                }
+
+                if (move.getOwner() == NetworkProtocol.Owner.CLIENT_PLAYER && !m_networkManager.isServer())
+                {
+                    Gdx.app.log("NETWORK", "Got information about client player on client side. Should not happen");
+                    break;
+                }
+
+                if (move.getOwner() == NetworkProtocol.Owner.SERVER_PLAYER ||
+                    move.getOwner() == NetworkProtocol.Owner.CLIENT_PLAYER)
+                {
+                    m_layerManager.onNetworkMove(move.getOwner(), move.getX(), move.getY());
                 }
             }
                 break;

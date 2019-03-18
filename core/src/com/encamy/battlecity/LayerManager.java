@@ -147,7 +147,7 @@ public class LayerManager implements Settings.WallDestroyedCallback
         animationContainer.setInvulnerabilityAnimation(invulnerabilityAnimation);
         animationContainer.setSpawnAnimation(playerSpawnAnimation);
 
-        m_players[index] = new Player(animationContainer, playerBody, index + 1, spawnpoint, m_bulletManager, isRemote);
+        m_players[index] = new Player(animationContainer, playerBody, index + 1, spawnpoint, m_bulletManager, isRemote, m_networkManager);
 
         if (m_networkManager == null || isRemote)
         {
@@ -392,5 +392,25 @@ public class LayerManager implements Settings.WallDestroyedCallback
     public void OnWallDestroyed(BaseWall wall)
     {
         m_walls.remove(wall);
+    }
+
+    public void onNetworkMove(NetworkProtocol.Owner owner, float x, float y)
+    {
+        int index;
+        if (owner == NetworkProtocol.Owner.CLIENT_PLAYER)
+        {
+            index = 1;
+        }
+        else if (owner == NetworkProtocol.Owner.SERVER_PLAYER)
+        {
+            index = 0;
+        }
+        else
+        {
+            Gdx.app.log("FATAL", "Invalid player");
+            return;
+        }
+
+        m_players[index].setPosition(new Vector2(x, y));
     }
 }

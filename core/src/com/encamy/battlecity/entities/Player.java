@@ -14,6 +14,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.encamy.battlecity.AnimationContainer;
 import com.encamy.battlecity.BulletManager;
 import com.encamy.battlecity.Settings;
+import com.encamy.battlecity.network.NetworkManager;
+import com.encamy.battlecity.protobuf.NetworkProtocol;
 import com.encamy.battlecity.utils.Box2dHelpers;
 import com.encamy.battlecity.utils.Dictionary;
 import com.encamy.battlecity.utils.utils;
@@ -40,6 +42,8 @@ public class Player extends Sprite implements InputProcessor {
     private Sprite m_invulnarableSprite;
     private Dictionary<Integer, Integer> m_destroyedEnemies;
     private BulletManager m_bulletManager;
+    private NetworkManager m_networkManager;
+    private boolean m_isRemote;
 
     private static final float INVULNERABLE_ANIMATION_TIME = 3000;
 
@@ -51,7 +55,15 @@ public class Player extends Sprite implements InputProcessor {
 
     private State m_state;
 
-    public Player(AnimationContainer animation, Body body, int current_player, Vector2 spawnPoint, BulletManager bulletManager, boolean isRemote)
+    public Player(
+            AnimationContainer animation,
+            Body body,
+            int current_player,
+            Vector2 spawnPoint,
+            BulletManager bulletManager,
+            boolean isRemote,
+            NetworkManager networkManager
+        )
     {
         super(((TextureAtlas.AtlasRegion) animation.getTopAnimation().getKeyFrame(0)));
         m_left = animation.getLeftAnimation();
@@ -77,12 +89,14 @@ public class Player extends Sprite implements InputProcessor {
 
         m_invulnarableSprite = new Sprite((TextureAtlas.AtlasRegion)m_invulnerabilityAnimation.getKeyFrame(0.0f));
         m_invulnarableSprite.setPosition(spawnPoint.x, spawnPoint.y);
+        m_isRemote = isRemote;
 
         if (!isRemote)
         {
             Gdx.input.setInputProcessor(this);
         }
         m_destroyedEnemies = new Dictionary<>();
+        m_networkManager = networkManager;
     }
 
     public void draw(Batch batch, boolean freeze)
@@ -127,6 +141,11 @@ public class Player extends Sprite implements InputProcessor {
     public Dictionary<Integer, Integer> getDestroyedEnemies()
     {
         return m_destroyedEnemies;
+    }
+
+    public void setPosition(Vector2 vector)
+    {
+        m_body.setTransform(vector, 0);
     }
 
     private void updateSpawnAnimation(float animationTime)
@@ -217,6 +236,20 @@ public class Player extends Sprite implements InputProcessor {
 
         m_invulnarableSprite.setX(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32));
         m_invulnarableSprite.setY(Box2dHelpers.Box2d2y(m_body.getPosition().y, 32));
+
+        if (m_isRemote)
+        {
+            return;
+        }
+
+        if (isServer())
+        {
+            m_networkManager.notifyMove(NetworkProtocol.Owner.SERVER_PLAYER, m_current_player, m_body.getPosition().x, m_body.getPosition().y);
+        }
+        else
+        {
+            m_networkManager.notifyMove(NetworkProtocol.Owner.CLIENT_PLAYER, m_current_player, m_body.getPosition().x, m_body.getPosition().y);
+        }
     }
 
     public void fire()
@@ -391,5 +424,10 @@ public class Player extends Sprite implements InputProcessor {
     public boolean scrolled(int amount)
     {
         return false;
+    }
+
+    private boolean isServer()
+    {
+        return m_current_player == 1;
     }
 }
