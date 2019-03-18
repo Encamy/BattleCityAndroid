@@ -64,6 +64,8 @@ public class GameScreen implements
 		Gdx.app.log("Info", this.getClass().getName() + " started");
 		Gdx.app.log("Info", "platform = " + Gdx.app.getType().name());
 
+        m_eventQueue = new EventQueue();
+
 		m_camera = new OrthographicCamera();
         m_camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -81,14 +83,15 @@ public class GameScreen implements
 
         m_bulletManager = new BulletManager(m_world);
 
-        m_layerManager = new LayerManager(m_world, m_bulletManager, m_networkManager);
-
         boolean isMaster = true;
 
         if (m_networkManager != null)
         {
             isMaster = m_networkManager.isServer();
+            m_networkManager.setOnMessageReceivedCallback(this);
         }
+
+        m_layerManager = new LayerManager(m_world, m_bulletManager, m_networkManager);
 
         if (!isMaster)
         {
@@ -109,19 +112,12 @@ public class GameScreen implements
                 isMaster
         );
 
-        if (m_networkManager != null)
-        {
-            m_networkManager.setOnMessageReceivedCallback(this);
-        }
-
         if (isMaster && m_networkManager != null)
         {
             m_enemyFactory.setOnSpawnedCallback(this);
             m_enemyFactory.setOnUpdateCallback(this);
             m_enemyFactory.setOnEnemyFiredCallback(this);
         }
-
-        m_eventQueue = new EventQueue();
 	}
 
     @Override
