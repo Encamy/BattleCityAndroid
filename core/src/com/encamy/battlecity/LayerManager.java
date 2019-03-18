@@ -2,6 +2,7 @@ package com.encamy.battlecity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
@@ -51,6 +52,17 @@ public class LayerManager implements Settings.WallDestroyedCallback
         m_networkManager = networkManager;
     }
 
+    public void updatePlayers(Batch batch, boolean freeze)
+    {
+        for (Player player : m_players)
+        {
+            if (player != null)
+            {
+                player.draw(batch, freeze);
+            }
+        }
+    }
+
     public void loadLevel(String levelTitle)
     {
         // Can we rely on GC?
@@ -66,7 +78,7 @@ public class LayerManager implements Settings.WallDestroyedCallback
         loaded = true;
     }
 
-    public void loadPlayer(int index)
+    public void loadPlayer(int index, boolean isRemote)
     {
         if (!loaded)
         {
@@ -135,9 +147,9 @@ public class LayerManager implements Settings.WallDestroyedCallback
         animationContainer.setInvulnerabilityAnimation(invulnerabilityAnimation);
         animationContainer.setSpawnAnimation(playerSpawnAnimation);
 
-        m_players[index] = new Player(animationContainer, playerBody, index + 1, spawnpoint, m_bulletManager, false);
+        m_players[index] = new Player(animationContainer, playerBody, index + 1, spawnpoint, m_bulletManager, isRemote);
 
-        if (m_networkManager == null)
+        if (m_networkManager == null || isRemote)
         {
             return;
         }

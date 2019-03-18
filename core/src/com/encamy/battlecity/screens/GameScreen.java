@@ -99,7 +99,7 @@ public class GameScreen implements
         }
 
         m_layerManager.loadLevel("general_map.tmx");
-        m_layerManager.loadPlayer(m_currentPlayer);
+        m_layerManager.loadPlayer(m_currentPlayer, false);
 
         m_bulletManager.setAtlas(m_layerManager.getAtlas());
 
@@ -132,7 +132,8 @@ public class GameScreen implements
 
         m_spriteBatch.setProjectionMatrix(m_camera.combined);
         m_spriteBatch.begin();
-        m_layerManager.getPlayer(m_currentPlayer).draw(m_spriteBatch, m_freezeWorld);
+        //m_layerManager.getPlayer(m_currentPlayer).draw(m_spriteBatch, m_freezeWorld);
+        m_layerManager.updatePlayers(m_spriteBatch, m_freezeWorld);
         m_enemyFactory.draw(m_spriteBatch, m_freezeWorld);
         m_layerManager.drawWalls(m_spriteBatch);
         m_bulletManager.update(m_spriteBatch);
@@ -435,7 +436,7 @@ public class GameScreen implements
                 if (spawned.getOwner() == NetworkProtocol.Owner.CLIENT_PLAYER ||
                     spawned.getOwner() == NetworkProtocol.Owner.SERVER_PLAYER)
                 {
-                    Gdx.app.log("PROTOBUF", "Got player spawned event");
+                    m_layerManager.loadPlayer(spawned.getId() + 1, true);
                 }
             }
                 break;
