@@ -60,7 +60,7 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
         if (m_OnMessageReceivedCallback == null)
         {
             Gdx.app.log("TCP Socket", "OnMessageReceived callback is not set. Just outputting events to log.\n" +
-                    "Received packet: " + packet.getWrapperCase());
+                    "Received packet: " + packet.toString());
         }
         else
         {
