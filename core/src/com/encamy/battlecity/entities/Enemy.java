@@ -173,7 +173,7 @@ public class Enemy extends Sprite {
 
                 if (m_animationTime * 1000 > Settings.FIRE_RATE)
                 {
-                    Gdx.app.log("TRACE", "FIRE");
+                    //Gdx.app.log("TRACE", "FIRE");
                     fire(false);
                     m_animationTime = 0;
                 }

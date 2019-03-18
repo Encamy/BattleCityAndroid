@@ -81,7 +81,7 @@ public class GameScreen implements
 
         m_bulletManager = new BulletManager(m_world);
 
-        m_layerManager = new LayerManager(m_world, m_bulletManager);
+        m_layerManager = new LayerManager(m_world, m_bulletManager, m_networkManager);
 
         boolean isMaster = true;
 
@@ -189,18 +189,18 @@ public class GameScreen implements
             }
 
             EnumSet<Settings.ObjectType> type = (EnumSet<Settings.ObjectType>)body.getUserData();
-            Gdx.app.log("TRACE", type.toString());
+            //Gdx.app.log("TRACE", type.toString());
 
             if (type.contains(Settings.ObjectType.BULLET ) && !type.contains(Settings.ObjectType.GRASS))
             {
-                Gdx.app.log("TRACE", "Handled");
+                //Gdx.app.log("TRACE", "Handled");
                 m_bulletManager.removeBullet(body);
             }
             else if (type.contains(Settings.ObjectType.ENEMY))
             {
                 if (!type.contains(Settings.ObjectType.ENEMY_OWNER))
                 {
-                    Gdx.app.log("TRACE", "Handled");
+                    //Gdx.app.log("TRACE", "Handled");
 
                     Enemy enemy = m_enemyFactory.getEnemy(body);
 
@@ -244,7 +244,7 @@ public class GameScreen implements
                 }
                 else
                 {
-                    Gdx.app.log("TRACE", "Handled");
+                    //Gdx.app.log("TRACE", "Handled");
                     body.setUserData(EnumSet.of(Settings.ObjectType.ENEMY));
                 }
             }
@@ -253,7 +253,7 @@ public class GameScreen implements
                 if (m_layerManager.getPlayer(1) != null)
                 {
                     if (m_layerManager.getPlayer(1).getBody() == body) {
-                        Gdx.app.log("TRACE", "Handled");
+                       // Gdx.app.log("TRACE", "Handled");
                         m_layerManager.getPlayer(1).hit();
                         body.setUserData(EnumSet.of(Settings.ObjectType.PLAYER));
                     }
@@ -262,7 +262,7 @@ public class GameScreen implements
                 {
                     if (m_layerManager.getPlayer(2).getBody() == body)
                     {
-                        Gdx.app.log("TRACE", "Handled");
+                        //Gdx.app.log("TRACE", "Handled");
                         m_layerManager.getPlayer(2).hit();
                         body.setUserData(EnumSet.of(Settings.ObjectType.PLAYER));
                     }
@@ -274,7 +274,7 @@ public class GameScreen implements
             }
             else if (type.contains(Settings.ObjectType.BRICK_WALL))
             {
-                Gdx.app.log("TRACE", "handled");
+                //Gdx.app.log("TRACE", "handled");
                 boolean destroyed = m_layerManager.hit(body, type);
                 if (!destroyed)
                 {
@@ -283,7 +283,7 @@ public class GameScreen implements
             }
             else if (type.contains(Settings.ObjectType.STONE_WALL))
             {
-                Gdx.app.log("TRACE", "handled");
+                //Gdx.app.log("TRACE", "handled");
                 boolean destroyed = m_layerManager.hit(body, type);
                 if (!destroyed)
                 {
@@ -295,7 +295,7 @@ public class GameScreen implements
                 boolean destroyed = m_layerManager.hit(body, type);
                 if (!destroyed)
                 {
-                    Gdx.app.log("TRACE", "handled");
+                    //Gdx.app.log("TRACE", "handled");
                 }
 
                 if (!type.contains(Settings.ObjectType.BULLET))
@@ -321,7 +321,7 @@ public class GameScreen implements
             }
             else if (type.contains(Settings.ObjectType.WATER))
             {
-                Gdx.app.log("TRACE", "handled");
+                //Gdx.app.log("TRACE", "handled");
                 boolean destroyed = m_layerManager.hit(body, type);
                 if (!destroyed)
                 {
@@ -330,7 +330,7 @@ public class GameScreen implements
             }
             else if (type.contains(Settings.ObjectType.WALL))
             {
-                Gdx.app.log("TRACE", "Handled");
+                //Gdx.app.log("TRACE", "Handled");
                 body.setUserData(EnumSet.of(Settings.ObjectType.WALL));
             }
             else if (type.contains(Settings.ObjectType.FLAG ))
@@ -367,21 +367,21 @@ public class GameScreen implements
     @Override
     public void OnEnemySpawned(int id, float x, float y, int level)
     {
-        Gdx.app.log("NETWORK", "Enemy (" + id + ") has spawned at " + x + ":" + y);
+        //Gdx.app.log("NETWORK", "Enemy (" + id + ") has spawned at " + x + ":" + y);
         m_networkManager.notifySpawn(NetworkProtocol.Owner.ENEMY, id, x, y, level);
     }
 
     @Override
     public void OnEnemyMoved(int id, float x, float y)
     {
-        Gdx.app.log("NETWORK", "Enemy (" + id + ") moved with position " + x + ":" + y);
+        //Gdx.app.log("NETWORK", "Enemy (" + id + ") moved with position " + x + ":" + y);
         m_networkManager.notifyMove(NetworkProtocol.Owner.ENEMY, id, x, y);
     }
 
     @Override
     public void OnEnemyFired(int id, Settings.Direction direction)
     {
-        Gdx.app.log("NETWORK", "Enemy (" + id + ") fired at direction " + direction.toString());
+        //Gdx.app.log("NETWORK", "Enemy (" + id + ") fired at direction " + direction.toString());
         m_networkManager.notifyFire(NetworkProtocol.Owner.ENEMY, id, direction);
     }
 
@@ -435,6 +435,12 @@ public class GameScreen implements
                 {
                     m_enemyFactory.onNetworkSpawn(spawned.getId(), spawned.getX(), spawned.getY(), spawned.getLevel());
                 }
+
+                if (spawned.getOwner() == NetworkProtocol.Owner.CLIENT_PLAYER ||
+                    spawned.getOwner() == NetworkProtocol.Owner.SERVER_PLAYER)
+                {
+                    Gdx.app.log("PROTOBUF", "Got player spawned event");
+                }
             }
                 break;
             case DESTROYED:
@@ -448,7 +454,7 @@ public class GameScreen implements
     @Override
     public void OnEventPoll(NetworkProtocol.Event event)
     {
-        Gdx.app.log("EVENT_QUEUE", "Polled " + event.toString());
+        //Gdx.app.log("EVENT_QUEUE", "Polled " + event.toString());
         eventDispatcher(event);
     }
 }

@@ -89,13 +89,36 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
             return;
         }
 
-        try
+        if (owner == NetworkProtocol.Owner.ENEMY)
         {
-            m_server.sendSpawnEvent(owner, id, x, y, level);
+            try
+            {
+                m_server.sendSpawnEvent(owner, id, x, y, level);
+            }
+            catch (IOException e)
+            {
+                // Do nothing
+            }
         }
-        catch (IOException e)
+
+        if (owner == NetworkProtocol.Owner.CLIENT_PLAYER ||
+            owner == NetworkProtocol.Owner.SERVER_PLAYER)
         {
-            //
+            try
+            {
+                if (m_isServer)
+                {
+                    m_server.sendSpawnEvent(owner, id, x, y, level);
+                }
+                else
+                {
+                    m_client.sendSpawnEvent(owner, id, x, y, level);
+                }
+            }
+            catch (Exception e)
+            {
+                // Do nothing
+            }
         }
     }
 

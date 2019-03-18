@@ -93,6 +93,7 @@ public class TCPserver extends Thread
                 NetworkProtocol.PacketWrapper.newBuilder().setEvent(
                         NetworkProtocol.Event.newBuilder().setSpawned(
                                 NetworkProtocol.Spawned.newBuilder()
+                                        .setOwner(owner)
                                         .setId(id)
                                         .setX(x)
                                         .setY(y)

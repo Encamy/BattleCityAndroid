@@ -21,6 +21,8 @@ import com.encamy.battlecity.entities.Grass;
 import com.encamy.battlecity.entities.Player;
 import com.encamy.battlecity.entities.StoneWall;
 import com.encamy.battlecity.entities.Water;
+import com.encamy.battlecity.network.NetworkManager;
+import com.encamy.battlecity.protobuf.NetworkProtocol;
 import com.encamy.battlecity.utils.Box2dHelpers;
 
 import java.util.ArrayList;
@@ -37,14 +39,16 @@ public class LayerManager implements Settings.WallDestroyedCallback
     private Player[] m_players;
     private ArrayList<BaseWall> m_walls;
     private BulletManager m_bulletManager;
+    private NetworkManager m_networkManager;
 
     private boolean loaded = false;
 
-    public LayerManager(World world, BulletManager bulletManager)
+    public LayerManager(World world, BulletManager bulletManager, NetworkManager networkManager)
     {
         m_world = world;
-        m_walls = new ArrayList<BaseWall>();
+        m_walls = new ArrayList<>();
         m_bulletManager = bulletManager;
+        m_networkManager = networkManager;
     }
 
     public void loadLevel(String levelTitle)
@@ -132,6 +136,22 @@ public class LayerManager implements Settings.WallDestroyedCallback
         animationContainer.setSpawnAnimation(playerSpawnAnimation);
 
         m_players[index] = new Player(animationContainer, playerBody, index + 1, spawnpoint, m_bulletManager, false);
+
+        if (m_networkManager == null)
+        {
+            return;
+        }
+
+        if (index == 0)
+        {
+            Gdx.app.log("NETWORK", "announcing about server spawned");
+            m_networkManager.notifySpawn(NetworkProtocol.Owner.SERVER_PLAYER, index, 0, 0, 0);
+        }
+        else
+        {
+            Gdx.app.log("NETWORK", "announcing about client spawned");
+            m_networkManager.notifySpawn(NetworkProtocol.Owner.CLIENT_PLAYER, index, 0, 0, 0);
+        }
     }
 
     public TiledMap getTileMap()

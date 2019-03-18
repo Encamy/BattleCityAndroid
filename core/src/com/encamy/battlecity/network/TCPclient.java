@@ -93,4 +93,20 @@ public class TCPclient extends Thread
     {
         m_onConnectedCallback = m_onConnected;
     }
+
+    public void sendSpawnEvent(NetworkProtocol.Owner owner, int id, float x, float y, int level) throws IOException
+    {
+        NetworkProtocol.PacketWrapper wrapper =
+                NetworkProtocol.PacketWrapper.newBuilder().setEvent(
+                        NetworkProtocol.Event.newBuilder().setSpawned(
+                                NetworkProtocol.Spawned.newBuilder()
+                                        .setOwner(owner)
+                                        .setId(id)
+                                        .setX(x)
+                                        .setY(y)
+                                        .setLevel(level)
+                        )).build();
+
+        wrapper.writeDelimitedTo(m_outputStream);
+    }
 }
