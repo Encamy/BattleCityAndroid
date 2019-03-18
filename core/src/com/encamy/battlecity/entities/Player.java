@@ -51,7 +51,7 @@ public class Player extends Sprite implements InputProcessor {
 
     private State m_state;
 
-    public Player(AnimationContainer animation, Body body, int current_player, Vector2 spawnPoint, BulletManager bulletManager)
+    public Player(AnimationContainer animation, Body body, int current_player, Vector2 spawnPoint, BulletManager bulletManager, boolean isRemote)
     {
         super(((TextureAtlas.AtlasRegion) animation.getTopAnimation().getKeyFrame(0)));
         m_left = animation.getLeftAnimation();
@@ -78,9 +78,11 @@ public class Player extends Sprite implements InputProcessor {
         m_invulnarableSprite = new Sprite((TextureAtlas.AtlasRegion)m_invulnerabilityAnimation.getKeyFrame(0.0f));
         m_invulnarableSprite.setPosition(spawnPoint.x, spawnPoint.y);
 
-        Gdx.input.setInputProcessor(this);
-        //m_invulnarableSprite.setAlpha(0.5f);
-        m_destroyedEnemies = new Dictionary<Integer, Integer>();
+        if (!isRemote)
+        {
+            Gdx.input.setInputProcessor(this);
+        }
+        m_destroyedEnemies = new Dictionary<>();
     }
 
     public void draw(Batch batch, boolean freeze)

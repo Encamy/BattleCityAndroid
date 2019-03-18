@@ -131,7 +131,7 @@ public class LayerManager implements Settings.WallDestroyedCallback
         animationContainer.setInvulnerabilityAnimation(invulnerabilityAnimation);
         animationContainer.setSpawnAnimation(playerSpawnAnimation);
 
-        m_players[index] = new Player(animationContainer, playerBody, index + 1, spawnpoint, m_bulletManager);
+        m_players[index] = new Player(animationContainer, playerBody, index + 1, spawnpoint, m_bulletManager, false);
     }
 
     public TiledMap getTileMap()
