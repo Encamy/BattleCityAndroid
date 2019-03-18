@@ -14,7 +14,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.encamy.battlecity.BulletManager;
 import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.protobuf.NetworkProtocol;
-import com.encamy.battlecity.screens.GameScreen;
 import com.encamy.battlecity.utils.utils;
 
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.O
     private int m_last_id;
 
     private Settings.OnEnemySpawnedCallback m_onEnemySpawnedCallback;
-    private Settings.OnEnemyUpdateCallback m_onEnemyUpdateCallback;
+    private Settings.OnEnemyMovedCallback m_onEnemyMovedCallback;
     private Settings.OnEnemyFiredCallback m_onEnemyFiredCallback;
 
     private boolean m_master;
@@ -242,9 +241,9 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.O
             Vector2 position = new Vector2();
             enemy.draw(batch, freeze, position);
 
-            if (m_onEnemyUpdateCallback != null)
+            if (m_onEnemyMovedCallback != null)
             {
-                m_onEnemyUpdateCallback.OnEnemyUpdate(enemy.getId(), position.x, position.y);
+                m_onEnemyMovedCallback.OnEnemyMoved(enemy.getId(), position.x, position.y);
             }
         }
     }
@@ -286,9 +285,9 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.O
         m_onEnemySpawnedCallback = callback;
     }
 
-    public void setOnUpdateCallback(Settings.OnEnemyUpdateCallback callback)
+    public void setOnUpdateCallback(Settings.OnEnemyMovedCallback callback)
     {
-        m_onEnemyUpdateCallback = callback;
+        m_onEnemyMovedCallback = callback;
     }
 
     public void setOnEnemyFiredCallback(Settings.OnEnemyFiredCallback callback)

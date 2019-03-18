@@ -70,9 +70,9 @@ public class Settings {
         void OnEnemySpawned(int id, float x, float y, int level);
     }
 
-    public interface OnEnemyUpdateCallback
+    public interface OnEnemyMovedCallback
     {
-        void OnEnemyUpdate(int id, float x, float y);
+        void OnEnemyMoved(int id, float x, float y);
     }
 
     public interface OnEnemyFiredCallback

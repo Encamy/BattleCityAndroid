@@ -29,7 +29,7 @@ import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
 
 public class GameScreen implements
         Screen,
-        Settings.OnEnemyUpdateCallback,
+        Settings.OnEnemyMovedCallback,
         Settings.OnEnemySpawnedCallback,
         Settings.OnMessageReceivedCallback,
         Settings.OnEnemyFiredCallback,
@@ -372,10 +372,10 @@ public class GameScreen implements
     }
 
     @Override
-    public void OnEnemyUpdate(int id, float x, float y)
+    public void OnEnemyMoved(int id, float x, float y)
     {
         Gdx.app.log("NETWORK", "Enemy (" + id + ") moved with position " + x + ":" + y);
-        m_networkManager.notifyUpdate(NetworkProtocol.Owner.ENEMY, id, x, y);
+        m_networkManager.notifyMove(NetworkProtocol.Owner.ENEMY, id, x, y);
     }
 
     @Override
