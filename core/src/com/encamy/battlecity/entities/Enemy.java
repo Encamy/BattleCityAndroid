@@ -124,21 +124,20 @@ public class Enemy extends Sprite {
 
     private void updateAliveAnimation(float animationTime)
     {
-        if (m_body.getLinearVelocity().x < 0)
+        switch (m_direction)
         {
-            super.setRegion(((TextureAtlas.AtlasRegion) m_left.getKeyFrame(animationTime)));
-        }
-        else if (m_body.getLinearVelocity().x > 0)
-        {
-            super.setRegion(((TextureAtlas.AtlasRegion) m_right.getKeyFrame(animationTime)));
-        }
-        else if (m_body.getLinearVelocity().y < 0)
-        {
-            super.setRegion(((TextureAtlas.AtlasRegion) m_bottom.getKeyFrame(animationTime)));
-        }
-        else if (m_body.getLinearVelocity().y > 0)
-        {
-            super.setRegion(((TextureAtlas.AtlasRegion) m_top.getKeyFrame(animationTime)));
+            case LEFT:
+                super.setRegion(((TextureAtlas.AtlasRegion) m_left.getKeyFrame(animationTime)));
+                break;
+            case TOP:
+                super.setRegion(((TextureAtlas.AtlasRegion) m_top.getKeyFrame(animationTime)));
+                break;
+            case RIGHT:
+                super.setRegion(((TextureAtlas.AtlasRegion) m_right.getKeyFrame(animationTime)));
+                break;
+            case BOTTOM:
+                super.setRegion(((TextureAtlas.AtlasRegion) m_bottom.getKeyFrame(animationTime)));
+                break;
         }
     }
 
