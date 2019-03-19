@@ -125,4 +125,19 @@ public class TCPclient extends Thread
 
         wrapper.writeDelimitedTo(m_outputStream);
     }
+
+    public void sendFireEvent(NetworkProtocol.Owner owner, int id, NetworkProtocol.Direction direction) throws IOException
+    {
+        NetworkProtocol.PacketWrapper wrapper =
+                NetworkProtocol.PacketWrapper.newBuilder().setEvent(
+                        NetworkProtocol.Event.newBuilder().setFire(
+                                NetworkProtocol.Fire.newBuilder()
+                                        .setId(id)
+                                        .setOwner(owner)
+                                        .setDirection(direction)
+                        )
+                ).build();
+
+        wrapper.writeDelimitedTo(m_outputStream);
+    }
 }

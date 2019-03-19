@@ -179,7 +179,14 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
         NetworkProtocol.Direction networkDirection = utils.toNetworkDirection(direction);
         try
         {
-            m_server.sendFireEvent(owner, id, networkDirection);
+            if (owner == NetworkProtocol.Owner.ENEMY || owner == NetworkProtocol.Owner.SERVER_PLAYER)
+            {
+                m_server.sendFireEvent(owner, id, networkDirection);
+            }
+            else if (owner == NetworkProtocol.Owner.CLIENT_PLAYER)
+            {
+                m_client.sendFireEvent(owner, id, networkDirection);
+            }
         }
         catch (IOException e)
         {

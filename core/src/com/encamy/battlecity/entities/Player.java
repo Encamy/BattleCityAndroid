@@ -242,7 +242,7 @@ public class Player extends Sprite implements InputProcessor {
         m_invulnarableSprite.setX(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32));
         m_invulnarableSprite.setY(Box2dHelpers.Box2d2y(m_body.getPosition().y, 32));
 
-        if (m_isRemote)
+        if (m_isRemote || m_networkManager == null)
         {
             return;
         }
@@ -297,6 +297,20 @@ public class Player extends Sprite implements InputProcessor {
         else
         {
             Gdx.app.log("FATAL", "Invalid player id. Should not happen");
+        }
+
+        if (m_isRemote || m_networkManager == null)
+        {
+            return;
+        }
+
+        if (isServer())
+        {
+            m_networkManager.notifyFire(NetworkProtocol.Owner.SERVER_PLAYER, m_current_player, m_direction);
+        }
+        else
+        {
+            m_networkManager.notifyFire(NetworkProtocol.Owner.CLIENT_PLAYER, m_current_player, m_direction);
         }
     }
 
