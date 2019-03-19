@@ -119,7 +119,7 @@ public class TCPserver extends Thread
         wrapper.writeDelimitedTo(m_outputStream);
     }
 
-    public void sendFireEvent(NetworkProtocol.Owner owner, int id, NetworkProtocol.Fire.Direction direction) throws IOException
+    public void sendFireEvent(NetworkProtocol.Owner owner, int id, NetworkProtocol.Direction direction) throws IOException
     {
         NetworkProtocol.PacketWrapper wrapper =
                 NetworkProtocol.PacketWrapper.newBuilder().setEvent(

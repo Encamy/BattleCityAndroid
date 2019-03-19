@@ -176,7 +176,7 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
             return;
         }
 
-        NetworkProtocol.Fire.Direction networkDirection = utils.toNetworkDirection(direction);
+        NetworkProtocol.Direction networkDirection = utils.toNetworkDirection(direction);
         try
         {
             m_server.sendFireEvent(owner, id, networkDirection);

@@ -121,6 +121,122 @@ public final class NetworkProtocol {
     // @@protoc_insertion_point(enum_scope:com.encamy.battlecity.protobuf.Owner)
   }
 
+  /**
+   * Protobuf enum {@code com.encamy.battlecity.protobuf.Direction}
+   */
+  public enum Direction
+      implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     * <code>LEFT = 0;</code>
+     */
+    LEFT(0),
+    /**
+     * <code>TOP = 1;</code>
+     */
+    TOP(1),
+    /**
+     * <code>RIGHT = 2;</code>
+     */
+    RIGHT(2),
+    /**
+     * <code>BOTTOM = 3;</code>
+     */
+    BOTTOM(3),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     * <code>LEFT = 0;</code>
+     */
+    public static final int LEFT_VALUE = 0;
+    /**
+     * <code>TOP = 1;</code>
+     */
+    public static final int TOP_VALUE = 1;
+    /**
+     * <code>RIGHT = 2;</code>
+     */
+    public static final int RIGHT_VALUE = 2;
+    /**
+     * <code>BOTTOM = 3;</code>
+     */
+    public static final int BOTTOM_VALUE = 3;
+
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static Direction valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static Direction forNumber(int value) {
+      switch (value) {
+        case 0: return LEFT;
+        case 1: return TOP;
+        case 2: return RIGHT;
+        case 3: return BOTTOM;
+        default: return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<Direction>
+        internalGetValueMap() {
+      return internalValueMap;
+    }
+    private static final com.google.protobuf.Internal.EnumLiteMap<
+        Direction> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<Direction>() {
+            public Direction findValueByNumber(int number) {
+              return Direction.forNumber(number);
+            }
+          };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+      return getDescriptor().getValues().get(ordinal());
+    }
+    public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+    public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+      return com.encamy.battlecity.protobuf.NetworkProtocol.getDescriptor().getEnumTypes().get(1);
+    }
+
+    private static final Direction[] VALUES = values();
+
+    public static Direction valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private Direction(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:com.encamy.battlecity.protobuf.Direction)
+  }
+
   public interface PingOrBuilder extends
       // @@protoc_insertion_point(interface_extends:com.encamy.battlecity.protobuf.Ping)
       com.google.protobuf.MessageOrBuilder {
@@ -1720,13 +1836,13 @@ public final class NetworkProtocol {
     int getId();
 
     /**
-     * <code>.com.encamy.battlecity.protobuf.Fire.Direction direction = 3;</code>
+     * <code>.com.encamy.battlecity.protobuf.Direction direction = 3;</code>
      */
     int getDirectionValue();
     /**
-     * <code>.com.encamy.battlecity.protobuf.Fire.Direction direction = 3;</code>
+     * <code>.com.encamy.battlecity.protobuf.Direction direction = 3;</code>
      */
-    com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction getDirection();
+    com.encamy.battlecity.protobuf.NetworkProtocol.Direction getDirection();
   }
   /**
    * Protobuf type {@code com.encamy.battlecity.protobuf.Fire}
@@ -1818,122 +1934,6 @@ public final class NetworkProtocol {
               com.encamy.battlecity.protobuf.NetworkProtocol.Fire.class, com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Builder.class);
     }
 
-    /**
-     * Protobuf enum {@code com.encamy.battlecity.protobuf.Fire.Direction}
-     */
-    public enum Direction
-        implements com.google.protobuf.ProtocolMessageEnum {
-      /**
-       * <code>LEFT = 0;</code>
-       */
-      LEFT(0),
-      /**
-       * <code>TOP = 1;</code>
-       */
-      TOP(1),
-      /**
-       * <code>RIGHT = 2;</code>
-       */
-      RIGHT(2),
-      /**
-       * <code>BOTTOM = 3;</code>
-       */
-      BOTTOM(3),
-      UNRECOGNIZED(-1),
-      ;
-
-      /**
-       * <code>LEFT = 0;</code>
-       */
-      public static final int LEFT_VALUE = 0;
-      /**
-       * <code>TOP = 1;</code>
-       */
-      public static final int TOP_VALUE = 1;
-      /**
-       * <code>RIGHT = 2;</code>
-       */
-      public static final int RIGHT_VALUE = 2;
-      /**
-       * <code>BOTTOM = 3;</code>
-       */
-      public static final int BOTTOM_VALUE = 3;
-
-
-      public final int getNumber() {
-        if (this == UNRECOGNIZED) {
-          throw new java.lang.IllegalArgumentException(
-              "Can't get the number of an unknown enum value.");
-        }
-        return value;
-      }
-
-      /**
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
-      public static Direction valueOf(int value) {
-        return forNumber(value);
-      }
-
-      public static Direction forNumber(int value) {
-        switch (value) {
-          case 0: return LEFT;
-          case 1: return TOP;
-          case 2: return RIGHT;
-          case 3: return BOTTOM;
-          default: return null;
-        }
-      }
-
-      public static com.google.protobuf.Internal.EnumLiteMap<Direction>
-          internalGetValueMap() {
-        return internalValueMap;
-      }
-      private static final com.google.protobuf.Internal.EnumLiteMap<
-          Direction> internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<Direction>() {
-              public Direction findValueByNumber(int number) {
-                return Direction.forNumber(number);
-              }
-            };
-
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor
-          getValueDescriptor() {
-        return getDescriptor().getValues().get(ordinal());
-      }
-      public final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptorForType() {
-        return getDescriptor();
-      }
-      public static final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptor() {
-        return com.encamy.battlecity.protobuf.NetworkProtocol.Fire.getDescriptor().getEnumTypes().get(0);
-      }
-
-      private static final Direction[] VALUES = values();
-
-      public static Direction valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
-            "EnumValueDescriptor is not for this type.");
-        }
-        if (desc.getIndex() == -1) {
-          return UNRECOGNIZED;
-        }
-        return VALUES[desc.getIndex()];
-      }
-
-      private final int value;
-
-      private Direction(int value) {
-        this.value = value;
-      }
-
-      // @@protoc_insertion_point(enum_scope:com.encamy.battlecity.protobuf.Fire.Direction)
-    }
-
     public static final int OWNER_FIELD_NUMBER = 1;
     private int owner_;
     /**
@@ -1963,18 +1963,18 @@ public final class NetworkProtocol {
     public static final int DIRECTION_FIELD_NUMBER = 3;
     private int direction_;
     /**
-     * <code>.com.encamy.battlecity.protobuf.Fire.Direction direction = 3;</code>
+     * <code>.com.encamy.battlecity.protobuf.Direction direction = 3;</code>
      */
     public int getDirectionValue() {
       return direction_;
     }
     /**
-     * <code>.com.encamy.battlecity.protobuf.Fire.Direction direction = 3;</code>
+     * <code>.com.encamy.battlecity.protobuf.Direction direction = 3;</code>
      */
-    public com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction getDirection() {
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Direction getDirection() {
       @SuppressWarnings("deprecation")
-      com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction result = com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction.valueOf(direction_);
-      return result == null ? com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction.UNRECOGNIZED : result;
+      com.encamy.battlecity.protobuf.NetworkProtocol.Direction result = com.encamy.battlecity.protobuf.NetworkProtocol.Direction.valueOf(direction_);
+      return result == null ? com.encamy.battlecity.protobuf.NetworkProtocol.Direction.UNRECOGNIZED : result;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -1997,7 +1997,7 @@ public final class NetworkProtocol {
       if (id_ != 0) {
         output.writeInt32(2, id_);
       }
-      if (direction_ != com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction.LEFT.getNumber()) {
+      if (direction_ != com.encamy.battlecity.protobuf.NetworkProtocol.Direction.LEFT.getNumber()) {
         output.writeEnum(3, direction_);
       }
       unknownFields.writeTo(output);
@@ -2017,7 +2017,7 @@ public final class NetworkProtocol {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, id_);
       }
-      if (direction_ != com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction.LEFT.getNumber()) {
+      if (direction_ != com.encamy.battlecity.protobuf.NetworkProtocol.Direction.LEFT.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(3, direction_);
       }
@@ -2384,13 +2384,13 @@ public final class NetworkProtocol {
 
       private int direction_ = 0;
       /**
-       * <code>.com.encamy.battlecity.protobuf.Fire.Direction direction = 3;</code>
+       * <code>.com.encamy.battlecity.protobuf.Direction direction = 3;</code>
        */
       public int getDirectionValue() {
         return direction_;
       }
       /**
-       * <code>.com.encamy.battlecity.protobuf.Fire.Direction direction = 3;</code>
+       * <code>.com.encamy.battlecity.protobuf.Direction direction = 3;</code>
        */
       public Builder setDirectionValue(int value) {
         direction_ = value;
@@ -2398,17 +2398,17 @@ public final class NetworkProtocol {
         return this;
       }
       /**
-       * <code>.com.encamy.battlecity.protobuf.Fire.Direction direction = 3;</code>
+       * <code>.com.encamy.battlecity.protobuf.Direction direction = 3;</code>
        */
-      public com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction getDirection() {
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Direction getDirection() {
         @SuppressWarnings("deprecation")
-        com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction result = com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction.valueOf(direction_);
-        return result == null ? com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction.UNRECOGNIZED : result;
+        com.encamy.battlecity.protobuf.NetworkProtocol.Direction result = com.encamy.battlecity.protobuf.NetworkProtocol.Direction.valueOf(direction_);
+        return result == null ? com.encamy.battlecity.protobuf.NetworkProtocol.Direction.UNRECOGNIZED : result;
       }
       /**
-       * <code>.com.encamy.battlecity.protobuf.Fire.Direction direction = 3;</code>
+       * <code>.com.encamy.battlecity.protobuf.Direction direction = 3;</code>
        */
-      public Builder setDirection(com.encamy.battlecity.protobuf.NetworkProtocol.Fire.Direction value) {
+      public Builder setDirection(com.encamy.battlecity.protobuf.NetworkProtocol.Direction value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -2418,7 +2418,7 @@ public final class NetworkProtocol {
         return this;
       }
       /**
-       * <code>.com.encamy.battlecity.protobuf.Fire.Direction direction = 3;</code>
+       * <code>.com.encamy.battlecity.protobuf.Direction direction = 3;</code>
        */
       public Builder clearDirection() {
         
@@ -2506,6 +2506,15 @@ public final class NetworkProtocol {
      * <code>float y = 4;</code>
      */
     float getY();
+
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Direction direction = 5;</code>
+     */
+    int getDirectionValue();
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Direction direction = 5;</code>
+     */
+    com.encamy.battlecity.protobuf.NetworkProtocol.Direction getDirection();
   }
   /**
    * Protobuf type {@code com.encamy.battlecity.protobuf.Move}
@@ -2521,6 +2530,7 @@ public final class NetworkProtocol {
     }
     private Move() {
       owner_ = 0;
+      direction_ = 0;
     }
 
     @java.lang.Override
@@ -2566,6 +2576,12 @@ public final class NetworkProtocol {
             case 37: {
 
               y_ = input.readFloat();
+              break;
+            }
+            case 40: {
+              int rawValue = input.readEnum();
+
+              direction_ = rawValue;
               break;
             }
             default: {
@@ -2644,6 +2660,23 @@ public final class NetworkProtocol {
       return y_;
     }
 
+    public static final int DIRECTION_FIELD_NUMBER = 5;
+    private int direction_;
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Direction direction = 5;</code>
+     */
+    public int getDirectionValue() {
+      return direction_;
+    }
+    /**
+     * <code>.com.encamy.battlecity.protobuf.Direction direction = 5;</code>
+     */
+    public com.encamy.battlecity.protobuf.NetworkProtocol.Direction getDirection() {
+      @SuppressWarnings("deprecation")
+      com.encamy.battlecity.protobuf.NetworkProtocol.Direction result = com.encamy.battlecity.protobuf.NetworkProtocol.Direction.valueOf(direction_);
+      return result == null ? com.encamy.battlecity.protobuf.NetworkProtocol.Direction.UNRECOGNIZED : result;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -2670,6 +2703,9 @@ public final class NetworkProtocol {
       if (y_ != 0F) {
         output.writeFloat(4, y_);
       }
+      if (direction_ != com.encamy.battlecity.protobuf.NetworkProtocol.Direction.LEFT.getNumber()) {
+        output.writeEnum(5, direction_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -2695,6 +2731,10 @@ public final class NetworkProtocol {
         size += com.google.protobuf.CodedOutputStream
           .computeFloatSize(4, y_);
       }
+      if (direction_ != com.encamy.battlecity.protobuf.NetworkProtocol.Direction.LEFT.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(5, direction_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -2719,6 +2759,7 @@ public final class NetworkProtocol {
       if (java.lang.Float.floatToIntBits(getY())
           != java.lang.Float.floatToIntBits(
               other.getY())) return false;
+      if (direction_ != other.direction_) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -2740,6 +2781,8 @@ public final class NetworkProtocol {
       hash = (37 * hash) + Y_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
           getY());
+      hash = (37 * hash) + DIRECTION_FIELD_NUMBER;
+      hash = (53 * hash) + direction_;
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -2881,6 +2924,8 @@ public final class NetworkProtocol {
 
         y_ = 0F;
 
+        direction_ = 0;
+
         return this;
       }
 
@@ -2911,6 +2956,7 @@ public final class NetworkProtocol {
         result.id_ = id_;
         result.x_ = x_;
         result.y_ = y_;
+        result.direction_ = direction_;
         onBuilt();
         return result;
       }
@@ -2970,6 +3016,9 @@ public final class NetworkProtocol {
         }
         if (other.getY() != 0F) {
           setY(other.getY());
+        }
+        if (other.direction_ != 0) {
+          setDirectionValue(other.getDirectionValue());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -3119,6 +3168,51 @@ public final class NetworkProtocol {
       public Builder clearY() {
         
         y_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private int direction_ = 0;
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Direction direction = 5;</code>
+       */
+      public int getDirectionValue() {
+        return direction_;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Direction direction = 5;</code>
+       */
+      public Builder setDirectionValue(int value) {
+        direction_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Direction direction = 5;</code>
+       */
+      public com.encamy.battlecity.protobuf.NetworkProtocol.Direction getDirection() {
+        @SuppressWarnings("deprecation")
+        com.encamy.battlecity.protobuf.NetworkProtocol.Direction result = com.encamy.battlecity.protobuf.NetworkProtocol.Direction.valueOf(direction_);
+        return result == null ? com.encamy.battlecity.protobuf.NetworkProtocol.Direction.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Direction direction = 5;</code>
+       */
+      public Builder setDirection(com.encamy.battlecity.protobuf.NetworkProtocol.Direction value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        direction_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.com.encamy.battlecity.protobuf.Direction direction = 5;</code>
+       */
+      public Builder clearDirection() {
+        
+        direction_ = 0;
         onChanged();
         return this;
       }
@@ -6214,29 +6308,31 @@ public final class NetworkProtocol {
       "protobuf\"\006\n\004Ping\"\006\n\004Pong\"p\n\007Spawned\0224\n\005o" +
       "wner\030\001 \001(\0162%.com.encamy.battlecity.proto" +
       "buf.Owner\022\n\n\002id\030\002 \001(\005\022\t\n\001x\030\003 \001(\002\022\t\n\001y\030\004 " +
-      "\001(\002\022\r\n\005level\030\005 \001(\005\"\302\001\n\004Fire\0224\n\005owner\030\001 \001" +
+      "\001(\002\022\r\n\005level\030\005 \001(\005\"\206\001\n\004Fire\0224\n\005owner\030\001 \001" +
       "(\0162%.com.encamy.battlecity.protobuf.Owne" +
-      "r\022\n\n\002id\030\002 \001(\005\022A\n\tdirection\030\003 \001(\0162..com.e" +
-      "ncamy.battlecity.protobuf.Fire.Direction" +
-      "\"5\n\tDirection\022\010\n\004LEFT\020\000\022\007\n\003TOP\020\001\022\t\n\005RIGH" +
-      "T\020\002\022\n\n\006BOTTOM\020\003\"^\n\004Move\0224\n\005owner\030\001 \001(\0162%" +
-      ".com.encamy.battlecity.protobuf.Owner\022\n\n" +
-      "\002id\030\002 \001(\005\022\t\n\001x\030\003 \001(\002\022\t\n\001y\030\004 \001(\002\"@\n\tDestr" +
-      "oyed\0223\n\004item\030\001 \001(\0162%.com.encamy.battleci" +
-      "ty.protobuf.Owner\"\375\001\n\005Event\022:\n\007spawned\030\001" +
-      " \001(\0132\'.com.encamy.battlecity.protobuf.Sp" +
-      "awnedH\000\0224\n\004fire\030\002 \001(\0132$.com.encamy.battl" +
-      "ecity.protobuf.FireH\000\0224\n\004move\030\003 \001(\0132$.co" +
-      "m.encamy.battlecity.protobuf.MoveH\000\022>\n\td" +
-      "estroyed\030\004 \001(\0132).com.encamy.battlecity.p" +
-      "rotobuf.DestroyedH\000B\014\n\nevent_type\"\276\001\n\rPa" +
-      "cketWrapper\0226\n\005event\030\001 \001(\0132%.com.encamy." +
-      "battlecity.protobuf.EventH\000\0224\n\004ping\030\002 \001(" +
-      "\0132$.com.encamy.battlecity.protobuf.PingH" +
-      "\000\0224\n\004pong\030\003 \001(\0132$.com.encamy.battlecity." +
-      "protobuf.PongH\000B\t\n\007wrapper*8\n\005Owner\022\t\n\005E" +
-      "NEMY\020\000\022\021\n\rSERVER_PLAYER\020\001\022\021\n\rCLIENT_PLAY" +
-      "ER\020\002B\021B\017NetworkProtocolb\006proto3"
+      "r\022\n\n\002id\030\002 \001(\005\022<\n\tdirection\030\003 \001(\0162).com.e" +
+      "ncamy.battlecity.protobuf.Direction\"\234\001\n\004" +
+      "Move\0224\n\005owner\030\001 \001(\0162%.com.encamy.battlec" +
+      "ity.protobuf.Owner\022\n\n\002id\030\002 \001(\005\022\t\n\001x\030\003 \001(" +
+      "\002\022\t\n\001y\030\004 \001(\002\022<\n\tdirection\030\005 \001(\0162).com.en" +
+      "camy.battlecity.protobuf.Direction\"@\n\tDe" +
+      "stroyed\0223\n\004item\030\001 \001(\0162%.com.encamy.battl" +
+      "ecity.protobuf.Owner\"\375\001\n\005Event\022:\n\007spawne" +
+      "d\030\001 \001(\0132\'.com.encamy.battlecity.protobuf" +
+      ".SpawnedH\000\0224\n\004fire\030\002 \001(\0132$.com.encamy.ba" +
+      "ttlecity.protobuf.FireH\000\0224\n\004move\030\003 \001(\0132$" +
+      ".com.encamy.battlecity.protobuf.MoveH\000\022>" +
+      "\n\tdestroyed\030\004 \001(\0132).com.encamy.battlecit" +
+      "y.protobuf.DestroyedH\000B\014\n\nevent_type\"\276\001\n" +
+      "\rPacketWrapper\0226\n\005event\030\001 \001(\0132%.com.enca" +
+      "my.battlecity.protobuf.EventH\000\0224\n\004ping\030\002" +
+      " \001(\0132$.com.encamy.battlecity.protobuf.Pi" +
+      "ngH\000\0224\n\004pong\030\003 \001(\0132$.com.encamy.battleci" +
+      "ty.protobuf.PongH\000B\t\n\007wrapper*8\n\005Owner\022\t" +
+      "\n\005ENEMY\020\000\022\021\n\rSERVER_PLAYER\020\001\022\021\n\rCLIENT_P" +
+      "LAYER\020\002*5\n\tDirection\022\010\n\004LEFT\020\000\022\007\n\003TOP\020\001\022" +
+      "\t\n\005RIGHT\020\002\022\n\n\006BOTTOM\020\003B\021B\017NetworkProtoco" +
+      "lb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -6279,7 +6375,7 @@ public final class NetworkProtocol {
     internal_static_com_encamy_battlecity_protobuf_Move_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_encamy_battlecity_protobuf_Move_descriptor,
-        new java.lang.String[] { "Owner", "Id", "X", "Y", });
+        new java.lang.String[] { "Owner", "Id", "X", "Y", "Direction", });
     internal_static_com_encamy_battlecity_protobuf_Destroyed_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_com_encamy_battlecity_protobuf_Destroyed_fieldAccessorTable = new

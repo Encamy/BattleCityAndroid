@@ -17,6 +17,13 @@ enum Owner {
     CLIENT_PLAYER = 2;
 }
 
+enum Direction {
+    LEFT = 0;
+    TOP = 1;
+    RIGHT = 2;
+    BOTTOM = 3;
+}
+
 message Spawned {
     Owner owner = 1;
     int32 id = 2;
@@ -26,13 +33,6 @@ message Spawned {
 }
 
 message Fire {
-    enum Direction {
-        LEFT = 0;
-        TOP = 1;
-        RIGHT = 2;
-        BOTTOM = 3;
-    }
-
     Owner owner = 1;
     int32 id = 2;
     Direction direction = 3;
@@ -43,6 +43,7 @@ message Move {
     int32 id = 2;
     float x = 3;
     float y = 4;
+    Direction direction = 5;
 }
 
 message Destroyed {

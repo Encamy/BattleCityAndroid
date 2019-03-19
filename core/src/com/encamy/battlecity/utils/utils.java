@@ -117,22 +117,22 @@ public class utils
         }
     }
 
-    public static NetworkProtocol.Fire.Direction toNetworkDirection(Settings.Direction direction)
+    public static NetworkProtocol.Direction toNetworkDirection(Settings.Direction direction)
     {
-        NetworkProtocol.Fire.Direction networkDirection = null;
+        NetworkProtocol.Direction networkDirection = null;
         switch (direction)
         {
             case LEFT:
-                networkDirection = NetworkProtocol.Fire.Direction.LEFT;
+                networkDirection = NetworkProtocol.Direction.LEFT;
                 break;
             case RIGHT:
-                networkDirection = NetworkProtocol.Fire.Direction.RIGHT;
+                networkDirection = NetworkProtocol.Direction.RIGHT;
                 break;
             case TOP:
-                networkDirection = NetworkProtocol.Fire.Direction.TOP;
+                networkDirection = NetworkProtocol.Direction.TOP;
                 break;
             case BOTTOM:
-                networkDirection = NetworkProtocol.Fire.Direction.BOTTOM;
+                networkDirection = NetworkProtocol.Direction.BOTTOM;
                 break;
             default:
                 Gdx.app.log("FATAL", "Can't cast enemy fired direction to network direction");
@@ -142,7 +142,7 @@ public class utils
         return networkDirection;
     }
 
-    public static Settings.Direction fromNetworkDirection(NetworkProtocol.Fire.Direction direction)
+    public static Settings.Direction fromNetworkDirection(NetworkProtocol.Direction direction)
     {
         Settings.Direction normalDirection = null;
         switch (direction)

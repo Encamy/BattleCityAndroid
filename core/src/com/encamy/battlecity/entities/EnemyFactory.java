@@ -119,7 +119,7 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.O
         }
     }
 
-    public void onNetworkFire(int id, NetworkProtocol.Fire.Direction direction)
+    public void onNetworkFire(int id, NetworkProtocol.Direction direction)
     {
         Enemy enemy = null;
 
