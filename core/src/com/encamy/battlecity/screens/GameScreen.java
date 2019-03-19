@@ -412,6 +412,11 @@ public class GameScreen implements
                 {
                     m_enemyFactory.onNetworkFire(fire.getId(), fire.getDirection());
                 }
+                else if (fire.getOwner() == NetworkProtocol.Owner.CLIENT_PLAYER ||
+                         fire.getOwner() == NetworkProtocol.Owner.SERVER_PLAYER)
+                {
+                    m_layerManager.onNetworkPlayerFire(fire);
+                }
             }
                 break;
             case MOVE:

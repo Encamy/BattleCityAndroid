@@ -414,4 +414,13 @@ public class LayerManager implements Settings.WallDestroyedCallback
         m_players[index].setPosition(new Vector2(x, y));
         m_players[index].setDirection(direction);
     }
+
+    public void onNetworkPlayerFire(NetworkProtocol.Fire fire)
+    {
+        /*if (m_networkManager.isServer() && fire.getOwner() == NetworkProtocol.Owner.CLIENT_PLAYER)
+        {
+            m_players[]
+        }*/
+        m_players[fire.getId() - 1].fire();
+    }
 }
