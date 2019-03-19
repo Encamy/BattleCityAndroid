@@ -107,13 +107,14 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.O
         m_enemies.add(enemy);
     }
 
-    public void onNetworkMove(int id, float x, float y)
+    public void onNetworkMove(int id, float x, float y, NetworkProtocol.Direction direction)
     {
         for (Enemy enemy : m_enemies)
         {
             if (enemy.getId() == id)
             {
                 enemy.setPosition(new Vector2(x, y));
+                enemy.setDirection(utils.fromNetworkDirection(direction));
                 break;
             }
         }
@@ -238,12 +239,16 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.O
     {
         for (Enemy enemy : m_enemies)
         {
-            Vector2 position = new Vector2();
-            enemy.draw(batch, freeze, position);
+            Vector2 position = enemy.draw(batch, freeze);
+
+            if (position == null)
+            {
+                continue;
+            }
 
             if (m_onEnemyMovedCallback != null)
             {
-                m_onEnemyMovedCallback.OnEnemyMoved(enemy.getId(), position.x, position.y);
+                m_onEnemyMovedCallback.OnEnemyMoved(enemy.getId(), position.x, position.y, enemy.getDirection());
             }
         }
     }

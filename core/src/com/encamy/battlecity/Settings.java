@@ -72,7 +72,7 @@ public class Settings {
 
     public interface OnEnemyMovedCallback
     {
-        void OnEnemyMoved(int id, float x, float y);
+        void OnEnemyMoved(int id, float x, float y, Settings.Direction direction);
     }
 
     public interface OnEnemyFiredCallback

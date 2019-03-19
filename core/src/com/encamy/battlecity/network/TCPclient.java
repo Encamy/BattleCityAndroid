@@ -110,7 +110,7 @@ public class TCPclient extends Thread
         wrapper.writeDelimitedTo(m_outputStream);
     }
 
-    public void sendMoveEvent(NetworkProtocol.Owner owner, int id, float x, float y) throws IOException
+    public void sendMoveEvent(NetworkProtocol.Owner owner, int id, float x, float y, NetworkProtocol.Direction direction) throws IOException
     {
         NetworkProtocol.PacketWrapper wrapper =
                 NetworkProtocol.PacketWrapper.newBuilder().setEvent(
@@ -120,6 +120,7 @@ public class TCPclient extends Thread
                                         .setId(id)
                                         .setX(x)
                                         .setY(y)
+                                        .setDirection(direction)
                         )).build();
 
         wrapper.writeDelimitedTo(m_outputStream);

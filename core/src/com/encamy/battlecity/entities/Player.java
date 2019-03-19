@@ -148,6 +148,11 @@ public class Player extends Sprite implements InputProcessor {
         m_body.setTransform(vector, 0);
     }
 
+    public void setDirection(Settings.Direction direction)
+    {
+        m_direction = direction;
+    }
+
     private void updateSpawnAnimation(float animationTime)
     {
         super.setRegion((TextureAtlas.AtlasRegion) m_playerSpawAnimation.getKeyFrame(animationTime));
@@ -244,11 +249,21 @@ public class Player extends Sprite implements InputProcessor {
 
         if (isServer())
         {
-            m_networkManager.notifyMove(NetworkProtocol.Owner.SERVER_PLAYER, m_current_player, m_body.getPosition().x, m_body.getPosition().y);
+            m_networkManager.notifyMove(
+                    NetworkProtocol.Owner.SERVER_PLAYER,
+                    m_current_player,
+                    m_body.getPosition().x, m_body.getPosition().y,
+                    utils.toNetworkDirection(m_direction)
+            );
         }
         else
         {
-            m_networkManager.notifyMove(NetworkProtocol.Owner.CLIENT_PLAYER, m_current_player, m_body.getPosition().x, m_body.getPosition().y);
+            m_networkManager.notifyMove(
+                    NetworkProtocol.Owner.CLIENT_PLAYER,
+                    m_current_player,
+                    m_body.getPosition().x, m_body.getPosition().y,
+                    utils.toNetworkDirection(m_direction)
+            );
         }
     }
 

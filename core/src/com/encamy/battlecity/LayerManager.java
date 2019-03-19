@@ -394,7 +394,7 @@ public class LayerManager implements Settings.WallDestroyedCallback
         m_walls.remove(wall);
     }
 
-    public void onNetworkMove(NetworkProtocol.Owner owner, float x, float y)
+    public void onNetworkMove(NetworkProtocol.Owner owner, float x, float y, Settings.Direction direction)
     {
         int index;
         if (owner == NetworkProtocol.Owner.CLIENT_PLAYER)
@@ -412,5 +412,6 @@ public class LayerManager implements Settings.WallDestroyedCallback
         }
 
         m_players[index].setPosition(new Vector2(x, y));
+        m_players[index].setDirection(direction);
     }
 }

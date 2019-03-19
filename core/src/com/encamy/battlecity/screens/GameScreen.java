@@ -21,6 +21,7 @@ import com.encamy.battlecity.entities.EnemyFactory;
 import com.encamy.battlecity.network.NetworkManager;
 import com.encamy.battlecity.protobuf.NetworkProtocol;
 import com.encamy.battlecity.utils.Dictionary;
+import com.encamy.battlecity.utils.utils;
 
 import java.util.EnumSet;
 
@@ -368,10 +369,10 @@ public class GameScreen implements
     }
 
     @Override
-    public void OnEnemyMoved(int id, float x, float y)
+    public void OnEnemyMoved(int id, float x, float y, Settings.Direction direction)
     {
         //Gdx.app.log("NETWORK", "Enemy (" + id + ") moved with position " + x + ":" + y);
-        m_networkManager.notifyMove(NetworkProtocol.Owner.ENEMY, id, x, y);
+        m_networkManager.notifyMove(NetworkProtocol.Owner.ENEMY, id, x, y, utils.toNetworkDirection(direction));
     }
 
     @Override
@@ -419,7 +420,7 @@ public class GameScreen implements
 
                 if (move.getOwner() == NetworkProtocol.Owner.ENEMY)
                 {
-                    m_enemyFactory.onNetworkMove(move.getId(), move.getX(), move.getY());
+                    m_enemyFactory.onNetworkMove(move.getId(), move.getX(), move.getY(), move.getDirection());
                 }
 
                 if (move.getOwner() == NetworkProtocol.Owner.SERVER_PLAYER && m_networkManager.isServer())
@@ -437,7 +438,10 @@ public class GameScreen implements
                 if (move.getOwner() == NetworkProtocol.Owner.SERVER_PLAYER ||
                     move.getOwner() == NetworkProtocol.Owner.CLIENT_PLAYER)
                 {
-                    m_layerManager.onNetworkMove(move.getOwner(), move.getX(), move.getY());
+                    m_layerManager.onNetworkMove(
+                            move.getOwner(),
+                            move.getX(), move.getY(),
+                            utils.fromNetworkDirection(move.getDirection()));
                 }
             }
                 break;

@@ -16,6 +16,7 @@ import com.encamy.battlecity.Settings;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.Vector;
 
 import javax.security.auth.callback.Callback;
 
@@ -89,13 +90,16 @@ public class Enemy extends Sprite {
         m_OnEnemyFired = callback;
     }
 
-    public void draw(Batch batch, boolean freeze, Vector2 linearVelocity)
+    public Vector2 draw(Batch batch, boolean freeze)
     {
+        Vector2 position = null;
         if (!freeze)
         {
-            update(Gdx.graphics.getDeltaTime(), batch, linearVelocity);
+            position = update(Gdx.graphics.getDeltaTime());
         }
         super.draw(batch);
+
+        return position;
     }
 
     public Body getBody()
@@ -152,7 +156,12 @@ public class Enemy extends Sprite {
         m_body.setTransform(vector2, 0);
     }
 
-    private void update(float deltaTime, Batch batch, Vector2 position)
+    public void setDirection(Settings.Direction direction)
+    {
+        m_direction = direction;
+    }
+
+    private Vector2 update(float deltaTime)
     {
         m_animationTime += deltaTime;
 
@@ -187,14 +196,18 @@ public class Enemy extends Sprite {
         setX(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32));
         setY(Box2dHelpers.Box2d2y(m_body.getPosition().y, 32));
 
-        position.x = m_body.getPosition().x;
-        position.y = m_body.getPosition().y;
+        return new Vector2(m_body.getPosition().x, m_body.getPosition().y);
     }
 
     public void fire(Settings.Direction direction)
     {
         m_direction = direction;
         fire(true);
+    }
+
+    public Settings.Direction getDirection()
+    {
+        return m_direction;
     }
 
     private void fire(boolean force)

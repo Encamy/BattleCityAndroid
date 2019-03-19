@@ -125,7 +125,7 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
         }
     }
 
-    public void notifyMove(NetworkProtocol.Owner owner, int id, float x, float y)
+    public void notifyMove(NetworkProtocol.Owner owner, int id, float x, float y, NetworkProtocol.Direction direction)
     {
         if (owner == NetworkProtocol.Owner.ENEMY && !m_isServer)
         {
@@ -138,7 +138,7 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
         {
             try
             {
-                m_server.sendMoveEvent(owner, id, x, y);
+                m_server.sendMoveEvent(owner, id, x, y, direction);
             }
             catch (IOException e)
             {
@@ -154,11 +154,11 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
             {
                 if (m_isServer)
                 {
-                    m_server.sendMoveEvent(owner, id, x, y);
+                    m_server.sendMoveEvent(owner, id, x, y, direction);
                 }
                 else
                 {
-                    m_client.sendMoveEvent(owner, id, x, y);
+                    m_client.sendMoveEvent(owner, id, x, y, direction);
                 }
             }
             catch (Exception e)
