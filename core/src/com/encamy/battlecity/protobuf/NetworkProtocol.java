@@ -31,6 +31,10 @@ public final class NetworkProtocol {
      * <code>CLIENT_PLAYER = 2;</code>
      */
     CLIENT_PLAYER(2),
+    /**
+     * <code>WALL = 3;</code>
+     */
+    WALL(3),
     UNRECOGNIZED(-1),
     ;
 
@@ -46,6 +50,10 @@ public final class NetworkProtocol {
      * <code>CLIENT_PLAYER = 2;</code>
      */
     public static final int CLIENT_PLAYER_VALUE = 2;
+    /**
+     * <code>WALL = 3;</code>
+     */
+    public static final int WALL_VALUE = 3;
 
 
     public final int getNumber() {
@@ -69,6 +77,7 @@ public final class NetworkProtocol {
         case 0: return ENEMY;
         case 1: return SERVER_PLAYER;
         case 2: return CLIENT_PLAYER;
+        case 3: return WALL;
         default: return null;
       }
     }
@@ -3281,6 +3290,11 @@ public final class NetworkProtocol {
      * <code>.com.encamy.battlecity.protobuf.Owner item = 1;</code>
      */
     com.encamy.battlecity.protobuf.NetworkProtocol.Owner getItem();
+
+    /**
+     * <code>int32 id = 2;</code>
+     */
+    int getId();
   }
   /**
    * Protobuf type {@code com.encamy.battlecity.protobuf.Destroyed}
@@ -3326,6 +3340,11 @@ public final class NetworkProtocol {
               int rawValue = input.readEnum();
 
               item_ = rawValue;
+              break;
+            }
+            case 16: {
+
+              id_ = input.readInt32();
               break;
             }
             default: {
@@ -3377,6 +3396,15 @@ public final class NetworkProtocol {
       return result == null ? com.encamy.battlecity.protobuf.NetworkProtocol.Owner.UNRECOGNIZED : result;
     }
 
+    public static final int ID_FIELD_NUMBER = 2;
+    private int id_;
+    /**
+     * <code>int32 id = 2;</code>
+     */
+    public int getId() {
+      return id_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -3394,6 +3422,9 @@ public final class NetworkProtocol {
       if (item_ != com.encamy.battlecity.protobuf.NetworkProtocol.Owner.ENEMY.getNumber()) {
         output.writeEnum(1, item_);
       }
+      if (id_ != 0) {
+        output.writeInt32(2, id_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -3406,6 +3437,10 @@ public final class NetworkProtocol {
       if (item_ != com.encamy.battlecity.protobuf.NetworkProtocol.Owner.ENEMY.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(1, item_);
+      }
+      if (id_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, id_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -3423,6 +3458,8 @@ public final class NetworkProtocol {
       com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed other = (com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed) obj;
 
       if (item_ != other.item_) return false;
+      if (getId()
+          != other.getId()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -3436,6 +3473,8 @@ public final class NetworkProtocol {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + ITEM_FIELD_NUMBER;
       hash = (53 * hash) + item_;
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + getId();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -3571,6 +3610,8 @@ public final class NetworkProtocol {
         super.clear();
         item_ = 0;
 
+        id_ = 0;
+
         return this;
       }
 
@@ -3598,6 +3639,7 @@ public final class NetworkProtocol {
       public com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed buildPartial() {
         com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed result = new com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed(this);
         result.item_ = item_;
+        result.id_ = id_;
         onBuilt();
         return result;
       }
@@ -3648,6 +3690,9 @@ public final class NetworkProtocol {
         if (other == com.encamy.battlecity.protobuf.NetworkProtocol.Destroyed.getDefaultInstance()) return this;
         if (other.item_ != 0) {
           setItemValue(other.getItemValue());
+        }
+        if (other.getId() != 0) {
+          setId(other.getId());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -3719,6 +3764,32 @@ public final class NetworkProtocol {
       public Builder clearItem() {
         
         item_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int id_ ;
+      /**
+       * <code>int32 id = 2;</code>
+       */
+      public int getId() {
+        return id_;
+      }
+      /**
+       * <code>int32 id = 2;</code>
+       */
+      public Builder setId(int value) {
+        
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 id = 2;</code>
+       */
+      public Builder clearId() {
+        
+        id_ = 0;
         onChanged();
         return this;
       }
@@ -6315,24 +6386,24 @@ public final class NetworkProtocol {
       "Move\0224\n\005owner\030\001 \001(\0162%.com.encamy.battlec" +
       "ity.protobuf.Owner\022\n\n\002id\030\002 \001(\005\022\t\n\001x\030\003 \001(" +
       "\002\022\t\n\001y\030\004 \001(\002\022<\n\tdirection\030\005 \001(\0162).com.en" +
-      "camy.battlecity.protobuf.Direction\"@\n\tDe" +
+      "camy.battlecity.protobuf.Direction\"L\n\tDe" +
       "stroyed\0223\n\004item\030\001 \001(\0162%.com.encamy.battl" +
-      "ecity.protobuf.Owner\"\375\001\n\005Event\022:\n\007spawne" +
-      "d\030\001 \001(\0132\'.com.encamy.battlecity.protobuf" +
-      ".SpawnedH\000\0224\n\004fire\030\002 \001(\0132$.com.encamy.ba" +
-      "ttlecity.protobuf.FireH\000\0224\n\004move\030\003 \001(\0132$" +
-      ".com.encamy.battlecity.protobuf.MoveH\000\022>" +
-      "\n\tdestroyed\030\004 \001(\0132).com.encamy.battlecit" +
-      "y.protobuf.DestroyedH\000B\014\n\nevent_type\"\276\001\n" +
-      "\rPacketWrapper\0226\n\005event\030\001 \001(\0132%.com.enca" +
-      "my.battlecity.protobuf.EventH\000\0224\n\004ping\030\002" +
-      " \001(\0132$.com.encamy.battlecity.protobuf.Pi" +
-      "ngH\000\0224\n\004pong\030\003 \001(\0132$.com.encamy.battleci" +
-      "ty.protobuf.PongH\000B\t\n\007wrapper*8\n\005Owner\022\t" +
-      "\n\005ENEMY\020\000\022\021\n\rSERVER_PLAYER\020\001\022\021\n\rCLIENT_P" +
-      "LAYER\020\002*5\n\tDirection\022\010\n\004LEFT\020\000\022\007\n\003TOP\020\001\022" +
-      "\t\n\005RIGHT\020\002\022\n\n\006BOTTOM\020\003B\021B\017NetworkProtoco" +
-      "lb\006proto3"
+      "ecity.protobuf.Owner\022\n\n\002id\030\002 \001(\005\"\375\001\n\005Eve" +
+      "nt\022:\n\007spawned\030\001 \001(\0132\'.com.encamy.battlec" +
+      "ity.protobuf.SpawnedH\000\0224\n\004fire\030\002 \001(\0132$.c" +
+      "om.encamy.battlecity.protobuf.FireH\000\0224\n\004" +
+      "move\030\003 \001(\0132$.com.encamy.battlecity.proto" +
+      "buf.MoveH\000\022>\n\tdestroyed\030\004 \001(\0132).com.enca" +
+      "my.battlecity.protobuf.DestroyedH\000B\014\n\nev" +
+      "ent_type\"\276\001\n\rPacketWrapper\0226\n\005event\030\001 \001(" +
+      "\0132%.com.encamy.battlecity.protobuf.Event" +
+      "H\000\0224\n\004ping\030\002 \001(\0132$.com.encamy.battlecity" +
+      ".protobuf.PingH\000\0224\n\004pong\030\003 \001(\0132$.com.enc" +
+      "amy.battlecity.protobuf.PongH\000B\t\n\007wrappe" +
+      "r*B\n\005Owner\022\t\n\005ENEMY\020\000\022\021\n\rSERVER_PLAYER\020\001" +
+      "\022\021\n\rCLIENT_PLAYER\020\002\022\010\n\004WALL\020\003*5\n\tDirecti" +
+      "on\022\010\n\004LEFT\020\000\022\007\n\003TOP\020\001\022\t\n\005RIGHT\020\002\022\n\n\006BOTT" +
+      "OM\020\003B\021B\017NetworkProtocolb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -6381,7 +6452,7 @@ public final class NetworkProtocol {
     internal_static_com_encamy_battlecity_protobuf_Destroyed_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_encamy_battlecity_protobuf_Destroyed_descriptor,
-        new java.lang.String[] { "Item", });
+        new java.lang.String[] { "Item", "Id", });
     internal_static_com_encamy_battlecity_protobuf_Event_descriptor =
       getDescriptor().getMessageTypes().get(6);
     internal_static_com_encamy_battlecity_protobuf_Event_fieldAccessorTable = new

@@ -10,21 +10,22 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
-import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.encamy.battlecity.entities.BaseWall;
-import com.encamy.battlecity.entities.BrickWall;
-import com.encamy.battlecity.entities.Grass;
+import com.encamy.battlecity.entities.Walls.BaseWall;
+import com.encamy.battlecity.entities.Walls.BrickWall;
+import com.encamy.battlecity.entities.Walls.Flag;
+import com.encamy.battlecity.entities.Walls.Grass;
 import com.encamy.battlecity.entities.Player;
-import com.encamy.battlecity.entities.StoneWall;
-import com.encamy.battlecity.entities.Water;
+import com.encamy.battlecity.entities.Walls.StoneWall;
+import com.encamy.battlecity.entities.Walls.Water;
 import com.encamy.battlecity.network.NetworkManager;
 import com.encamy.battlecity.protobuf.NetworkProtocol;
 import com.encamy.battlecity.utils.Box2dHelpers;
+import com.encamy.battlecity.utils._Placeholder;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -255,6 +256,7 @@ public class LayerManager implements Settings.WallDestroyedCallback
     private void loadCollision(MapObjects objects)
     {
         Gdx.app.log("Trace", "Loading collisions layer");
+        int current_id = 0;
         for (MapObject object : objects)
         {
             if (object instanceof RectangleMapObject)
@@ -268,35 +270,35 @@ public class LayerManager implements Settings.WallDestroyedCallback
                     {
                         case "brick":
                             {
-                                BaseWall wall = new BrickWall(m_world, rectangle, m_atlas.findRegion("brick"));
+                                BaseWall wall = new BrickWall(m_world, rectangle, m_atlas.findRegion("brick"), current_id);
                                 wall.setOnDestoryedCallback(this);
                                 m_walls.add(wall);
                             }
                             break;
                         case "stone":
                             {
-                                BaseWall wall = new StoneWall(m_world, rectangle, m_atlas.findRegion("stone"));
+                                BaseWall wall = new StoneWall(m_world, rectangle, m_atlas.findRegion("stone"), current_id);
                                 wall.setOnDestoryedCallback(this);
                                 m_walls.add(wall);
                             }
                             break;
                         case "grass":
                             {
-                                BaseWall wall = new Grass(m_world, rectangle, m_atlas.findRegion("grass"));
+                                BaseWall wall = new Grass(m_world, rectangle, m_atlas.findRegion("grass"), current_id);
                                 wall.setOnDestoryedCallback(this);
                                 m_walls.add(wall);
                             }
                                 break;
                         case "water":
                             {
-                                BaseWall wall = new Water(m_world, rectangle, m_atlas.findRegion("water1"));
+                                BaseWall wall = new Water(m_world, rectangle, m_atlas.findRegion("water1"), current_id);
                                 wall.setOnDestoryedCallback(this);
                                 m_walls.add(wall);
                             }
                             break;
                         case "flag":
                             {
-                                Flag flag = new Flag(m_world, rectangle, m_atlas.findRegion("flag"));
+                                Flag flag = new Flag(m_world, rectangle, m_atlas.findRegion("flag"), current_id);
                                 flag.setOnDestoryedCallback(this);
                                 m_walls.add(flag);
                             }
@@ -307,6 +309,8 @@ public class LayerManager implements Settings.WallDestroyedCallback
                     }
                 }
             }
+
+            current_id++;
         }
 
         // Create world boundaries
@@ -348,7 +352,7 @@ public class LayerManager implements Settings.WallDestroyedCallback
                 true);
     }
 
-    public boolean hit(Body body, EnumSet<Settings.ObjectType> type)
+    public boolean hit(Body body, EnumSet<Settings.ObjectType> type, _Placeholder<Integer> ref_id)
     {
         for (BaseWall wall : m_walls)
         {
@@ -373,6 +377,7 @@ public class LayerManager implements Settings.WallDestroyedCallback
                     return false;
                 }
 
+                ref_id.variable = wall.getId();
                 return wall.hit(power);
             }
         }

@@ -1,6 +1,5 @@
-package com.encamy.battlecity.entities;
+package com.encamy.battlecity.entities.Walls;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -17,8 +16,9 @@ public class Water extends Sprite implements BaseWall
     private World m_world;
     private Body m_body;
     private Settings.WallDestroyedCallback m_OnWallDestroyed;
+    private int m_id;
 
-    public Water(World world, Rectangle rectangle, TextureAtlas.AtlasRegion region)
+    public Water(World world, Rectangle rectangle, TextureAtlas.AtlasRegion region, int id)
     {
         super(region);
 
@@ -33,6 +33,7 @@ public class Water extends Sprite implements BaseWall
                 true);
 
         m_world = world;
+        m_id = id;
     }
 
     @Override
@@ -53,6 +54,12 @@ public class Water extends Sprite implements BaseWall
     public void setOnDestoryedCallback(Settings.WallDestroyedCallback callback)
     {
         m_OnWallDestroyed = callback;
+    }
+
+    @Override
+    public int getId()
+    {
+        return m_id;
     }
 
     @Override

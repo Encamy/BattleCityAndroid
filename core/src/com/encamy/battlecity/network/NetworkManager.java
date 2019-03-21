@@ -198,4 +198,9 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
     {
         return m_isServer;
     }
+
+    public void notifyDestroyed(NetworkProtocol.Owner wall, Integer variable)
+    {
+        Gdx.app.log("FATAL", "Not implemented");
+    }
 }

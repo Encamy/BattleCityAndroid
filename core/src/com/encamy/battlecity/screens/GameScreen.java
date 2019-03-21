@@ -21,6 +21,7 @@ import com.encamy.battlecity.entities.EnemyFactory;
 import com.encamy.battlecity.network.NetworkManager;
 import com.encamy.battlecity.protobuf.NetworkProtocol;
 import com.encamy.battlecity.utils.Dictionary;
+import com.encamy.battlecity.utils._Placeholder;
 import com.encamy.battlecity.utils.utils;
 
 import java.util.EnumSet;
@@ -272,27 +273,42 @@ public class GameScreen implements
             else if (type.contains(Settings.ObjectType.BRICK_WALL))
             {
                 //Gdx.app.log("TRACE", "handled");
-                boolean destroyed = m_layerManager.hit(body, type);
+                _Placeholder<Integer> ref_id = new _Placeholder();
+                boolean destroyed = m_layerManager.hit(body, type, ref_id);
                 if (!destroyed)
                 {
                     body.setUserData(EnumSet.of(Settings.ObjectType.BRICK_WALL));
+                }
+                else if (m_networkManager.isServer())
+                {
+                    m_networkManager.notifyDestroyed(NetworkProtocol.Owner.WALL, ref_id.variable);
                 }
             }
             else if (type.contains(Settings.ObjectType.STONE_WALL))
             {
                 //Gdx.app.log("TRACE", "handled");
-                boolean destroyed = m_layerManager.hit(body, type);
+                _Placeholder<Integer> ref_id = new _Placeholder();
+                boolean destroyed = m_layerManager.hit(body, type, ref_id);
                 if (!destroyed)
                 {
                     body.setUserData(EnumSet.of(Settings.ObjectType.STONE_WALL));
                 }
+                else if (m_networkManager.isServer())
+                {
+                    m_networkManager.notifyDestroyed(NetworkProtocol.Owner.WALL, ref_id.variable);
+                }
             }
             else if (type.contains(Settings.ObjectType.GRASS))
             {
-                boolean destroyed = m_layerManager.hit(body, type);
+                _Placeholder<Integer> ref_id = new _Placeholder();
+                boolean destroyed = m_layerManager.hit(body, type, ref_id);
                 if (!destroyed)
                 {
                     //Gdx.app.log("TRACE", "handled");
+                }
+                else if (m_networkManager.isServer())
+                {
+                    m_networkManager.notifyDestroyed(NetworkProtocol.Owner.WALL, ref_id.variable);
                 }
 
                 if (!type.contains(Settings.ObjectType.BULLET))
@@ -319,10 +335,15 @@ public class GameScreen implements
             else if (type.contains(Settings.ObjectType.WATER))
             {
                 //Gdx.app.log("TRACE", "handled");
-                boolean destroyed = m_layerManager.hit(body, type);
+                _Placeholder<Integer> ref_id = new _Placeholder();
+                boolean destroyed = m_layerManager.hit(body, type, ref_id);
                 if (!destroyed)
                 {
                     body.setUserData(EnumSet.of(Settings.ObjectType.WATER));
+                }
+                else if (m_networkManager.isServer())
+                {
+                    m_networkManager.notifyDestroyed(NetworkProtocol.Owner.WALL, ref_id.variable);
                 }
             }
             else if (type.contains(Settings.ObjectType.WALL))
@@ -332,7 +353,8 @@ public class GameScreen implements
             }
             else if (type.contains(Settings.ObjectType.FLAG ))
             {
-                if (m_layerManager.hit(body, type))
+                _Placeholder<Integer> ref_id = new _Placeholder();
+                if (m_layerManager.hit(body, type, ref_id))
                 {
                     Gdx.app.log("INFO", "GAME OVER");
                     m_freezeWorld = true;
@@ -342,6 +364,11 @@ public class GameScreen implements
                     {
                         Dictionary.Entry entry = dictionary.getAt(i);
                         Gdx.app.log("TRACE","level = " + entry.getKey() + " score = " + entry.getValue());
+                    }
+
+                    if (m_networkManager.isServer())
+                    {
+                        m_networkManager.notifyDestroyed(NetworkProtocol.Owner.WALL, ref_id.variable);
                     }
                 }
                 Gdx.app.log("TRACE", "FLAG");

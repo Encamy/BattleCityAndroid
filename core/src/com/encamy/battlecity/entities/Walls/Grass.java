@@ -1,26 +1,24 @@
-package com.encamy.battlecity;
+package com.encamy.battlecity.entities.Walls;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.encamy.battlecity.entities.BaseWall;
+import com.encamy.battlecity.Settings;
 import com.encamy.battlecity.utils.Box2dHelpers;
 
 import java.util.EnumSet;
 
-class Flag extends Sprite implements BaseWall
+public class Grass extends Sprite implements BaseWall
 {
-    private Texture m_texture;
     private World m_world;
     private Body m_body;
     private Settings.WallDestroyedCallback m_OnWallDestroyed;
+    private int m_id;
 
-    public Flag(World world, Rectangle rectangle, TextureAtlas.AtlasRegion region)
+    public Grass(World world, Rectangle rectangle, TextureAtlas.AtlasRegion region, int id)
     {
         super(region);
 
@@ -31,17 +29,18 @@ class Flag extends Sprite implements BaseWall
                 rectangle.width,
                 rectangle.height,
                 true,
-                EnumSet.of(Settings.ObjectType.FLAG),
+                EnumSet.of(Settings.ObjectType.GRASS),
                 false);
 
         m_world = world;
+        m_id = id;
     }
 
     @Override
     public void update()
     {
-        setX(Box2dHelpers.Box2d2x(m_body.getPosition().x, 32));
-        setY(Box2dHelpers.Box2d2y(m_body.getPosition().y, 32));
+        setX(Box2dHelpers.Box2d2x(m_body.getPosition().x, 16));
+        setY(Box2dHelpers.Box2d2y(m_body.getPosition().y, 16));
     }
 
     @Override
@@ -49,6 +48,18 @@ class Flag extends Sprite implements BaseWall
     {
         update();
         super.draw(batch);
+    }
+
+    @Override
+    public void setOnDestoryedCallback(Settings.WallDestroyedCallback callback)
+    {
+        m_OnWallDestroyed = callback;
+    }
+
+    @Override
+    public int getId()
+    {
+        return m_id;
     }
 
     @Override
@@ -67,14 +78,11 @@ class Flag extends Sprite implements BaseWall
     @Override
     public boolean hit(int power)
     {
-        Gdx.app.log("TRACE", "Flag was hitted");
-        destroy();
-        return true;
-    }
-
-    @Override
-    public void setOnDestoryedCallback(Settings.WallDestroyedCallback callback)
-    {
-        m_OnWallDestroyed = callback;
+        if (power >= 4)
+        {
+            destroy();
+            return true;
+        }
+        return false;
     }
 }

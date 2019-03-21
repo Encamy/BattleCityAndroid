@@ -1,4 +1,4 @@
-package com.encamy.battlecity.entities;
+package com.encamy.battlecity.entities.Walls;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -12,4 +12,5 @@ public interface BaseWall
     boolean hit(int power);
     void draw(Batch batch);
     void setOnDestoryedCallback(Settings.WallDestroyedCallback callback);
+    int getId();
 }

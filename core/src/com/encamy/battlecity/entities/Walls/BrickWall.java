@@ -1,6 +1,5 @@
-package com.encamy.battlecity.entities;
+package com.encamy.battlecity.entities.Walls;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -12,13 +11,14 @@ import com.encamy.battlecity.utils.Box2dHelpers;
 
 import java.util.EnumSet;
 
-public class Grass extends Sprite implements BaseWall
+public class BrickWall extends Sprite implements BaseWall
 {
     private World m_world;
     private Body m_body;
     private Settings.WallDestroyedCallback m_OnWallDestroyed;
+    private int m_id;
 
-    public Grass(World world, Rectangle rectangle, TextureAtlas.AtlasRegion region)
+    public BrickWall(World world, Rectangle rectangle, TextureAtlas.AtlasRegion region, int id)
     {
         super(region);
 
@@ -29,10 +29,11 @@ public class Grass extends Sprite implements BaseWall
                 rectangle.width,
                 rectangle.height,
                 true,
-                EnumSet.of(Settings.ObjectType.GRASS),
-                false);
+                EnumSet.of(Settings.ObjectType.BRICK_WALL),
+                true);
 
         m_world = world;
+        m_id = id;
     }
 
     @Override
@@ -56,6 +57,12 @@ public class Grass extends Sprite implements BaseWall
     }
 
     @Override
+    public int getId()
+    {
+        return m_id;
+    }
+
+    @Override
     public void destroy()
     {
         m_world.destroyBody(m_body);
@@ -71,7 +78,7 @@ public class Grass extends Sprite implements BaseWall
     @Override
     public boolean hit(int power)
     {
-        if (power >= 4)
+        if (power >= 1)
         {
             destroy();
             return true;

@@ -15,6 +15,7 @@ enum Owner {
     ENEMY = 0;
     SERVER_PLAYER = 1;
     CLIENT_PLAYER = 2;
+    WALL = 3;
 }
 
 enum Direction {
@@ -48,6 +49,7 @@ message Move {
 
 message Destroyed {
     Owner item = 1;
+    int32 id = 2;
 }
 
 message Event {
