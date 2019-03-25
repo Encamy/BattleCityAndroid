@@ -279,7 +279,7 @@ public class GameScreen implements
                 {
                     body.setUserData(EnumSet.of(Settings.ObjectType.BRICK_WALL));
                 }
-                else if (m_networkManager.isServer())
+                else if (m_networkManager != null && m_networkManager.isServer())
                 {
                     m_networkManager.notifyDestroyed(NetworkProtocol.Owner.WALL, ref_id.variable);
                 }
@@ -293,7 +293,7 @@ public class GameScreen implements
                 {
                     body.setUserData(EnumSet.of(Settings.ObjectType.STONE_WALL));
                 }
-                else if (m_networkManager.isServer())
+                else if (m_networkManager != null && m_networkManager.isServer())
                 {
                     m_networkManager.notifyDestroyed(NetworkProtocol.Owner.WALL, ref_id.variable);
                 }
@@ -306,7 +306,7 @@ public class GameScreen implements
                 {
                     //Gdx.app.log("TRACE", "handled");
                 }
-                else if (m_networkManager.isServer())
+                else if (m_networkManager != null && m_networkManager.isServer())
                 {
                     m_networkManager.notifyDestroyed(NetworkProtocol.Owner.WALL, ref_id.variable);
                 }
@@ -341,7 +341,7 @@ public class GameScreen implements
                 {
                     body.setUserData(EnumSet.of(Settings.ObjectType.WATER));
                 }
-                else if (m_networkManager.isServer())
+                else if (m_networkManager != null && m_networkManager.isServer())
                 {
                     m_networkManager.notifyDestroyed(NetworkProtocol.Owner.WALL, ref_id.variable);
                 }
@@ -366,7 +366,7 @@ public class GameScreen implements
                         Gdx.app.log("TRACE","level = " + entry.getKey() + " score = " + entry.getValue());
                     }
 
-                    if (m_networkManager.isServer())
+                    if (m_networkManager != null && m_networkManager.isServer())
                     {
                         m_networkManager.notifyDestroyed(NetworkProtocol.Owner.WALL, ref_id.variable);
                     }
@@ -494,6 +494,14 @@ public class GameScreen implements
             }
                 break;
             case DESTROYED:
+            {
+                NetworkProtocol.Destroyed destroyed = event.getDestroyed();
+
+                if (destroyed.getItem() == NetworkProtocol.Owner.WALL && !m_networkManager.isServer())
+                {
+                    m_layerManager.onNetworkWallDestroy(destroyed.getItem(), destroyed.getId());
+                }
+            }
                 break;
             case EVENTTYPE_NOT_SET:
                 Gdx.app.log("NETWORK ERROR", "Wrapper type is not set. Probably wrong packet structure");

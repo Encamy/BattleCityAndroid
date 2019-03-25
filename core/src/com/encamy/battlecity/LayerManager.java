@@ -396,6 +396,18 @@ public class LayerManager implements Settings.WallDestroyedCallback
     @Override
     public void OnWallDestroyed(BaseWall wall)
     {
+/*        // Single player
+        if (m_networkManager == null)
+        {
+            m_walls.remove(wall);
+            return;
+        }
+
+        //if (m_networkManager.isServer())
+        {
+            m_walls.remove(wall);
+        }
+*/
         m_walls.remove(wall);
     }
 
@@ -427,5 +439,20 @@ public class LayerManager implements Settings.WallDestroyedCallback
             m_players[]
         }*/
         m_players[fire.getId() - 1].fire();
+    }
+
+    public void onNetworkWallDestroy(NetworkProtocol.Owner owner, int id)
+    {
+        Gdx.app.log("NETWORK", "wall was destroyed " + id);
+        for(int i = 0; i < m_walls.size(); i++)
+        {
+            if (m_walls.get(i).getId() == id)
+            {
+                BaseWall wall = m_walls.get(i);
+                //m_walls.remove(wall);
+                wall.destroy();
+                break;
+            }
+        }
     }
 }

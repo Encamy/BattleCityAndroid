@@ -134,4 +134,18 @@ public class TCPserver extends Thread
 
         wrapper.writeDelimitedTo(m_outputStream);
     }
+
+    public void sendDestroyEvent(NetworkProtocol.Owner wall, Integer id) throws IOException
+    {
+        NetworkProtocol.PacketWrapper wrapper =
+                NetworkProtocol.PacketWrapper.newBuilder().setEvent(
+                        NetworkProtocol.Event.newBuilder().setDestroyed(
+                                NetworkProtocol.Destroyed.newBuilder()
+                                .setId(id)
+                                .setItem(wall)
+                        )
+                ).build();
+
+        wrapper.writeDelimitedTo(m_outputStream);
+    }
 }
