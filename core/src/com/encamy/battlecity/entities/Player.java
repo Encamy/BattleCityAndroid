@@ -329,16 +329,10 @@ public class Player extends Sprite implements InputProcessor {
         m_health--;
         Gdx.app.log("TRACE", "Player was hitted. Current health: " + m_health);
 
-        // Is there a better way to change x and y?ss
-        m_world.destroyBody(m_body);
-        m_body = Box2dHelpers.createBox(
-                m_world,
-                m_spawnPoint.x,
-                m_spawnPoint.y,
-                54, 54,
-                false,
-                EnumSet.of(Settings.ObjectType.PLAYER),
-                true);
+        float x = m_spawnPoint.x / Settings.PPM - Settings.SCREEN_WIDTH / Settings.PPM * 0.5f;
+        float y = m_spawnPoint.y / Settings.PPM - Settings.SCREEN_HEIGHT / Settings.PPM * 0.5f;
+        m_body.setTransform(new Vector2(x, y), 0);
+        m_body.setUserData(EnumSet.of(Settings.ObjectType.PLAYER));
 
         m_animationTime = 0f;
         m_state = State.SPAWNING;
