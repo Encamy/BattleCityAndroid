@@ -1,8 +1,11 @@
 package com.encamy.battlecity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
@@ -27,12 +30,15 @@ import com.encamy.battlecity.network.NetworkManager;
 import com.encamy.battlecity.protobuf.NetworkProtocol;
 import com.encamy.battlecity.utils.Box2dHelpers;
 import com.encamy.battlecity.utils._Placeholder;
+import com.encamy.battlecity.utils.utils;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Iterator;
 
 import static com.encamy.battlecity.Settings.ANIMATION_FRAME_DURATION;
+import static com.encamy.battlecity.Settings.SCREEN_HEIGHT;
+import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
 
 public class LayerManager implements Settings.WallDestroyedCallback
 {
@@ -43,6 +49,9 @@ public class LayerManager implements Settings.WallDestroyedCallback
     private ArrayList<BaseWall> m_walls;
     private BulletManager m_bulletManager;
     private NetworkManager m_networkManager;
+    private Texture m_ui_background;
+    private BitmapFont m_bitmapFont;
+    private GlyphLayout m_glyphLayout;
 
     private boolean loaded = false;
 
@@ -52,6 +61,9 @@ public class LayerManager implements Settings.WallDestroyedCallback
         m_walls = new ArrayList<>();
         m_bulletManager = bulletManager;
         m_networkManager = networkManager;
+        m_glyphLayout = new GlyphLayout();
+        m_bitmapFont = new BitmapFont(Gdx.files.internal("bcFont.fnt"), Gdx.files.internal("bcFont.png"), false);
+        m_bitmapFont.getData().setScale(0.75f);
     }
 
     public void updatePlayers(Batch batch, boolean freeze)
@@ -76,6 +88,8 @@ public class LayerManager implements Settings.WallDestroyedCallback
         MapObjects objects = m_tileMap.getLayers().get("Collisions").getObjects();
 
         loadCollision(objects);
+
+        m_ui_background = new Texture("UI_background.png");
 
         loaded = true;
     }
@@ -446,5 +460,17 @@ public class LayerManager implements Settings.WallDestroyedCallback
         result.x = layer.getTileWidth() * layer.getWidth();
         result.y = layer.getTileHeight() * layer.getHeight();
         return result;
+    }
+
+    public void drawUI(SpriteBatch batch)
+    {
+        //batch.draw(m_ui_background, getMapSize().x, Settings.SCREEN_HEIGHT - getMapSize().y);
+        //batch.draw(m_ui_background, 0, Settings.SCREEN_HEIGHT - getMapSize().y);
+        batch.draw(m_ui_background, 0, 0);
+
+        float XOffset = Settings.SCREEN_WIDTH * 0.95f;
+        float YOffset = Settings.SCREEN_HEIGHT - (Settings.SCREEN_HEIGHT * 0.635f);
+        m_glyphLayout.setText(m_bitmapFont, Integer.toString(m_players[0].getHealth()));
+        m_bitmapFont.draw(batch, m_glyphLayout, XOffset, YOffset);
     }
 }

@@ -153,6 +153,11 @@ public class Player extends Sprite implements InputProcessor {
         m_direction = direction;
     }
 
+    public int getHealth()
+    {
+        return m_health;
+    }
+
     private void updateSpawnAnimation(float animationTime)
     {
         super.setRegion((TextureAtlas.AtlasRegion) m_playerSpawAnimation.getKeyFrame(animationTime));
