@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -336,7 +337,7 @@ public class LayerManager implements Settings.WallDestroyedCallback
         // top
         Box2dHelpers.createBox(
                 m_world,
-                0, Settings.SCREEN_HEIGHT + 1,
+                0, getMapSize().y,
                 Settings.SCREEN_WIDTH, 10,
                 true,
                 EnumSet.of(Settings.ObjectType.WALL),
@@ -345,7 +346,7 @@ public class LayerManager implements Settings.WallDestroyedCallback
         // right
         Box2dHelpers.createBox(
                 m_world,
-                Settings.SCREEN_WIDTH + 2, 0,
+                getMapSize().x, 0,
                 10, Settings.SCREEN_HEIGHT,
                 true,
                 EnumSet.of(Settings.ObjectType.WALL),
@@ -436,5 +437,14 @@ public class LayerManager implements Settings.WallDestroyedCallback
                 break;
             }
         }
+    }
+
+    public Vector2 getMapSize()
+    {
+        TiledMapTileLayer layer = (TiledMapTileLayer) m_tileMap.getLayers().get(0);
+        Vector2 result = new Vector2();
+        result.x = layer.getTileWidth() * layer.getWidth();
+        result.y = layer.getTileHeight() * layer.getHeight();
+        return result;
     }
 }
