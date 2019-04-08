@@ -137,7 +137,7 @@ public class GameScreen implements
         m_layerManager.updatePlayers(m_spriteBatch, m_freezeWorld);
         m_enemyFactory.draw(m_spriteBatch, m_freezeWorld);
         m_layerManager.drawWalls(m_spriteBatch);
-        m_layerManager.drawUI(m_spriteBatch);
+        m_layerManager.drawUI(m_spriteBatch, m_enemyFactory.getEnemiesLeft());
         //Gdx.app.log("TRACE", "Map width = " + m_layerManager.getMapSize().x + " height = " + m_layerManager.getMapSize().y);
         m_bulletManager.update(m_spriteBatch);
         m_spriteBatch.end();

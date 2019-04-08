@@ -31,6 +31,8 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.O
     private MapObjects m_spawnPoints;
     private int m_currentRandomCounter = 0;
 
+    private static final int m_totalEnemies = 20;
+    private int m_spawnedEnemies = 0;
     private static final int m_spawnIntervalMs = 1000;
     private static final int m_maxEnemies = 4;
     private int m_elapsedTime = 0;
@@ -83,7 +85,7 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.O
         {
             if (m_elapsedTime > m_spawnIntervalMs)
             {
-                if (m_enemies.size() < m_maxEnemies)
+                if (m_enemies.size() < m_maxEnemies && m_spawnedEnemies <= m_totalEnemies)
                 {
                     spawn();
                 }
@@ -144,6 +146,11 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.O
         enemy.fire(bulletDirection);
     }
 
+    public int getEnemiesLeft()
+    {
+        return m_totalEnemies - m_spawnedEnemies;
+    }
+
     private Enemy CreateRandomEnemy(Vector2 spawnpoint)
     {
         m_last_id++;
@@ -161,6 +168,8 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.O
         {
             m_onEnemySpawnedCallback.OnEnemySpawned(m_last_id, spawnpoint.x, spawnpoint.y, level);
         }
+
+        m_spawnedEnemies++;
 
         return new Enemy(spawnpoint, m_properties.Get(level), m_world, m_playerSteeringEntity, m_bulletManager, m_last_id++);
     }

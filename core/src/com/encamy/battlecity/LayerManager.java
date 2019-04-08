@@ -50,6 +50,7 @@ public class LayerManager implements Settings.WallDestroyedCallback
     private BulletManager m_bulletManager;
     private NetworkManager m_networkManager;
     private Texture m_ui_background;
+    private Texture m_enemyIcon;
     private BitmapFont m_bitmapFont;
     private GlyphLayout m_glyphLayout;
 
@@ -90,6 +91,7 @@ public class LayerManager implements Settings.WallDestroyedCallback
         loadCollision(objects);
 
         m_ui_background = new Texture("UI_background.png");
+        m_enemyIcon = new Texture("enemy_icon.png");
 
         loaded = true;
     }
@@ -462,15 +464,35 @@ public class LayerManager implements Settings.WallDestroyedCallback
         return result;
     }
 
-    public void drawUI(SpriteBatch batch)
+    public void drawUI(SpriteBatch batch, int enemiesLeft)
     {
         //batch.draw(m_ui_background, getMapSize().x, Settings.SCREEN_HEIGHT - getMapSize().y);
         //batch.draw(m_ui_background, 0, Settings.SCREEN_HEIGHT - getMapSize().y);
         batch.draw(m_ui_background, 0, 0);
 
         float XOffset = Settings.SCREEN_WIDTH * 0.95f;
-        float YOffset = Settings.SCREEN_HEIGHT - (Settings.SCREEN_HEIGHT * 0.635f);
+        float YOffset = Settings.SCREEN_HEIGHT - (Settings.SCREEN_HEIGHT * 0.835f);
         m_glyphLayout.setText(m_bitmapFont, Integer.toString(m_players[0].getHealth()));
         m_bitmapFont.draw(batch, m_glyphLayout, XOffset, YOffset);
+
+        XOffset = Settings.SCREEN_WIDTH * 0.90f;
+        YOffset = Settings.SCREEN_HEIGHT - (Settings.SCREEN_HEIGHT * 0.10f);
+
+        if (enemiesLeft == 0)
+        {
+            return;
+        }
+
+        for (int i = 0; i < enemiesLeft / 2; i++)
+        {
+            batch.draw(m_enemyIcon, XOffset, YOffset);
+            batch.draw(m_enemyIcon, XOffset + 40, YOffset);
+            YOffset -= 50;
+        }
+
+        if (enemiesLeft % 2 != 0)
+        {
+            batch.draw(m_enemyIcon, XOffset, YOffset);
+        }
     }
 }
