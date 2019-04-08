@@ -85,7 +85,7 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.O
         {
             if (m_elapsedTime > m_spawnIntervalMs)
             {
-                if (m_enemies.size() < m_maxEnemies && m_spawnedEnemies <= m_totalEnemies)
+                if (m_enemies.size() < m_maxEnemies && m_spawnedEnemies < m_totalEnemies)
                 {
                     spawn();
                 }
