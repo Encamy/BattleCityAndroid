@@ -466,8 +466,6 @@ public class LayerManager implements Settings.WallDestroyedCallback
 
     public void drawUI(SpriteBatch batch, int enemiesLeft)
     {
-        //batch.draw(m_ui_background, getMapSize().x, Settings.SCREEN_HEIGHT - getMapSize().y);
-        //batch.draw(m_ui_background, 0, Settings.SCREEN_HEIGHT - getMapSize().y);
         batch.draw(m_ui_background, 0, 0);
 
         float XOffset = Settings.SCREEN_WIDTH * 0.95f;

@@ -38,6 +38,14 @@ public class Settings {
         SHOTTED;
     }
 
+    public enum GameState
+    {
+        LOAD_STATE,
+        PLAY_STATE,
+        SCORE_STATE,
+        GAME_OVER_STATE
+    }
+
     public interface EnemyDestroyedCallback
     {
         void OnEnemyDestroyed(Enemy enemy);

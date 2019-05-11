@@ -12,6 +12,9 @@ public class DesktopLauncher
 		config.width = 1280;
 		config.height = 720;
 
+		//config.width = 640;
+		//config.height = 360;
+
 		new LwjglApplication(new BattleCityGame(null), config);
 	}
 }

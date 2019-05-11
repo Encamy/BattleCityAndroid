@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -25,6 +28,9 @@ import com.encamy.battlecity.utils._Placeholder;
 import com.encamy.battlecity.utils.utils;
 
 import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
+import java.util.Vector;
 
 import static com.encamy.battlecity.Settings.SCREEN_HEIGHT;
 import static com.encamy.battlecity.Settings.SCREEN_WIDTH;
@@ -53,6 +59,12 @@ public class GameScreen implements
 
     private NetworkManager m_networkManager;
     private EventQueue m_eventQueue;
+    private Settings.GameState m_state;
+
+    private Texture m_scoreBackground;
+
+    private BitmapFont m_bitmapFont;
+    private GlyphLayout m_glyphLayout;
 
     public GameScreen(NetworkManager networkManager)
     {
@@ -99,6 +111,7 @@ public class GameScreen implements
             m_currentPlayer = 2;
         }
 
+        m_state = Settings.GameState.LOAD_STATE;
         m_layerManager.loadLevel("general_map.tmx");
         m_layerManager.loadPlayer(m_currentPlayer, false);
 
@@ -119,6 +132,13 @@ public class GameScreen implements
             m_enemyFactory.setOnUpdateCallback(this);
             m_enemyFactory.setOnEnemyFiredCallback(this);
         }
+
+        m_scoreBackground = new Texture("score_background.png");
+        m_glyphLayout = new GlyphLayout();
+        m_bitmapFont = new BitmapFont(Gdx.files.internal("bcFont.fnt"), Gdx.files.internal("bcFont.png"), false);
+        m_bitmapFont.getData().setScale(0.75f);
+
+        m_state = Settings.GameState.PLAY_STATE;
 	}
 
     @Override
@@ -140,13 +160,66 @@ public class GameScreen implements
         m_layerManager.drawUI(m_spriteBatch, m_enemyFactory.getEnemiesLeft());
         //Gdx.app.log("TRACE", "Map width = " + m_layerManager.getMapSize().x + " height = " + m_layerManager.getMapSize().y);
         m_bulletManager.update(m_spriteBatch);
+
+        if (m_state == Settings.GameState.SCORE_STATE || m_state == Settings.GameState.GAME_OVER_STATE)
+        {
+            m_spriteBatch.draw(m_scoreBackground, 0, 0);
+
+            if (m_layerManager.getPlayer(1) != null)
+            {
+                Dictionary<Integer, Integer> dictionary1P = m_layerManager.getPlayer(1).getDestroyedEnemies();
+                Integer[] countFirstPlayer = new Integer[4];
+                Integer[] scoreFirstPlayer = new Integer[4];
+
+                for(int i = 0; i < dictionary1P.size(); i++)
+                {
+                    Dictionary.Entry entry = dictionary1P.getAt(i);
+                    countFirstPlayer[(int)entry.getKey() - 1]++;
+                    scoreFirstPlayer[(int)entry.getKey() - 1] += (int)entry.getValue();
+                }
+
+                for (int i = 0; i < 4; i++)
+                {
+                    countFirstPlayer[i] = 0;
+                    scoreFirstPlayer[i] = 0;
+                }
+
+                m_glyphLayout.setText(m_bitmapFont, Integer.toString(countFirstPlayer[0]));
+                m_bitmapFont.draw(m_spriteBatch, m_glyphLayout, 0.27f * Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT - Settings.SCREEN_HEIGHT * 0.4f);
+
+                m_glyphLayout.setText(m_bitmapFont, Integer.toString(countFirstPlayer[1]));
+                m_bitmapFont.draw(m_spriteBatch, m_glyphLayout, 0.27f * Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT - Settings.SCREEN_HEIGHT * 0.5f);
+
+                m_glyphLayout.setText(m_bitmapFont, Integer.toString(countFirstPlayer[2]));
+                m_bitmapFont.draw(m_spriteBatch, m_glyphLayout, 0.27f * Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT - Settings.SCREEN_HEIGHT * 0.6f);
+
+                m_glyphLayout.setText(m_bitmapFont, Integer.toString(countFirstPlayer[3]));
+                m_bitmapFont.draw(m_spriteBatch, m_glyphLayout, 0.27f * Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT - Settings.SCREEN_HEIGHT * 0.7f);
+            }
+
+            if (m_layerManager.getPlayer(2) != null)
+            {
+                Dictionary<Integer, Integer> dictionary2P = m_layerManager.getPlayer(2).getDestroyedEnemies();
+
+                Array<Integer> countSecondPlayer = new Array<>(4);
+                Array<Integer> scoreSecondPlayer = new Array<>(4);
+
+                for (int i = 0; i < dictionary2P.size(); i++)
+                {
+                    Dictionary.Entry entry = dictionary2P.getAt(i);
+                    countSecondPlayer.items[(int) entry.getKey() - 1]++;
+                    scoreSecondPlayer.items[(int) entry.getKey() - 1] += (int) entry.getValue();
+                }
+            }
+        }
+
         m_spriteBatch.end();
         if (!m_freezeWorld)
         {
             m_world.step(Gdx.graphics.getDeltaTime(), 6, 2);
         }
 
-        m_b2drenderer.render(m_world, m_debugCamera.projection);
+        //m_b2drenderer.render(m_world, m_debugCamera.projection);
 
         processHitted();
 
@@ -359,6 +432,7 @@ public class GameScreen implements
                 if (m_layerManager.hit(body, type, ref_id))
                 {
                     Gdx.app.log("INFO", "GAME OVER");
+                    m_state = Settings.GameState.GAME_OVER_STATE;
                     m_freezeWorld = true;
 
                     Dictionary<Integer, Integer> dictionary = m_layerManager.getPlayer(1).getDestroyedEnemies();
