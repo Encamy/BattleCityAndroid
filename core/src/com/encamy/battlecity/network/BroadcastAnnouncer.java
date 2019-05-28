@@ -47,7 +47,7 @@ public class BroadcastAnnouncer extends Thread
 
             try
             {
-                Thread.sleep(1000);
+                Thread.sleep(100);
             }
             catch (InterruptedException e)
             {
