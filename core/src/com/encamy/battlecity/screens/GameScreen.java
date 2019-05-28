@@ -355,7 +355,10 @@ public class GameScreen implements
                                 m_layerManager.getPlayer(2).enemyDestroyed(level, score);
                             }
 
-                            m_networkManager.notifyDestroyed(NetworkProtocol.Owner.ENEMY, enemy.getId());
+                            if (m_networkManager != null)
+                            {
+                                m_networkManager.notifyDestroyed(NetworkProtocol.Owner.ENEMY, enemy.getId());
+                            }
                         }
                         else
                         {
