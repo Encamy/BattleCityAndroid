@@ -21,6 +21,8 @@ public class Bullet extends Sprite
     private Vector2 m_vector;
     private Animation m_destroyAnimation;
     private float m_animationDuration;
+    private int m_stillCount;
+    private Vector2 m_previousPosition;
 
     public enum State {
         ALIVE,
@@ -77,6 +79,10 @@ public class Bullet extends Sprite
                 atlas.findRegion("hit_animation_3"));
 
         m_animationDuration = 0;
+
+        m_previousPosition = new Vector2();
+        m_stillCount = 0;
+
     }
 
     public boolean update(Batch batch)
@@ -104,6 +110,21 @@ public class Bullet extends Sprite
 
         setX(Box2dHelpers.Box2d2x(m_body.getPosition().x, 16));
         setY(Box2dHelpers.Box2d2y(m_body.getPosition().y, 16));
+
+        if (m_previousPosition.x == m_body.getPosition().x && m_previousPosition.y == m_body.getPosition().y)
+        {
+            m_stillCount++;
+        }
+        else
+        {
+            m_previousPosition.x = m_body.getPosition().x;
+            m_previousPosition.y = m_body.getPosition().y;
+        }
+
+        if (m_stillCount >= 10)
+        {
+            setState(State.DESTROYING);
+        }
 
         super.draw(batch);
 

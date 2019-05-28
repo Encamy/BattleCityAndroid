@@ -470,8 +470,11 @@ public class LayerManager implements Settings.WallDestroyedCallback
 
         float XOffset = Settings.SCREEN_WIDTH * 0.95f;
         float YOffset = Settings.SCREEN_HEIGHT - (Settings.SCREEN_HEIGHT * 0.835f);
-        m_glyphLayout.setText(m_bitmapFont, Integer.toString(m_players[0].getHealth()));
-        m_bitmapFont.draw(batch, m_glyphLayout, XOffset, YOffset);
+        if (m_players[0] != null)
+        {
+            m_glyphLayout.setText(m_bitmapFont, Integer.toString(m_players[0].getHealth()));
+            m_bitmapFont.draw(batch, m_glyphLayout, XOffset, YOffset);
+        }
 
         XOffset = Settings.SCREEN_WIDTH * 0.90f;
         YOffset = Settings.SCREEN_HEIGHT - (Settings.SCREEN_HEIGHT * 0.10f);
