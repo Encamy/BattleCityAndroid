@@ -273,6 +273,10 @@ public class GameScreen implements
             {
                 if (!type.contains(Settings.ObjectType.ENEMY_OWNER))
                 {
+                    if (m_networkManager != null && !m_networkManager.isServer())
+                    {
+                        return;
+                    }
                     //Gdx.app.log("TRACE", "Handled");
 
                     Enemy enemy = m_enemyFactory.getEnemy(body);
@@ -294,6 +298,8 @@ public class GameScreen implements
                             {
                                 m_layerManager.getPlayer(2).enemyDestroyed(level, score);
                             }
+
+                            m_networkManager.notifyDestroyed(NetworkProtocol.Owner.ENEMY, enemy.getId());
                         }
                         else
                         {
@@ -347,6 +353,10 @@ public class GameScreen implements
             }
             else if (type.contains(Settings.ObjectType.BRICK_WALL))
             {
+                if (m_networkManager != null && !m_networkManager.isServer())
+                {
+                    return;
+                }
                 //Gdx.app.log("TRACE", "handled");
                 _Placeholder<Integer> ref_id = new _Placeholder();
                 boolean destroyed = m_layerManager.hit(body, type, ref_id);
@@ -361,6 +371,10 @@ public class GameScreen implements
             }
             else if (type.contains(Settings.ObjectType.STONE_WALL))
             {
+                if (m_networkManager != null && !m_networkManager.isServer())
+                {
+                    return;
+                }
                 //Gdx.app.log("TRACE", "handled");
                 _Placeholder<Integer> ref_id = new _Placeholder();
                 boolean destroyed = m_layerManager.hit(body, type, ref_id);
@@ -576,6 +590,10 @@ public class GameScreen implements
                 if (destroyed.getItem() == NetworkProtocol.Owner.WALL && !m_networkManager.isServer())
                 {
                     m_layerManager.onNetworkWallDestroy(destroyed.getItem(), destroyed.getId());
+                }
+                else if (destroyed.getItem() == NetworkProtocol.Owner.ENEMY)
+                {
+                    m_enemyFactory.OnNetworkDestroyed(destroyed.getId());
                 }
             }
                 break;

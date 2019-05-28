@@ -271,7 +271,7 @@ public class Enemy extends Sprite {
         return false;
     }
 
-    private void destroy()
+    public void destroy()
     {
         m_world.destroyBody(m_body);
         m_OnEnemyDestroyed.OnEnemyDestroyed(this);

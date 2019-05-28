@@ -317,4 +317,16 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.O
             m_onEnemyFiredCallback.OnEnemyFired(id, direction);
         }
     }
+
+    public void OnNetworkDestroyed(int id)
+    {
+        for (int i = 0; i < m_enemies.size(); i++)
+        {
+            Enemy current = m_enemies.get(i);
+            if (current.getId() == id)
+            {
+                current.destroy();
+            }
+        }
+    }
 }

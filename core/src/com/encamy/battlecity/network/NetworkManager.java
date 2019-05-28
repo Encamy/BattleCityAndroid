@@ -199,17 +199,17 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
         return m_isServer;
     }
 
-    public void notifyDestroyed(NetworkProtocol.Owner wall, Integer id)
+    public void notifyDestroyed(NetworkProtocol.Owner owner, Integer id)
     {
         if (!isServer())
         {
-            Gdx.app.log("FATAL", "Trying to notify about wall destroying from client side. Should not happen");
+            Gdx.app.log("FATAL", "Trying to notify about destroying from client side. Should not happen");
             return;
         }
 
         try
         {
-            m_server.sendDestroyEvent(wall, id);
+            m_server.sendDestroyEvent(owner, id);
         }
         catch (IOException e)
         {
