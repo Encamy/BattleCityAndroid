@@ -85,4 +85,9 @@ public class Settings {
     {
         void OnEnemyFired(int id, Settings.Direction direction);
     }
+
+    public interface OnAllEnemiesDestroyedCallback
+    {
+        void OnAllEnemiesDestroyed();
+    }
 }

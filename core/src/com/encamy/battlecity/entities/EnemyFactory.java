@@ -39,6 +39,7 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.O
     private EnemyProperties m_properties;
 
     private Vector<Enemy> m_enemies = new Vector<Enemy>();
+    private boolean m_enemiesWasSpawned = false;
 
     private World m_world;
     private Box2dSteeringEntity m_playerSteeringEntity;
@@ -48,6 +49,7 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.O
     private Settings.OnEnemySpawnedCallback m_onEnemySpawnedCallback;
     private Settings.OnEnemyMovedCallback m_onEnemyMovedCallback;
     private Settings.OnEnemyFiredCallback m_onEnemyFiredCallback;
+    private Settings.OnAllEnemiesDestroyedCallback m_onAllEnemiesDestroyedCallback;
 
     private boolean m_master;
 
@@ -92,6 +94,11 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.O
                 m_elapsedTime %= m_spawnIntervalMs;
             }
         }
+
+        if (m_enemies.size() == 0 && m_onAllEnemiesDestroyedCallback != null && m_enemiesWasSpawned == true)
+        {
+            m_onAllEnemiesDestroyedCallback.OnAllEnemiesDestroyed();
+        }
     }
 
     public void onNetworkSpawn(int id, float x, float y, int level)
@@ -107,6 +114,8 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.O
         // do we need it here or it's better to implement via OnDestroyed event?
         enemy.setOnDestroyedCallback(this);
         m_enemies.add(enemy);
+
+        m_enemiesWasSpawned = true;
     }
 
     public void onNetworkMove(int id, float x, float y, NetworkProtocol.Direction direction)
@@ -193,6 +202,8 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.O
         }
 
         m_enemies.add(enemy);
+
+        m_enemiesWasSpawned = true;
     }
 
     private Vector2 getSpawnPoint()
@@ -307,6 +318,11 @@ public class EnemyFactory implements Settings.EnemyDestroyedCallback, Settings.O
     public void setOnEnemyFiredCallback(Settings.OnEnemyFiredCallback callback)
     {
         m_onEnemyFiredCallback = callback;
+    }
+
+    public void setOnAllEnemiesDestroyedCallback(Settings.OnAllEnemiesDestroyedCallback callback)
+    {
+        m_onAllEnemiesDestroyedCallback = callback;
     }
 
     @Override

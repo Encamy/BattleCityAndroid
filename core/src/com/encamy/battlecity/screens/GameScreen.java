@@ -41,7 +41,8 @@ public class GameScreen implements
         Settings.OnEnemySpawnedCallback,
         Settings.OnMessageReceivedCallback,
         Settings.OnEnemyFiredCallback,
-        EventQueue.EventQueueCallback
+        EventQueue.EventQueueCallback,
+        Settings.OnAllEnemiesDestroyedCallback
 {
 
 	private OrthographicCamera m_camera;
@@ -130,12 +131,14 @@ public class GameScreen implements
                 isMaster
         );
 
-        if (isMaster  && m_networkManager != null)
+        if (isMaster && m_networkManager != null)
         {
             m_enemyFactory.setOnSpawnedCallback(this);
             m_enemyFactory.setOnUpdateCallback(this);
             m_enemyFactory.setOnEnemyFiredCallback(this);
         }
+
+        m_enemyFactory.setOnAllEnemiesDestroyedCallback(this);
 
         m_scoreBackground = new Texture("score_background.png");
         m_glyphLayout = new GlyphLayout();
@@ -145,8 +148,20 @@ public class GameScreen implements
         m_state = Settings.GameState.PLAY_STATE;
 
         m_destroyedFirstPlayer = new Vector<>();
+        m_destroyedFirstPlayer.add(0);
+        m_destroyedFirstPlayer.add(0);
+        m_destroyedFirstPlayer.add(0);
+        m_destroyedFirstPlayer.add(0);
         m_destroyedSecondPlayer = new Vector<>();
+        m_destroyedSecondPlayer.add(0);
+        m_destroyedSecondPlayer.add(0);
+        m_destroyedSecondPlayer.add(0);
+        m_destroyedSecondPlayer.add(0);
         m_enemyCost = new Vector<>();
+        m_enemyCost.add(0);
+        m_enemyCost.add(0);
+        m_enemyCost.add(0);
+        m_enemyCost.add(0);
 	}
 
     @Override
@@ -508,62 +523,12 @@ public class GameScreen implements
                     m_state = Settings.GameState.GAME_OVER_STATE;
                     m_freezeWorld = true;
 
-                    Dictionary<Integer, Integer> dictionary = m_layerManager.getPlayer(1).getDestroyedEnemies();
-                    for(int i = 0; i < dictionary.size(); i++)
-                    {
-                        Dictionary.Entry entry = dictionary.getAt(i);
-                        Gdx.app.log("TRACE","level = " + entry.getKey() + " score = " + entry.getValue());
-                    }
-
                     if (m_networkManager != null && m_networkManager.isServer())
                     {
                         m_networkManager.notifyDestroyed(NetworkProtocol.Owner.WALL, ref_id.variable);
-
-                        Vector<Integer> countFirstPlayer = new Vector<>();
-                        Vector<Integer> countSecondPlayer = new Vector<>();
-                        Vector<Integer> enemyCost = new Vector<>();
-                        enemyCost.add(0);
-                        enemyCost.add(0);
-                        enemyCost.add(0);
-                        enemyCost.add(0);
-
-                        if (m_layerManager.getPlayer(1) != null)
-                        {
-                            Dictionary<Integer, Integer> dictionaryDestroyed = m_layerManager.getPlayer(1).getDestroyedEnemies();
-                            countFirstPlayer.add(0);
-                            countFirstPlayer.add(0);
-                            countFirstPlayer.add(0);
-                            countFirstPlayer.add(0);
-
-                            for(int i = 0; i < dictionaryDestroyed.size(); i++)
-                            {
-                                Dictionary.Entry entry = dictionaryDestroyed.getAt(i);
-                                int id = (int)entry.getKey();
-                                countFirstPlayer.set(id, countFirstPlayer.get(id) + 1);
-                                enemyCost.set(id, (int)entry.getValue());
-                            }
-                        }
-
-                        if (m_layerManager.getPlayer(2) != null)
-                        {
-                            Dictionary<Integer, Integer> dictionaryDestroyed = m_layerManager.getPlayer(2).getDestroyedEnemies();
-
-                            countSecondPlayer.add(0);
-                            countSecondPlayer.add(0);
-                            countSecondPlayer.add(0);
-                            countSecondPlayer.add(0);
-
-                            for(int i = 0; i < dictionaryDestroyed.size(); i++)
-                            {
-                                Dictionary.Entry entry = dictionaryDestroyed.getAt(i);
-                                int id = (int)entry.getKey();
-                                countSecondPlayer.set(id, countSecondPlayer.get(id) + 1);
-                                enemyCost.set(id, (int)entry.getValue());
-                            }
-                        }
-
-                        m_networkManager.notifyGameOver(countFirstPlayer, countSecondPlayer, enemyCost);
                     }
+
+                    NotifyGameOver();
                 }
                 Gdx.app.log("TRACE", "FLAG");
                 break;
@@ -703,6 +668,10 @@ public class GameScreen implements
                 break;
             case GAMEOVER:
                 {
+                    m_destroyedFirstPlayer.clear();
+                    m_destroyedSecondPlayer.clear();
+                    m_enemyCost.clear();
+
                     m_destroyedFirstPlayer.add(event.getGameover().getCountPlayer1Type0());
                     m_destroyedFirstPlayer.add(event.getGameover().getCountPlayer1Type1());
                     m_destroyedFirstPlayer.add(event.getGameover().getCountPlayer1Type2());
@@ -719,6 +688,7 @@ public class GameScreen implements
                     m_enemyCost.add(event.getGameover().getCostType3());
 
                     m_state = Settings.GameState.GAME_OVER_STATE;
+                    m_freezeWorld = true;
                 }
                 break;
             case EVENTTYPE_NOT_SET:
@@ -732,5 +702,71 @@ public class GameScreen implements
     {
         //Gdx.app.log("EVENT_QUEUE", "Polled " + event.toString());
         eventDispatcher(event);
+    }
+
+    @Override
+    public void OnAllEnemiesDestroyed()
+    {
+        m_state = Settings.GameState.GAME_OVER_STATE;
+        m_freezeWorld = true;
+        NotifyGameOver();
+    }
+
+    private void NotifyGameOver()
+    {
+        Dictionary<Integer, Integer> dictionary = m_layerManager.getPlayer(1).getDestroyedEnemies();
+        for(int i = 0; i < dictionary.size(); i++)
+        {
+            Dictionary.Entry entry = dictionary.getAt(i);
+            Gdx.app.log("TRACE","level = " + entry.getKey() + " score = " + entry.getValue());
+        }
+
+        if (m_networkManager != null && m_networkManager.isServer())
+        {
+            Vector<Integer> countFirstPlayer = new Vector<>();
+            Vector<Integer> countSecondPlayer = new Vector<>();
+            Vector<Integer> enemyCost = new Vector<>();
+            enemyCost.add(0);
+            enemyCost.add(0);
+            enemyCost.add(0);
+            enemyCost.add(0);
+
+            if (m_layerManager.getPlayer(1) != null)
+            {
+                Dictionary<Integer, Integer> dictionaryDestroyed = m_layerManager.getPlayer(1).getDestroyedEnemies();
+                countFirstPlayer.add(0);
+                countFirstPlayer.add(0);
+                countFirstPlayer.add(0);
+                countFirstPlayer.add(0);
+
+                for(int i = 0; i < dictionaryDestroyed.size(); i++)
+                {
+                    Dictionary.Entry entry = dictionaryDestroyed.getAt(i);
+                    int id = (int)entry.getKey();
+                    countFirstPlayer.set(id, countFirstPlayer.get(id) + 1);
+                    enemyCost.set(id, (int)entry.getValue());
+                }
+            }
+
+            if (m_layerManager.getPlayer(2) != null)
+            {
+                Dictionary<Integer, Integer> dictionaryDestroyed = m_layerManager.getPlayer(2).getDestroyedEnemies();
+
+                countSecondPlayer.add(0);
+                countSecondPlayer.add(0);
+                countSecondPlayer.add(0);
+                countSecondPlayer.add(0);
+
+                for(int i = 0; i < dictionaryDestroyed.size(); i++)
+                {
+                    Dictionary.Entry entry = dictionaryDestroyed.getAt(i);
+                    int id = (int)entry.getKey();
+                    countSecondPlayer.set(id, countSecondPlayer.get(id) + 1);
+                    enemyCost.set(id, (int)entry.getValue());
+                }
+            }
+
+            m_networkManager.notifyGameOver(countFirstPlayer, countSecondPlayer, enemyCost);
+        }
     }
 }
