@@ -66,6 +66,10 @@ public class GameScreen implements
     private BitmapFont m_bitmapFont;
     private GlyphLayout m_glyphLayout;
 
+    private Vector<Integer> m_destroyedFirstPlayer;
+    private Vector<Integer> m_destroyedSecondPlayer;
+    private Vector<Integer> m_enemyCost;
+
     public GameScreen(NetworkManager networkManager)
     {
         m_networkManager = networkManager;
@@ -139,6 +143,10 @@ public class GameScreen implements
         m_bitmapFont.getData().setScale(0.75f);
 
         m_state = Settings.GameState.PLAY_STATE;
+
+        m_destroyedFirstPlayer = new Vector<>();
+        m_destroyedSecondPlayer = new Vector<>();
+        m_enemyCost = new Vector<>();
 	}
 
     @Override
@@ -167,49 +175,97 @@ public class GameScreen implements
 
             if (m_layerManager.getPlayer(1) != null)
             {
-                Dictionary<Integer, Integer> dictionary1P = m_layerManager.getPlayer(1).getDestroyedEnemies();
-                Integer[] countFirstPlayer = new Integer[4];
-                Integer[] scoreFirstPlayer = new Integer[4];
+                Vector<Integer> countFirstPlayer = new Vector<>();
+                int scoreFirstPlayer = 0;
 
-                for(int i = 0; i < dictionary1P.size(); i++)
+                if (m_networkManager != null && !m_networkManager.isServer())
                 {
-                    Dictionary.Entry entry = dictionary1P.getAt(i);
-                    countFirstPlayer[(int)entry.getKey() - 1]++;
-                    scoreFirstPlayer[(int)entry.getKey() - 1] += (int)entry.getValue();
+                    countFirstPlayer = m_destroyedFirstPlayer;
+                    scoreFirstPlayer =
+                            m_destroyedFirstPlayer.get(0) * m_enemyCost.get(0) +
+                            m_destroyedFirstPlayer.get(1) * m_enemyCost.get(1) +
+                            m_destroyedFirstPlayer.get(2) * m_enemyCost.get(2) +
+                            m_destroyedFirstPlayer.get(3) * m_enemyCost.get(3);
+                }
+                else
+                {
+                    Dictionary<Integer, Integer> dictionary1P = m_layerManager.getPlayer(1).getDestroyedEnemies();
+
+                    countFirstPlayer.add(0);
+                    countFirstPlayer.add(0);
+                    countFirstPlayer.add(0);
+                    countFirstPlayer.add(0);
+
+                    for(int i = 0; i < dictionary1P.size(); i++)
+                    {
+                        Dictionary.Entry entry = dictionary1P.getAt(i);
+                        int id = (int)entry.getKey();
+                        countFirstPlayer.set(id, countFirstPlayer.get(id) + 1);
+                        scoreFirstPlayer += (int)entry.getValue();
+                    }
                 }
 
-                for (int i = 0; i < 4; i++)
-                {
-                    countFirstPlayer[i] = 0;
-                    scoreFirstPlayer[i] = 0;
-                }
+                m_glyphLayout.setText(m_bitmapFont, Integer.toString(countFirstPlayer.get(0)));
+                m_bitmapFont.draw(m_spriteBatch, m_glyphLayout, 0.3f * Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT - Settings.SCREEN_HEIGHT * 0.42f);
 
-                m_glyphLayout.setText(m_bitmapFont, Integer.toString(countFirstPlayer[0]));
-                m_bitmapFont.draw(m_spriteBatch, m_glyphLayout, 0.27f * Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT - Settings.SCREEN_HEIGHT * 0.4f);
+                m_glyphLayout.setText(m_bitmapFont, Integer.toString(countFirstPlayer.get(1)));
+                m_bitmapFont.draw(m_spriteBatch, m_glyphLayout, 0.3f * Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT - Settings.SCREEN_HEIGHT * 0.52f);
 
-                m_glyphLayout.setText(m_bitmapFont, Integer.toString(countFirstPlayer[1]));
-                m_bitmapFont.draw(m_spriteBatch, m_glyphLayout, 0.27f * Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT - Settings.SCREEN_HEIGHT * 0.5f);
+                m_glyphLayout.setText(m_bitmapFont, Integer.toString(countFirstPlayer.get(2)));
+                m_bitmapFont.draw(m_spriteBatch, m_glyphLayout, 0.3f * Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT - Settings.SCREEN_HEIGHT * 0.62f);
 
-                m_glyphLayout.setText(m_bitmapFont, Integer.toString(countFirstPlayer[2]));
-                m_bitmapFont.draw(m_spriteBatch, m_glyphLayout, 0.27f * Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT - Settings.SCREEN_HEIGHT * 0.6f);
+                m_glyphLayout.setText(m_bitmapFont, Integer.toString(countFirstPlayer.get(3)));
+                m_bitmapFont.draw(m_spriteBatch, m_glyphLayout, 0.3f * Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT - Settings.SCREEN_HEIGHT * 0.72f);
 
-                m_glyphLayout.setText(m_bitmapFont, Integer.toString(countFirstPlayer[3]));
-                m_bitmapFont.draw(m_spriteBatch, m_glyphLayout, 0.27f * Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT - Settings.SCREEN_HEIGHT * 0.7f);
+                m_glyphLayout.setText(m_bitmapFont, Integer.toString(scoreFirstPlayer));
+                m_bitmapFont.draw(m_spriteBatch, m_glyphLayout, 0.45f * Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT - Settings.SCREEN_HEIGHT * 0.90f);
             }
 
             if (m_layerManager.getPlayer(2) != null)
             {
-                Dictionary<Integer, Integer> dictionary2P = m_layerManager.getPlayer(2).getDestroyedEnemies();
+                Vector<Integer> countSecondPlayer = new Vector<>();
+                int scoreSecondPlayer = 0;
 
-                Array<Integer> countSecondPlayer = new Array<>(4);
-                Array<Integer> scoreSecondPlayer = new Array<>(4);
-
-                for (int i = 0; i < dictionary2P.size(); i++)
+                if (m_networkManager != null && !m_networkManager.isServer())
                 {
-                    Dictionary.Entry entry = dictionary2P.getAt(i);
-                    countSecondPlayer.items[(int) entry.getKey() - 1]++;
-                    scoreSecondPlayer.items[(int) entry.getKey() - 1] += (int) entry.getValue();
+                    countSecondPlayer = m_destroyedSecondPlayer;
+                    scoreSecondPlayer =
+                            m_destroyedSecondPlayer.get(0) * m_enemyCost.get(0) +
+                            m_destroyedSecondPlayer.get(1) * m_enemyCost.get(1) +
+                            m_destroyedSecondPlayer.get(2) * m_enemyCost.get(2) +
+                            m_destroyedSecondPlayer.get(3) * m_enemyCost.get(3);
                 }
+                else
+                {
+                    Dictionary<Integer, Integer> dictionary2P = m_layerManager.getPlayer(2).getDestroyedEnemies();
+
+                    countSecondPlayer.add(0);
+                    countSecondPlayer.add(0);
+                    countSecondPlayer.add(0);
+                    countSecondPlayer.add(0);
+                    for (int i = 0; i < dictionary2P.size(); i++)
+                    {
+                        Dictionary.Entry entry = dictionary2P.getAt(i);
+                        int id = (int)entry.getKey();
+                        countSecondPlayer.set(id, countSecondPlayer.get(id) + 1);
+                        scoreSecondPlayer += (int)entry.getValue();
+                    }
+                }
+
+                m_glyphLayout.setText(m_bitmapFont, Integer.toString(countSecondPlayer.get(0)));
+                m_bitmapFont.draw(m_spriteBatch, m_glyphLayout, 0.70f * Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT - Settings.SCREEN_HEIGHT * 0.42f);
+
+                m_glyphLayout.setText(m_bitmapFont, Integer.toString(countSecondPlayer.get(1)));
+                m_bitmapFont.draw(m_spriteBatch, m_glyphLayout, 0.70f * Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT - Settings.SCREEN_HEIGHT * 0.52f);
+
+                m_glyphLayout.setText(m_bitmapFont, Integer.toString(countSecondPlayer.get(2)));
+                m_bitmapFont.draw(m_spriteBatch, m_glyphLayout, 0.70f * Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT - Settings.SCREEN_HEIGHT * 0.62f);
+
+                m_glyphLayout.setText(m_bitmapFont, Integer.toString(countSecondPlayer.get(3)));
+                m_bitmapFont.draw(m_spriteBatch, m_glyphLayout, 0.70f * Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT - Settings.SCREEN_HEIGHT * 0.72f);
+
+                m_glyphLayout.setText(m_bitmapFont, Integer.toString(scoreSecondPlayer));
+                m_bitmapFont.draw(m_spriteBatch, m_glyphLayout, 0.80f * Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT - Settings.SCREEN_HEIGHT * 0.90f);
             }
         }
 
@@ -459,6 +515,51 @@ public class GameScreen implements
                     if (m_networkManager != null && m_networkManager.isServer())
                     {
                         m_networkManager.notifyDestroyed(NetworkProtocol.Owner.WALL, ref_id.variable);
+
+                        Vector<Integer> countFirstPlayer = new Vector<>();
+                        Vector<Integer> countSecondPlayer = new Vector<>();
+                        Vector<Integer> enemyCost = new Vector<>();
+                        enemyCost.add(0);
+                        enemyCost.add(0);
+                        enemyCost.add(0);
+                        enemyCost.add(0);
+
+                        if (m_layerManager.getPlayer(1) != null)
+                        {
+                            Dictionary<Integer, Integer> dictionaryDestroyed = m_layerManager.getPlayer(1).getDestroyedEnemies();
+                            countFirstPlayer.add(0);
+                            countFirstPlayer.add(0);
+                            countFirstPlayer.add(0);
+                            countFirstPlayer.add(0);
+
+                            for(int i = 0; i < dictionaryDestroyed.size(); i++)
+                            {
+                                Dictionary.Entry entry = dictionaryDestroyed.getAt(i);
+                                int id = (int)entry.getKey();
+                                countFirstPlayer.set(id, countFirstPlayer.get(id) + 1);
+                                enemyCost.set(id, (int)entry.getValue());
+                            }
+                        }
+
+                        if (m_layerManager.getPlayer(2) != null)
+                        {
+                            Dictionary<Integer, Integer> dictionaryDestroyed = m_layerManager.getPlayer(2).getDestroyedEnemies();
+
+                            countSecondPlayer.add(0);
+                            countSecondPlayer.add(0);
+                            countSecondPlayer.add(0);
+                            countSecondPlayer.add(0);
+
+                            for(int i = 0; i < dictionaryDestroyed.size(); i++)
+                            {
+                                Dictionary.Entry entry = dictionaryDestroyed.getAt(i);
+                                int id = (int)entry.getKey();
+                                countSecondPlayer.set(id, countSecondPlayer.get(id) + 1);
+                                enemyCost.set(id, (int)entry.getValue());
+                            }
+                        }
+
+                        m_networkManager.notifyGameOver(countFirstPlayer, countSecondPlayer, enemyCost);
                     }
                 }
                 Gdx.app.log("TRACE", "FLAG");
@@ -522,80 +623,100 @@ public class GameScreen implements
         switch (event.getEventTypeCase())
         {
             case FIRE:
-            {
-                NetworkProtocol.Fire fire = event.getFire();
+                {
+                    NetworkProtocol.Fire fire = event.getFire();
 
-                if (fire.getOwner() == NetworkProtocol.Owner.ENEMY)
-                {
-                    m_enemyFactory.onNetworkFire(fire.getId(), fire.getDirection());
+                    if (fire.getOwner() == NetworkProtocol.Owner.ENEMY)
+                    {
+                        m_enemyFactory.onNetworkFire(fire.getId(), fire.getDirection());
+                    }
+                    else if (fire.getOwner() == NetworkProtocol.Owner.CLIENT_PLAYER ||
+                             fire.getOwner() == NetworkProtocol.Owner.SERVER_PLAYER)
+                    {
+                        m_layerManager.onNetworkPlayerFire(fire);
+                    }
                 }
-                else if (fire.getOwner() == NetworkProtocol.Owner.CLIENT_PLAYER ||
-                         fire.getOwner() == NetworkProtocol.Owner.SERVER_PLAYER)
-                {
-                    m_layerManager.onNetworkPlayerFire(fire);
-                }
-            }
                 break;
             case MOVE:
-            {
-                NetworkProtocol.Move move = event.getMove();
-
-                if (move.getOwner() == NetworkProtocol.Owner.ENEMY)
                 {
-                    m_enemyFactory.onNetworkMove(move.getId(), move.getX(), move.getY(), move.getDirection());
-                }
+                    NetworkProtocol.Move move = event.getMove();
 
-                if (move.getOwner() == NetworkProtocol.Owner.SERVER_PLAYER && m_networkManager.isServer())
-                {
-                    Gdx.app.log("NETWORK", "Got information about server player on server side. Should not happen");
-                    break;
-                }
+                    if (move.getOwner() == NetworkProtocol.Owner.ENEMY)
+                    {
+                        m_enemyFactory.onNetworkMove(move.getId(), move.getX(), move.getY(), move.getDirection());
+                    }
 
-                if (move.getOwner() == NetworkProtocol.Owner.CLIENT_PLAYER && !m_networkManager.isServer())
-                {
-                    Gdx.app.log("NETWORK", "Got information about client player on client side. Should not happen");
-                    break;
-                }
+                    if (move.getOwner() == NetworkProtocol.Owner.SERVER_PLAYER && m_networkManager.isServer())
+                    {
+                        Gdx.app.log("NETWORK", "Got information about server player on server side. Should not happen");
+                        break;
+                    }
 
-                if (move.getOwner() == NetworkProtocol.Owner.SERVER_PLAYER ||
-                    move.getOwner() == NetworkProtocol.Owner.CLIENT_PLAYER)
-                {
-                    m_layerManager.onNetworkMove(
-                            move.getOwner(),
-                            move.getX(), move.getY(),
-                            utils.fromNetworkDirection(move.getDirection()));
+                    if (move.getOwner() == NetworkProtocol.Owner.CLIENT_PLAYER && !m_networkManager.isServer())
+                    {
+                        Gdx.app.log("NETWORK", "Got information about client player on client side. Should not happen");
+                        break;
+                    }
+
+                    if (move.getOwner() == NetworkProtocol.Owner.SERVER_PLAYER ||
+                        move.getOwner() == NetworkProtocol.Owner.CLIENT_PLAYER)
+                    {
+                        m_layerManager.onNetworkMove(
+                                move.getOwner(),
+                                move.getX(), move.getY(),
+                                utils.fromNetworkDirection(move.getDirection()));
+                    }
                 }
-            }
                 break;
             case SPAWNED:
-            {
-                NetworkProtocol.Spawned spawned = event.getSpawned();
-
-                if (spawned.getOwner() == NetworkProtocol.Owner.ENEMY)
                 {
-                    m_enemyFactory.onNetworkSpawn(spawned.getId(), spawned.getX(), spawned.getY(), spawned.getLevel());
-                }
+                    NetworkProtocol.Spawned spawned = event.getSpawned();
 
-                if (spawned.getOwner() == NetworkProtocol.Owner.CLIENT_PLAYER ||
-                    spawned.getOwner() == NetworkProtocol.Owner.SERVER_PLAYER)
-                {
-                    m_layerManager.loadPlayer(spawned.getId() + 1, true);
+                    if (spawned.getOwner() == NetworkProtocol.Owner.ENEMY)
+                    {
+                        m_enemyFactory.onNetworkSpawn(spawned.getId(), spawned.getX(), spawned.getY(), spawned.getLevel());
+                    }
+
+                    if (spawned.getOwner() == NetworkProtocol.Owner.CLIENT_PLAYER ||
+                        spawned.getOwner() == NetworkProtocol.Owner.SERVER_PLAYER)
+                    {
+                        m_layerManager.loadPlayer(spawned.getId() + 1, true);
+                    }
                 }
-            }
                 break;
             case DESTROYED:
-            {
-                NetworkProtocol.Destroyed destroyed = event.getDestroyed();
+                {
+                    NetworkProtocol.Destroyed destroyed = event.getDestroyed();
 
-                if (destroyed.getItem() == NetworkProtocol.Owner.WALL && !m_networkManager.isServer())
-                {
-                    m_layerManager.onNetworkWallDestroy(destroyed.getItem(), destroyed.getId());
+                    if (destroyed.getItem() == NetworkProtocol.Owner.WALL && !m_networkManager.isServer())
+                    {
+                        m_layerManager.onNetworkWallDestroy(destroyed.getItem(), destroyed.getId());
+                    }
+                    else if (destroyed.getItem() == NetworkProtocol.Owner.ENEMY)
+                    {
+                        m_enemyFactory.OnNetworkDestroyed(destroyed.getId());
+                    }
                 }
-                else if (destroyed.getItem() == NetworkProtocol.Owner.ENEMY)
+                break;
+            case GAMEOVER:
                 {
-                    m_enemyFactory.OnNetworkDestroyed(destroyed.getId());
+                    m_destroyedFirstPlayer.add(event.getGameover().getCountPlayer1Type0());
+                    m_destroyedFirstPlayer.add(event.getGameover().getCountPlayer1Type1());
+                    m_destroyedFirstPlayer.add(event.getGameover().getCountPlayer1Type2());
+                    m_destroyedFirstPlayer.add(event.getGameover().getCountPlayer1Type3());
+
+                    m_destroyedSecondPlayer.add(event.getGameover().getCountPlayer2Type0());
+                    m_destroyedSecondPlayer.add(event.getGameover().getCountPlayer2Type1());
+                    m_destroyedSecondPlayer.add(event.getGameover().getCountPlayer2Type2());
+                    m_destroyedSecondPlayer.add(event.getGameover().getCountPlayer2Type3());
+
+                    m_enemyCost.add(event.getGameover().getCostType0());
+                    m_enemyCost.add(event.getGameover().getCostType1());
+                    m_enemyCost.add(event.getGameover().getCostType2());
+                    m_enemyCost.add(event.getGameover().getCostType3());
+
+                    m_state = Settings.GameState.GAME_OVER_STATE;
                 }
-            }
                 break;
             case EVENTTYPE_NOT_SET:
                 Gdx.app.log("NETWORK ERROR", "Wrapper type is not set. Probably wrong packet structure");

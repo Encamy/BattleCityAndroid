@@ -52,12 +52,30 @@ message Destroyed {
     int32 id = 2;
 }
 
+message GameOver {
+	int32 count_player1_type0 = 1;
+	int32 count_player1_type1 = 2;
+	int32 count_player1_type2 = 3;
+	int32 count_player1_type3 = 4;
+		
+	int32 count_player2_type0 = 5;
+	int32 count_player2_type1 = 6;
+	int32 count_player2_type2 = 7;
+	int32 count_player2_type3 = 8;
+	
+	int32 cost_type0 = 9;
+	int32 cost_type1 = 10;
+	int32 cost_type2 = 11;
+	int32 cost_type3 = 12;
+}
+
 message Event {
     oneof event_type {
         Spawned spawned = 1;
         Fire fire = 2;
         Move move = 3;
         Destroyed destroyed = 4;
+		GameOver gameover = 5;
     }
 }
 

@@ -6,6 +6,7 @@ import com.encamy.battlecity.protobuf.NetworkProtocol;
 import com.encamy.battlecity.utils.utils;
 
 import java.io.IOException;
+import java.util.Vector;
 
 public class NetworkManager implements Settings.OnMessageReceivedCallback
 {
@@ -210,6 +211,24 @@ public class NetworkManager implements Settings.OnMessageReceivedCallback
         try
         {
             m_server.sendDestroyEvent(owner, id);
+        }
+        catch (IOException e)
+        {
+            //
+        }
+    }
+
+    public void notifyGameOver(Vector<Integer> firstP, Vector<Integer> secondP, Vector<Integer> enemyCost)
+    {
+        if (!isServer())
+        {
+            Gdx.app.log("ERROR", "Trying to notify about game over from client side. Should not happen");
+            return;
+        }
+
+        try
+        {
+            m_server.sendGameOverEvent(firstP, secondP, enemyCost);
         }
         catch (IOException e)
         {

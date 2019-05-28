@@ -11,6 +11,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Vector;
 
 public class TCPserver extends Thread
 {
@@ -143,6 +144,32 @@ public class TCPserver extends Thread
                                 NetworkProtocol.Destroyed.newBuilder()
                                 .setId(id)
                                 .setItem(wall)
+                        )
+                ).build();
+
+        wrapper.writeDelimitedTo(m_outputStream);
+    }
+
+    public void sendGameOverEvent(Vector<Integer> firstP, Vector<Integer> secondP, Vector<Integer> enemyCost) throws IOException
+    {
+        NetworkProtocol.PacketWrapper wrapper =
+                NetworkProtocol.PacketWrapper.newBuilder().setEvent(
+                        NetworkProtocol.Event.newBuilder().setGameover(
+                                NetworkProtocol.GameOver.newBuilder()
+                                .setCountPlayer1Type0(firstP.get(0))
+                                .setCountPlayer1Type1(firstP.get(1))
+                                .setCountPlayer1Type2(firstP.get(2))
+                                .setCountPlayer1Type3(firstP.get(3))
+
+                                .setCountPlayer2Type0(secondP.get(0))
+                                .setCountPlayer2Type1(secondP.get(1))
+                                .setCountPlayer2Type2(secondP.get(2))
+                                .setCountPlayer2Type3(secondP.get(3))
+
+                                .setCostType0(enemyCost.get(0))
+                                .setCostType1(enemyCost.get(1))
+                                .setCostType2(enemyCost.get(2))
+                                .setCostType3(enemyCost.get(3))
                         )
                 ).build();
 
